@@ -3,6 +3,7 @@ var player2;
 var scl = 10;
 var vol = 0.4;
 var food;
+var currLevel;
 
 function preload() {
 	p1_img = loadImage('images/p1.png');
@@ -30,13 +31,14 @@ function setup() {
 	player1 = new Player("1", " ", 0, windowWidth/2 + 200, windowHeight/2);
 	player2 = new Player("2", " ", -0, windowWidth/2 - 200, windowHeight/2);
 	food = new Food(scl);
+	currLevel = new Level(false, 0);
 }
 
 
 function draw() {
 	background(30);
 
-
+	currLevel.advanceToNextLevel(player1, player2);
 
 //food
 	fill(0, 255, 0);
@@ -85,26 +87,17 @@ function draw() {
 	if (player1.eat(food)) {
 		console.log("collide");
 		food.placer();
+		// level.levelSwitcher(currLevel);
+		// console.log(level);
 	}
 
 	if (player2.eat(food)) {
 		console.log("collide");
-		food.placer();
-	}
+			food.placer();
+		}
 
 }
 
-// if (player1.total > 15) {
-// 	textSize(40);
-// 	textAlign(CENTER, TOP);
-// 	text("Player 1 wins!", windowWidth/2, windowHeight/6);
-// } elseif (player2.total > 15) {
-// 	textSize(40);
-// 	textAlign(CENTER, TOP);
-// 	text("Player 2 wins!", windowWidth/2, windowHeight/6);}
-// } else {
-//
-// }
 
 function handlePlayerFollowing(playerX, playerY, futureDirectionOfX) {
 	//this is happening right after playerX presses a directional key, BEFORE the direction of playerX changes
