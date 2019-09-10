@@ -1,6 +1,6 @@
 var player1;
 var player2;
-var scl = 10;
+var scl = 40;
 var vol = 0.4;
 var food;
 var currLevel;
@@ -26,28 +26,28 @@ function preload() {
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-	noStroke();
+	// noStroke();
 	//Special function to construct an object
 	player1 = new Player("1", " ", 0, windowWidth/2 + 200, windowHeight/2);
 	player2 = new Player("2", " ", -0, windowWidth/2 - 200, windowHeight/2);
 	food = new Food(scl);
-	currLevel = new Level(false, 0);
-}
 
+
+	currLevel = new Level(false, 0);
+	food.location();
+
+}
 
 function draw() {
 	background(30);
+	noStroke();
 
 	currLevel.advanceToNextLevel(player1, player2);
 
-//food
-	fill(0, 255, 0);
-	// noStroke();
-	// 		fill(random(220, 270), random(220, 270), 0);
-	// 		ellipse(food.x, food.y, random(scl/2, scl/8), random(scl/2, scl/8));
+	//food
+	// fill(0, 255, 0);
 
 	//"is following text
-	noStroke();
 	textSize(30);
 	fill(255, 51, 153);
 	text(player1.total.toFixed(0), windowWidth / 2 + 200, windowHeight / 1.2);
@@ -60,13 +60,13 @@ function draw() {
 
 	//following punishment/rewards
 	if (player1.isFollowing) {
-		if (player1.isFollowing && player1.total > 0) {
+		if (player1.isFollowing) {
 			player1.total = player1.total - 0.001;
 			}
 		fill(255, 51, 153);
 		text("Pink is following", windowWidth/2, windowHeight/6);
 	} else if (player2.isFollowing) {
-		if (player2.isFollowing && player2.total > 0) {
+		if (player2.isFollowing) {
 			player2.total = player2.total - 0.001;
 			}
 		fill(51, 153, 255);
@@ -86,19 +86,19 @@ function draw() {
 
 	if (player1.eat(food)) {
 		console.log("collide");
+		food.location();
 		food.placer();
-		// level.levelSwitcher(currLevel);
-		// console.log(level);
 	}
 
 	if (player2.eat(food)) {
 		console.log("collide");
-			food.placer();
+		food.location();
+		food.placer();
 		}
 
 }
 
-
+//who is following who
 function handlePlayerFollowing(playerX, playerY, futureDirectionOfX) {
 	//this is happening right after playerX presses a directional key, BEFORE the direction of playerX changes
 	if(playerX.direction == playerY.direction) { 	//only deal with cases where there is ALREADY a "follower"
