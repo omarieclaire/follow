@@ -11,8 +11,8 @@ class Player {
 }
 
 
-  eat(pos) {
-    var d = dist(this.x, this.y, pos.x, pos.y);
+  eat(food) {
+    var d = dist(this.x, this.y, food.x, food.y);
     if (d < scl) {
       this.total++;
       eat_sound.play();

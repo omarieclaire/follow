@@ -2,8 +2,11 @@ var player1;
 var player2;
 var scl = 40;
 var vol = 0.4;
-var food;
+var food = [];
 var currLevel;
+var posX;
+var posY;
+
 
 function preload() {
 	p1_img = loadImage('images/p1.png');
@@ -30,11 +33,21 @@ function setup() {
 	//Special function to construct an object
 	player1 = new Player("1", " ", 0, windowWidth/2 + 200, windowHeight/2);
 	player2 = new Player("2", " ", -0, windowWidth/2 - 200, windowHeight/2);
-	food = new Food(scl);
+	// food = new Food(scl);
+
 
 
 	currLevel = new Level(false, 0);
-	food.location();
+
+	for (var i = 0; i < 5; i++) {
+		food[i] = new Food(scl);
+		food[i].location();
+		posX = food[i].x;
+		posY = food[i].y;
+		// console.log(food[i].x);
+
+	}
+
 
 }
 
@@ -43,9 +56,6 @@ function draw() {
 	noStroke();
 
 	currLevel.advanceToNextLevel(player1, player2);
-
-	//food
-	// fill(0, 255, 0);
 
 	//"is following text
 	textSize(30);
@@ -80,21 +90,22 @@ function draw() {
 	fill(51, 153, 255);
 	player2.show();
 	fill(255);
-	food.show();
 
-//food placement
+	for (let i = 0; i < food.length; i++) {
+		food[i].show();
+		if (player1.eat(food[i])) {
+			food[i].location();
+			// food[i].placer();
+		}
 
-	if (player1.eat(food)) {
-		console.log("collide");
-		food.location();
-		food.placer();
+		if (player2.eat(food[i])) {
+			food[i].location();
+			// food[i].placer();
+		}
 	}
 
-	if (player2.eat(food)) {
-		console.log("collide");
-		food.location();
-		food.placer();
-		}
+
+//food placement
 
 }
 
@@ -155,6 +166,8 @@ function keyPressed() {
 		player2.direction = "left";
 	}
 }
+
+
 
 // function foodPlacer() {
 // 	var cols = floor(width/scl);

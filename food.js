@@ -3,6 +3,8 @@ class Food {
     this.isfollowing = false;
     this.scl = temp_scl;
     this.total = 3;
+    this.x;
+    this.y;
   }
 
   //picking place for food
@@ -21,12 +23,11 @@ class Food {
   }
 
   //new location
-  placer() {
-    this.foodLocation = this.makeRandomVector();
-    this.x = this.foodLocation.x;
-    this.y = this.foodLocation.y;
-  }
-
+  // placer() {
+  //   this.foodLocation = this.makeRandomVector();
+  //   this.x = this.foodLocation.x;
+  //   this.y = this.foodLocation.y;
+  // }
 
   show() {
     ellipse(this.foodLocation.x, this.foodLocation.y, this.scl, this.scl);
