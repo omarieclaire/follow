@@ -30,10 +30,11 @@ class Food {
   // }
 
   show() {
+    stroke(255);
+    noFill();
     ellipse(this.foodLocation.x, this.foodLocation.y, this.scl, this.scl);
     for (var i = 0; i < this.total; i++) {
-      noStroke();
-      fill(random(220, 270), random(220, 270), 0);
+      // fill(random(220, 270), random(220, 270), 0);
       ellipse(this.foodLocation.x, this.foodLocation.y, random(scl / 2, scl / 8), random(scl / 2, scl / 8));
     }
   }
