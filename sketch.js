@@ -44,9 +44,9 @@ function setup() {
   player1 = new Player("1", " ", 0, windowWidth / 2 + 200, windowHeight / 2);
   player2 = new Player("2", " ", -0, windowWidth / 2 - 200, windowHeight / 2);
 
-	level1 = new Level1();
+  level1 = new Level1();
   level2 = new Level2();
-	level3 = new Level3();
+  level3 = new Level3();
   finalLevel = new FinalLevel();
 
   var allTheLevels = [level1, level2, level3, finalLevel];
@@ -55,7 +55,6 @@ function setup() {
   for (var i = 0; i < 1; i++) {
     foods[i] = new Food(scl);
     foods[i].location();
-
   }
 }
 
@@ -80,18 +79,55 @@ function draw() {
   playerCollision();
 
   ////////////////////////// DRAW
- levelManager.drawLevel(player1, player2, foods);
+  levelManager.drawLevel(player1, player2, foods);
 
+}
+
+function changePlayerDirectionRight() {
+  handlePlayerFollowing(player1, player2, "right");
+  player1.dir(.1, 0);
+  player1.direction = "right";
+}
+function changePlayerDirectionLeft() {
+  handlePlayerFollowing(player1, player2, "left");
+  player1.dir(-.1, 0);
+  player1.direction = "left";
+}
+function changePlayerDirectionUp() {
+  handlePlayerFollowing(player1, player2, "up");
+  player1.dir(0, -.1);
+  player1.direction = "up";
+}
+function changePlayerDirectionDown() {
+  handlePlayerFollowing(player1, player2, "down");
+  player1.dir(0, .1);
+  player1.direction = "down";
 }
 
 function playerCollision() {
   let d = dist(player1.x, player1.y, player2.x, player2.y);
   if (d < player1.r + player2.r) {
-    // player1.x = player1.x *-1;
-    // player1.y = player1.y *-1
-    // player2.x = player2.x *-1;
-    // player2.y = player2.y *-1
+    console.log("collide", player1.xspeed, player2.xspeed);
 
+    if (player1.direction == "left") {
+			changePlayerDirectionRight();
+    } else if (player1.direction == "right") {
+      changePlayerDirectionLeft();
+    } else if (player1.direction == "up") {
+      changePlayerDirectionDown();
+    } else if (player1.direction == "down") {
+      changePlayerDirectionUp();
+    }
+
+		// if (player2.direction == "left") {
+		// 	changePlayerDirectionRight();
+		// } else if (player2.direction == "right") {
+		// 	changePlayerDirectionLeft();
+		// } else if (player2.direction == "up") {
+		// 	changePlayerDirectionDown();
+		// } else if (player2.direction == "down") {
+		// 	changePlayerDirectionUp();
+		// }
 
   }
 }
@@ -106,7 +142,6 @@ function foodEaten() {
       foods[i].location();
     }
   }
-
 }
 
 //who is following who
@@ -125,7 +160,7 @@ function handlePlayerFollowing(playerX, playerY, futureDirectionOfX) {
 }
 
 function keyPressed() {
-	levelManager.keyWasPressed(keyCode);
+  levelManager.keyWasPressed(keyCode);
   if (keyCode === UP_ARROW) {
     handlePlayerFollowing(player1, player2, "up");
     player1.dir(0, -.1);
@@ -137,9 +172,7 @@ function keyPressed() {
     player1.direction = "down";
 
   } else if (keyCode === RIGHT_ARROW) {
-    handlePlayerFollowing(player1, player2, "right");
-    player1.dir(.1, 0);
-    player1.direction = "right";
+    changePlayerDirectionRight();
 
   } else if (keyCode === LEFT_ARROW) {
     handlePlayerFollowing(player1, player2, "left");
@@ -167,12 +200,3 @@ function keyPressed() {
     player2.direction = "left";
   }
 }
-
-
-
-// function foodPlacer() {
-// 	var cols = floor(width/scl);
-// 	var rows = floor(height/scl);
-// 	food = createVector(floor(random(cols)), floor(random(rows)));
-// 	food.mult(scl);
-// }

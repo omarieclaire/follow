@@ -7,7 +7,7 @@ class Player {
     this.x = temp_x;
     this.y = temp_y;
 
-    this.r = 10;
+    this.r = 20;
     this.yspeed = 0;
     this.total = 5;
     this.isfollowing = false;
