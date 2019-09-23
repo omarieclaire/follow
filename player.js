@@ -13,8 +13,6 @@ class Player {
     this.isfollowing = false;
   }
 
-
-
   eat(food) {
     var d = dist(this.x, this.y, food.x, food.y);
     if (d < scl) {
@@ -29,6 +27,35 @@ class Player {
   dir(x, y) {
     this.xspeed = x;
     this.yspeed = y;
+  }
+
+  flipDirection() {
+    if(this.direction == "up") {
+      this.changeDirectionDown();
+    } else if (this.direction == "down") {
+      this.changeDirectionUp();
+    } else if (this.direction == "left") {
+      this.changeDirectionRight();
+    } else if (this.direction == "right") {
+      this.changeDirectionLeft();
+    }
+  }
+
+  changeDirectionDown() {
+    this.dir(0, 0.1);
+    this.direction = "down";
+  }
+  changeDirectionUp() {
+    this.dir(0, -0.1);
+    this.direction = "up";
+  }
+  changeDirectionLeft() {
+    this.dir(-0.1, 0);
+    this.direction = "left";
+  }
+  changeDirectionRight() {
+    this.dir(0.1, 0);
+    this.direction = "right";
   }
 
   updateTotal() {
