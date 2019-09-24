@@ -11,16 +11,7 @@ class Level {
     }
   }
   keyWasPressedLevel(keyCode) {}
-
-  // don't need to override this
-  // but optionally use in draw.
-  basicLevelDraw(player1, player2, foods) {
-    // ... draw the basic of the level.
-
-  }
-
-  //next, a draw function containing the main play
-  draw(player1, player2, foods) {
+  basicLevelDraw(player1, player2, foods) { //basic level draw
     background(30);
     noStroke();
     textSize(30);
@@ -45,10 +36,11 @@ class Level {
     fill(51, 153, 255);
     player2.show();
 
-    for (let i = 0; i < foods.length; i++) {
-      foods[i].show();
-    }
+  }
 
+  //next, a draw function containing the main play
+  draw(player1, player2, foods) {
+    this.basicLevelDraw();
   }
 }
 // keypress to skip level?
@@ -70,22 +62,6 @@ class PressKeyToContinue extends Level {
     this.keyWasPressed = true;
   }
 }
-//
-// class TemporaryLevel extends Level {
-//   constructor() {
-//     super();
-//     this.numTicks = 0;
-//   }
-//
-//   draw(player1, player2, foods) {
-//     // .. draw stuff
-//     this.numTicks++;
-//   }
-//
-//   advanceToNextLevel(player1, player2) {
-//     return this.numTicks >= 3000;
-//   }
-// }
 
 class Level0 extends Level {
   constructor() {
@@ -93,7 +69,6 @@ class Level0 extends Level {
     super();
     this.numTicks = 0;
   };
-
   //can create a draw inside any level to customize it
   draw(player1, player2, foods) {
     this.numTicks++;
@@ -114,9 +89,12 @@ class Level1 extends Level {
   constructor() {
     super();
   };
+  draw(player1, player2, foods) {
+    this.basicLevelDraw(player1, player2, foods);
+  }
 
   advanceToNextLevel(player1, player2) {
-    if (player1.total >= 8 || player2.total >= 8) {
+    if (player1.total >= 15 || player2.total >= 15) {
       console.log("switching from level 1 to level 2");
       return true;
     } else {
@@ -131,8 +109,15 @@ class Level2 extends Level {
     super();
   };
 
+  draw(player1, player2, foods) {
+    this.basicLevelDraw(player1, player2, foods);
+    for (let i = 0; i < foods.length; i++) {
+      foods[i].show();
+    }
+  }
+
   advanceToNextLevel(player1, player2) {
-    if (player1.total > 10 || player2.total > 10) {
+    if (player1.total > 20 || player2.total > 20) {
       console.log("switching from level 2 to level 3");
       return true;
     } else {
@@ -143,9 +128,9 @@ class Level2 extends Level {
   draw(player1, player2, foods) {
     background(255, 0, 0);
 
-    fill(0, 5, 0);
-    noStroke();
-    text("GAME OVER!!!", windowWidth / 2, windowHeight / 6);
+    // fill(0, 5, 0);
+    // noStroke();
+    // text("GAME OVER!!!", windowWidth / 2, windowHeight / 6);
   }
 
 }

@@ -11,6 +11,8 @@ class Player {
     this.yspeed = 0;
     this.total = 5;
     this.isfollowing = false;
+    this.isfollowed = false;
+
   }
 
   eat(food) {
@@ -58,9 +60,12 @@ class Player {
     this.direction = "right";
   }
 
-  updateTotal() {
+  updateTotal(player1, player2) {
     if (this.isFollowing) {
-      this.total = this.total - 0.01;
+      player1.total = player1.total - 0.005;
+			player2.total = player2.total + 0.005;
+      console.log(player1.total, player2.total);
+
     }
   }
 

@@ -1,16 +1,13 @@
 
+//how to train players?
 
-//make trail better
-//make load screen, no star training screen, star screen, end screen
-// players bounce off eachother
-
-//doing something intentionally to prevent the other from doing it. watching the path of the eachother
+//move rings from one player to the other
 //
 
 
 var player1;
 var player2;
-var scl = 40;
+var scl = 20;
 var vol = 0.4;
 var foods = [];
 var level0;
@@ -19,7 +16,7 @@ var level2;
 var level3;
 var finallevel;
 var levelManager;
-var numTicks = 0;
+// var numTicks = 0;
 
 
 
@@ -64,9 +61,9 @@ function setup() {
 }
 
 function draw() {
-	console.log(levelManager);
-	numTicks++;
-	console.log(numTicks);
+	// console.log(levelManager);
+	// numTicks++;
+	// console.log(numTicks);
   //////////////////////////////// UPDATE
   if (levelManager.isGameOverManager(player1, player2) == true) {
     // how do we exit P5JS?
@@ -76,8 +73,8 @@ function draw() {
   levelManager.switchLevel(player1, player2);
 
   //following punishment/rewards
-  player1.updateTotal();
-  player2.updateTotal();
+  player1.updateTotal(player1, player2);
+  player2.updateTotal(player2, player1);
 
   // update location of player1 and player2
   player1.update();
@@ -117,6 +114,7 @@ function handlePlayerFollowing(playerX, playerY, futureDirectionOfX) {
   } else { // if there is no current follower
     if (futureDirectionOfX == playerY.direction) {
       playerX.isFollowing = true;
+			playerY.isFollowed = true
     }
   }
 }
