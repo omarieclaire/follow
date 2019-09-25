@@ -1,6 +1,8 @@
 // levels need to: draw themselves & know when over (both success and failure)
 class Level {
-  constructor() {};
+  constructor() {
+    this.leaderRing = new LeaderRing(scl);
+  };
   //first, a function to check if the game is over
   isGameOver(player1, player2) {
     if (player1.total <= 0 || player2.total <= 0) {
@@ -43,8 +45,9 @@ class Level {
       player2.show();
     }
 
+    this.leaderRing.drawLeaderRing(player1, player2);
+
   }
-  //next, a draw function containing the main play
   draw(player1, player2, foods) {
     this.basicLevelDraw();
   }

@@ -13,8 +13,11 @@ class Player {
     this.total = 5;
     this.isfollowing = false;
     this.isfollowed = false;
-
   }
+
+  // isFollowed() {
+  //   return ! this.isFollowing;
+  // }
 
   eat(food) {
     var d = dist(this.x, this.y, food.x, food.y);
@@ -105,20 +108,17 @@ class Player {
       //rings around players
       ellipse(this.x, this.y, scl/2 + i * scl/2);
     }
-    //losing a ring
-    if (this.isFollowing == true && this.direction == "right") {
-      for (var i = 0; i < this.total; i++) {
-      }
-      ellipse(this.x - i, this.y, scl/2 + i * scl/2)
-    } else if (this.isFollowing == true && this.direction == "left") {
-      ellipse(this.x + i, this.y, scl/2 + i * scl/2)
-    } else if (this.isFollowing == true && this.direction == "up") {
-      ellipse(this.x, this.y + i, scl/2 + i * scl/2)
-    } else if (this.isFollowing == true && this.direction == "down") {
-      ellipse(this.x, this.y - i, scl/2 + i * scl/2)
-    } else {
-      // ellipse(this.x, this.y, scl/2 + i * scl/2)
-    }
+    // if (this.isFollowing == true && this.direction == "right") {
+    //   ellipse(this.x - 10, this.y, scl/2 + 10 * scl/2)
+    // } else if (this.isFollowing == true && this.direction == "left") {
+    //   ellipse(this.x + 10, this.y, scl/2 + 10 * scl/2)
+    // } else if (this.isFollowing == true && this.direction == "up") {
+    //   ellipse(this.x, this.y + 10, scl/2 + 10 * scl/2)
+    // } else if (this.isFollowing == true && this.direction == "down") {
+    //   ellipse(this.x, this.y - 10, scl/2 + 10 * scl/2)
+    // } else {
+    //   // ellipse(this.x, this.y, scl/2 + i * scl/2)
+    // }
 
     //player trail
     let numberOfTrails = 10;
