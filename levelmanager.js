@@ -14,7 +14,6 @@ class LevelManager {
   switchLevel(player1, player2) {
     //from the list of levels, get me the current one.
     var theCurrentLevel = this.allTheLevels[this.currLevelIndex];
-
     if(theCurrentLevel.advanceToNextLevel(player1, player2) == true) {
       console.log("advancing to the next level");
       this.currLevelIndex++;
@@ -24,13 +23,11 @@ class LevelManager {
   drawLevel(player1, player2, foods) {
     //from the list of levels, get me the current one.
     var theCurrentLevel = this.allTheLevels[this.currLevelIndex];
-
     theCurrentLevel.draw(player1, player2, foods);
   }
 
   keyWasPressed(keyCode) {
     var theCurrentLevel = this.allTheLevels[this.currLevelIndex];
-
     theCurrentLevel.keyWasPressedLevel(keyCode);
   }
 }

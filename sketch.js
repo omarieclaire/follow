@@ -1,13 +1,15 @@
 
-//how to train players?
-
-//move rings from one player to the other
-//
-
+//slowly move rings from one player to another
+//add sound
+//figure out keyPress
+//communicate death with animation
+//restart game at end of GAME
 
 var player1;
 var player2;
-var scl = 20;
+var player1Color = [255, 51, 153, 255];
+var player2Color = [51, 153, 255, 255];
+var scl = 40;
 var vol = 0.4;
 var foods = [];
 var level0;
@@ -16,9 +18,6 @@ var level2;
 var level3;
 var finallevel;
 var levelManager;
-// var numTicks = 0;
-
-
 
 function preload() {
   p1_img = loadImage('images/p1.png');
@@ -41,7 +40,6 @@ function preload() {
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
-
   //Special function to construct an object
   player1 = new Player("1", " ", 0, windowWidth / 2 + 200, windowHeight / 2);
   player2 = new Player("2", " ", -0, windowWidth / 2 - 200, windowHeight / 2);
@@ -50,7 +48,7 @@ function setup() {
   level2 = new Level2();
   level3 = new Level3();
   finalLevel = new FinalLevel();
-
+//array variable containing all the levels
   var allTheLevels = [level0, level1, level2, level3, finalLevel];
   levelManager = new LevelManager(0, allTheLevels);
 
@@ -61,18 +59,15 @@ function setup() {
 }
 
 function draw() {
-	// console.log(levelManager);
-	// numTicks++;
-	// console.log(numTicks);
   //////////////////////////////// UPDATE
   if (levelManager.isGameOverManager(player1, player2) == true) {
-    // how do we exit P5JS?
+    // exit
     return;
   }
 
-  levelManager.switchLevel(player1, player2);
 
-  //following punishment/rewards
+  levelManager.switchLevel(player1, player2);
+	//following punishment/rewards
   player1.updateTotal(player1, player2);
   player2.updateTotal(player2, player1);
 
@@ -85,11 +80,7 @@ function draw() {
 
   ////////////////////////// DRAW
   levelManager.drawLevel(player1, player2, foods);
-
 }
-
-
-
 
 function foodEaten() {
   for (let i = 0; i < foods.length; i++) {
@@ -122,7 +113,6 @@ function handlePlayerFollowing(playerX, playerY, futureDirectionOfX) {
 function playerCollision() {
   let d = dist(player1.x, player1.y, player2.x, player2.y);
   if (d < player1.r + player2.r) {
-    console.log("collide", player1.xspeed, player2.xspeed);
 		player1.flipDirection();
 		player2.flipDirection();
 		// players never follow each other after a collission
@@ -132,6 +122,7 @@ function playerCollision() {
 }
 
 function keyPressed() {
+	//32
   levelManager.keyWasPressed(keyCode);
   if (keyCode === UP_ARROW) {
     handlePlayerFollowing(player1, player2, "up");

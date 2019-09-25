@@ -6,7 +6,8 @@ class Player {
     this.xspeed = temp_xspeed;
     this.x = temp_x;
     this.y = temp_y;
-
+    this.ringX;
+    this.ringY;
     this.r = 20;
     this.yspeed = 0;
     this.total = 5;
@@ -64,15 +65,10 @@ class Player {
     if (this.isFollowing) {
       player1.total = player1.total - 0.005;
 			player2.total = player2.total + 0.005;
-      console.log(player1.total, player2.total);
-
     }
   }
 
-
-
   update() {
-
     this.x = this.x + this.xspeed * scl;
     this.y = this.y + this.yspeed * scl;
 
@@ -87,14 +83,43 @@ class Player {
     }
   }
 
+  //need to know what is the outer ring
+  //need to know my x and y and the x and y of the other player
+  //need to do math to send the ring over to them.
+
+  // ringLocation() {
+  //   if (this.isFollowing == true) {
+  //     this.ringX = this.x + 10;
+  //   } else if (this.isFollowed == true) {
+  //     this.ringX = this.x - 10;
+  //   } else {
+  //     this.ringX = this.x;
+  //   }
+  // }
+
   show() {
     ellipse(this.x, this.y, scl, scl);
     for (var i = 1; i < this.total; i++) {
       noFill();
       stroke(255, 200);
-      ellipse(this.x, this.y, 10 + i * 20, 10 + i * 20);
-      // scl + i * scl / 2 + 20, scl + i * scl / 2 + 20
+      //rings around players
+      ellipse(this.x, this.y, scl/2 + i * scl/2);
     }
+    //losing a ring
+    if (this.isFollowing == true && this.direction == "right") {
+      for (var i = 0; i < this.total; i++) {
+      }
+      ellipse(this.x - i, this.y, scl/2 + i * scl/2)
+    } else if (this.isFollowing == true && this.direction == "left") {
+      ellipse(this.x + i, this.y, scl/2 + i * scl/2)
+    } else if (this.isFollowing == true && this.direction == "up") {
+      ellipse(this.x, this.y + i, scl/2 + i * scl/2)
+    } else if (this.isFollowing == true && this.direction == "down") {
+      ellipse(this.x, this.y - i, scl/2 + i * scl/2)
+    } else {
+      // ellipse(this.x, this.y, scl/2 + i * scl/2)
+    }
+
     //player trail
     let numberOfTrails = 10;
     let spaceBetweenCircles = 15;
@@ -118,5 +143,4 @@ class Player {
       }
     }
   }
-
 }

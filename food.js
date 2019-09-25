@@ -22,13 +22,6 @@ class Food {
     this.y = this.foodLocation.y;
   }
 
-  //new location
-  // placer() {
-  //   this.foodLocation = this.makeRandomVector();
-  //   this.x = this.foodLocation.x;
-  //   this.y = this.foodLocation.y;
-  // }
-
   show() {
     stroke(255);
     noFill();
