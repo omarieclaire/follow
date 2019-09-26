@@ -9,7 +9,7 @@ var player1;
 var player2;
 var player1Color = [255, 51, 153, 255];
 var player2Color = [51, 153, 255, 255];
-var scl = 40;
+var scl = 10;
 var vol = 0.4;
 var foods = [];
 var level0;

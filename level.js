@@ -90,7 +90,7 @@ class Level0 extends Level {
   }
 
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 300;
+    return this.numTicks >= 50;
   }
 }
 
