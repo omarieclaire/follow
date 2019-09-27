@@ -101,6 +101,7 @@ function foodEaten() {
 
 //who is following who
 function handlePlayerFollowing(playerX, playerY, futureDirectionOfX) {
+  debugger;
   //this is happening right after playerX presses a directional key, BEFORE the direction of playerX changes
   if (playerX.direction == playerY.direction) { //only deal with cases where there is ALREADY a "follower"
     if (futureDirectionOfX != playerX.direction) { //is someone unfollowing someone?
@@ -109,10 +110,9 @@ function handlePlayerFollowing(playerX, playerY, futureDirectionOfX) {
     }
   } else { // if there is no current follower
     if (futureDirectionOfX == playerY.direction) {
-      console.log("noooo a bug");
-
       playerX.isFollowing = true;
 			playerY.isFollowed = true;
+
     }
   }
 }

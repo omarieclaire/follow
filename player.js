@@ -14,8 +14,8 @@ class Player {
     this.r = 20;
     this.yspeed = 0;
     this.total = 5;
-    this.isfollowing = false;
-    this.isfollowed = false;
+    this.isFollowing = false;
+    this.isFollowed = false;
   }
 
   resetPlayer(){
@@ -25,8 +25,8 @@ class Player {
     this.r = 20;
     this.yspeed = 0;
     this.total = 5;
-    this.isfollowing = false;
-    this.isfollowed = false;
+    this.isFollowing = false;
+    this.isFollowed = false;
     this.direction = this.initialDirection;
 
     // console.log("reset: " + this.direction + "and reset: " + this.total);
