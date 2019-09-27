@@ -3,11 +3,14 @@ class Player {
   constructor(temp_name, temp_playerDir, temp_xspeed, temp_x, temp_y) {
     this.name = temp_name;
     this.direction = temp_playerDir;
+    //sotre inittial diection for reset
+    this.initialDirection = temp_playerDir;
     this.xspeed = temp_xspeed;
+    this.initialxspeed = temp_xspeed;
     this.x = temp_x;
+    this.initialX = temp_x;
     this.y = temp_y;
-    this.ringX;
-    this.ringY;
+    this.initialY = temp_y
     this.r = 20;
     this.yspeed = 0;
     this.total = 5;
@@ -15,9 +18,22 @@ class Player {
     this.isfollowed = false;
   }
 
-  // isFollowed() {
-  //   return ! this.isFollowing;
-  // }
+  resetPlayer(){
+    this.xspeed = this.initialxspeed;
+    this.x = this.initialX;
+    this.y = this.initialY;
+    this.r = 20;
+    this.yspeed = 0;
+    this.total = 5;
+    this.isfollowing = false;
+    this.isfollowed = false;
+    this.direction = this.initialDirection;
+
+    // console.log("reset: " + this.direction + "and reset: " + this.total);
+    console.log("player was reset " + this.name);
+    console.log("is following is " + this.isFollowing);
+
+  }
 
   eat(food) {
     var d = dist(this.x, this.y, food.x, food.y);
@@ -64,10 +80,10 @@ class Player {
     this.direction = "right";
   }
 
-  updateTotal(player1, player2) {
+  updateTotal(otherPlayer) {
     if (this.isFollowing) {
-      player1.total = player1.total - 0.005;
-			player2.total = player2.total + 0.005;
+      this.total = this.total - 0.005;
+			otherPlayer.total = otherPlayer.total + 0.005;
     }
   }
 
@@ -108,17 +124,17 @@ class Player {
       //rings around players
       ellipse(this.x, this.y, scl/2 + i * scl/2);
     }
-    // if (this.isFollowing == true && this.direction == "right") {
-    //   ellipse(this.x - 10, this.y, scl/2 + 10 * scl/2)
-    // } else if (this.isFollowing == true && this.direction == "left") {
-    //   ellipse(this.x + 10, this.y, scl/2 + 10 * scl/2)
-    // } else if (this.isFollowing == true && this.direction == "up") {
-    //   ellipse(this.x, this.y + 10, scl/2 + 10 * scl/2)
-    // } else if (this.isFollowing == true && this.direction == "down") {
-    //   ellipse(this.x, this.y - 10, scl/2 + 10 * scl/2)
-    // } else {
-    //   // ellipse(this.x, this.y, scl/2 + i * scl/2)
-    // }
+    if (this.isFollowing == true && this.direction == "right") {
+      ellipse(this.x - 10, this.y, scl/2 + 10 * scl/2)
+    } else if (this.isFollowing == true && this.direction == "left") {
+      ellipse(this.x + 10, this.y, scl/2 + 10 * scl/2)
+    } else if (this.isFollowing == true && this.direction == "up") {
+      ellipse(this.x, this.y + 10, scl/2 + 10 * scl/2)
+    } else if (this.isFollowing == true && this.direction == "down") {
+      ellipse(this.x, this.y - 10, scl/2 + 10 * scl/2)
+    } else {
+      // ellipse(this.x, this.y, scl/2 + i * scl/2)
+    }
 
     //player trail
     let numberOfTrails = 10;

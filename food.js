@@ -1,6 +1,6 @@
 class Food {
   constructor(temp_scl) {
-    this.isfollowing = false;
+    // this.isfollowing = false;
     this.scl = temp_scl;
     this.total = 3;
     this.x;

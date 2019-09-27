@@ -4,9 +4,9 @@ class Level {
     this.leaderRing = new LeaderRing(scl);
   };
   //first, a function to check if the game is over
-  isGameOver(player1, player2) {
+  isGameOverCheck(player1, player2) {
     if (player1.total <= 0 || player2.total <= 0) {
-      console.log("Game is over");
+      // console.log("Game is over");
       return true;
     } else {
       return false;
@@ -49,7 +49,29 @@ class Level {
 
   }
   draw(player1, player2, foods) {
-    this.basicLevelDraw();
+    this.basicLevelDraw(player1, player2, foods);
+  }
+
+}
+
+class PressKeyToContinue extends Level {
+  constructor() {
+    super();
+    this.keyWasPressed = false;
+  }
+
+  draw(player1, player2, foods) {
+
+    // draw our title screen.
+    background(200);
+  }
+
+  advanceToNextLevel(player1, player2) {
+    return this.keyWasPressed == true;
+  }
+
+  keyWasPressedLevel(keyCode) {
+    this.keyWasPressed = true;
   }
 }
 //////////keypress to skip level?
@@ -82,7 +104,7 @@ class Level0 extends Level {
   //can create a draw inside any level to customize it
   draw(player1, player2, foods) {
     this.numTicks++;
-    this.basicLevelDraw(player1, player2, foods);
+    // this.basicLevelDraw(player1, player2, foods);
     background(0, 10, 0);
     fill(255);
     noStroke();
@@ -113,50 +135,44 @@ class Level1 extends Level {
   }
 
 }
-//////////food level
+//////////no food level
 class Level2 extends Level {
   constructor() {
     super();
   };
-
-
   draw(player1, player2, foods) {
     this.basicLevelDraw(player1, player2, foods);
     for (let i = 0; i < foods.length; i++) {
       foods[i].show();
     }
   }
-
   advanceToNextLevel(player1, player2) {
-    if (player1.total > 20 || player2.total > 20) {
+    if (player1.total > 7 || player2.total > 7) {
       console.log("switching from level 2 to level 3");
       return true;
     } else {
       return false;
     }
   }
-
 }
-//////////death level
+//////////whatever level
 class Level3 extends Level {
   constructor() {
     super();
   };
-
+  draw(player1, player2, foods) {
+    this.basicLevelDraw(player1, player2, foods);
+    for (let i = 0; i < foods.length; i++) {
+      foods[i].show();
+    }
+  }
   advanceToNextLevel(player1, player2) {
-    if (player1.total > 15 || player2.total > 15) {
-      console.log("switching from level 3 to level 4");
-      return true;
+    if (player1.total > 1000 || player2.total > 1000) {
+      console.log("you win");
+      // return true;
     } else {
       return false;
     }
-  }
-  draw(player1, player2, foods) {
-    background(255, 0, 0);
-
-    fill(0, 5, 0);
-    noStroke();
-    text("GAME OVER!!!", windowWidth / 2, windowHeight / 6);
   }
 }
 
@@ -165,8 +181,19 @@ class FinalLevel extends Level {
   constructor() {
     super();
   }
+  draw(player1, player2, foods) {
+    this.dissolvePlayer(player1, player2);
+    console.log("you are dead");
+    noStroke();
+    text("GAME OVER!!!", windowWidth / 2, windowHeight / 6);
+  }
+
   advanceToNextLevel(player1, player2) {
-    console.log("final level");
     return false;
   }
+
+  dissolvePlayer(player1, player2) {
+    background(255);
+  }
+
 }

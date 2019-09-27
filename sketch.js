@@ -3,13 +3,14 @@
 //add sound
 //figure out keyPress
 //communicate death with animation
-//restart game at end of GAME
+//reset everything (especially player score and lvl)  at end of GAME
+
 
 var player1;
 var player2;
 var player1Color = [255, 51, 153, 255];
 var player2Color = [51, 153, 255, 255];
-var scl = 10;
+var scl = 40;
 var vol = 0.4;
 var foods = [];
 var level0;
@@ -18,6 +19,7 @@ var level2;
 var level3;
 var finallevel;
 var levelManager;
+var pressKeyToContinue;
 
 function preload() {
   p1_img = loadImage('images/p1.png');
@@ -48,9 +50,10 @@ function setup() {
   level2 = new Level2();
   level3 = new Level3();
   finalLevel = new FinalLevel();
+  pressKeyToContinue = new PressKeyToContinue();
 //array variable containing all the levels
-  var allTheLevels = [level0, level1, level2, level3, finalLevel];
-  levelManager = new LevelManager(0, allTheLevels);
+  var allTheLevels = [pressKeyToContinue, level0, level1, level2, level3];
+  levelManager = new LevelManager(0, allTheLevels, finalLevel);
 
   for (var i = 0; i < 1; i++) {
     foods[i] = new Food(scl);
@@ -61,19 +64,21 @@ function setup() {
 function draw() {
   //////////////////////////////// UPDATE
   if (levelManager.isGameOverManager(player1, player2) == true) {
-    // exit
-    return;
+    // return;
+    resetEverything(player1, player2, levelManager);
   }
-
 
   levelManager.switchLevel(player1, player2);
 	//following punishment/rewards
-  player1.updateTotal(player1, player2);
-  player2.updateTotal(player2, player1);
+  player1.updateTotal(player2);
+  player2.updateTotal(player1);
 
   // update location of player1 and player2
   player1.update();
   player2.update();
+
+	// player1.ringLocation();
+	// player2.ringLocation();
 
   foodEaten();
   playerCollision();
@@ -104,8 +109,10 @@ function handlePlayerFollowing(playerX, playerY, futureDirectionOfX) {
     }
   } else { // if there is no current follower
     if (futureDirectionOfX == playerY.direction) {
+      console.log("noooo a bug");
+
       playerX.isFollowing = true;
-			playerY.isFollowed = true
+			playerY.isFollowed = true;
     }
   }
 }
@@ -156,4 +163,11 @@ function keyPressed() {
     handlePlayerFollowing(player2, player1, "left");
 		player2.changeDirectionLeft();
   }
+}
+
+function resetEverything(player1, player2, levelManager){
+  console.log("game was reset")
+  levelManager.resetLevels();
+  player1.resetPlayer();
+  player2.resetPlayer();
 }
