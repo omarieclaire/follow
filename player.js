@@ -16,6 +16,8 @@ class Player {
     this.total = 5;
     this.isFollowing = false;
     this.isFollowed = false;
+    this.playerRings = []; // store the rings within a local array
+
   }
 
   resetPlayer(){
@@ -123,11 +125,15 @@ class Player {
     //colored player circle
     ellipse(this.x, this.y, scl/4, scl/4);
     //rings around players
+
+
     for (var i = 1; i < this.total; i++) {
       noFill();
       stroke(255, 200);
+      this.playerRings.push([i]);
       ellipse(this.x, this.y, scl/2 + i * scl/2);
     }
+    // console.log(this.playerRings);
 
 //extra following rings
     // if (this.isFollowing == true && this.direction == "right") {

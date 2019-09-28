@@ -3,7 +3,6 @@ class Level {
   constructor() {
     this.leaderRing = new LeaderRing(scl);
   };
-
   resetLevel() {}
   //first, a function to check if the game is over
   isGameOverCheck(player1, player2) {
@@ -66,17 +65,13 @@ class PressKeyToContinue extends Level {
   resetLevel() {
     this.keyWasPressed = false;
   }
-
   draw(player1, player2, foods) {
-
     // draw our title screen.
     background(200);
   }
-
   advanceToNextLevel(player1, player2) {
     return this.keyWasPressed == true;
   }
-
   keyWasPressedLevel(keyCode) {
     this.keyWasPressed = true;
   }
@@ -135,6 +130,12 @@ class Level1 extends Level {
   };
   draw(player1, player2, foods) {
     this.basicLevelDraw(player1, player2, foods);
+    if (intro_music.isPlaying()) {
+      // .isPlaying() returns a boolean
+      intro_music.stop();
+    } else {
+      intro_music.play();
+    }
   }
 
   advanceToNextLevel(player1, player2) {

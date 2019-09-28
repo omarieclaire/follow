@@ -1,7 +1,6 @@
 
 //player collision bug
 //reset rings at screen edge
-//add sound
 //communicate death with animation
 
 
@@ -124,7 +123,11 @@ function playerCollision() {
 
 function keyPressed() {
 	//32
-  levelManager.keyWasPressed(keyCode);
+  if (keyCode === 32) {
+    levelManager.keyWasPressed(keyCode);
+  }
+
+
   if (keyCode === UP_ARROW) {
     handlePlayerFollowing(player1, player2, "up");
 		player1.changeDirectionUp();
