@@ -5,10 +5,10 @@ class LeaderRing {
     this.move = 0.05;
     this.x = 10;
     this.y = 10;
-    this.lastPlayerFollowed = undefined;
+    this.lastPlayerLeading = undefined;
   }
 
-  drawRingOnFollowingPlayer(thePlayer) {
+  drawRingOnLeadingPlayer(thePlayer) {
     if (thePlayer.direction == "right") {
       ellipse(this.x, this.y, this.scl / 2 + 10 * this.scl / 2)
     } else if (thePlayer.direction == "left") {
@@ -24,32 +24,26 @@ class LeaderRing {
   playerLocDiff(player) {
     let v1 = createVector(this.x, this.y);
     let v2 = createVector(player.x, player.y);
-
-    // LERP: Linear Interpolation between two vectors
-    // basically: if you have two points (vectors) and drew a line between them,
-    // lerp(v1, v2, this.move) will find the point/vector which is 'this.move'
-    // amount along the line between v1 and v2.
     let lerp = p5.Vector.lerp(v1, v2, this.move);
     this.x = lerp.x;
     this.y = lerp.y;
-
   }
 
   drawLeaderRing(player1, player2) {
     if (player1.isFollowing) {
-      this.playerLocDiff(player1);
-      this.drawRingOnFollowingPlayer(player1);
-      this.lastPlayerFollowed = player1;
-    } else if (player2.isFollowing) {
       this.playerLocDiff(player2);
-      this.drawRingOnFollowingPlayer(player2);
-      this.lastPlayerFollowed = player2;
+      this.drawRingOnLeadingPlayer(player2);
+      this.lastPlayerLeading = player2;
+    } else if (player2.isFollowing) {
+      this.playerLocDiff(player1);
+      this.drawRingOnLeadingPlayer(player1);
+      this.lastPlayerLeading = player1;
     } else {
-      if (this.lastPlayerFollowed == undefined) {
-        this.lastPlayerFollowed == undefined
+      if (this.lastPlayerLeading == undefined) {
+        this.lastPlayerLeading == undefined
       } else {
-        this.x = this.lastPlayerFollowed.x;
-        this.y = this.lastPlayerFollowed.y;
+        this.x = this.lastPlayerLeading.x;
+        this.y = this.lastPlayerLeading.y;
       }
     }
   }

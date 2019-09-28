@@ -16,7 +16,7 @@ class Player {
     this.total = 5;
     this.isFollowing = false;
     this.isFollowed = false;
-    this.playerRings = []; // store the rings within a local array
+    // this.playerRings = []; // store the rings within a local array
 
   }
 
@@ -95,45 +95,47 @@ class Player {
     this.y = this.y + this.yspeed * scl;
 
     //loop player around screen
-    if (this.x < -20) {
+    if (this.x < 0) { //-20
       this.x = width - scl;
     } else if (this.x > width - scl + 20) {
-      this.x = -20;
-    } else if (this.y < -20) {
+      this.x = 0; // -20
+    } else if (this.y < 0) { //-20
       this.y = height - scl;
     } else if (this.y > height - scl + 20) {
-      this.y = -20;
+      this.y = 0; //-20
     }
   }
 
-  //need to know what is the outer ring
-  //need to know my x and y and the x and y of the other player
-  //need to do math to send the ring over to them.
 
-  // ringLocation() {
-  //   if (this.isFollowing == true) {
-  //     this.ringX = this.x + 10;
-  //   } else if (this.isFollowed == true) {
-  //     this.ringX = this.x - 10;
-  //   } else {
-  //     this.ringX = this.x;
+//FAIL
+  // show() {
+  //   noStroke();
+  //   //colored player circle
+  //   ellipse(this.x, this.y, scl/4, scl/4);
+  //   noFill();
+  //   stroke(255, 200);
+  //   //make array of player rings be empty
+  //   //loop through the rings
+  //   for (var i = 1; i < this.total; i++) {
+  //     //push the values for each new ring to the empty playerRings array
+  //     var playerRings = [];
+  //     playerRings.push([this.x, this.y, scl/2 + i * scl/2]);
+  //     ellipse(playerRings);
   //   }
-  // }
-
-  show() {
-    noStroke();
-    //colored player circle
-    ellipse(this.x, this.y, scl/4, scl/4);
-    //rings around players
 
 
-    for (var i = 1; i < this.total; i++) {
+    show() {
+      noStroke();
+      //colored player circle
+      ellipse(this.x, this.y, scl/4, scl/4);
+      //rings around players
       noFill();
       stroke(255, 200);
-      this.playerRings.push([i]);
-      ellipse(this.x, this.y, scl/2 + i * scl/2);
-    }
-    // console.log(this.playerRings);
+      for (var i = 1; i < this.total; i++) {
+        ellipse(this.x, this.y, scl/2 + i * scl/2);
+      }
+
+
 
 //extra following rings
     // if (this.isFollowing == true && this.direction == "right") {

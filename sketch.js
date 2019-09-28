@@ -1,7 +1,8 @@
 
-//player collision bug
-//reset rings at screen edge
 //communicate death with animation
+
+//make the player looping around the screen look better without causing bugs
+//reset rings at screen edge
 
 
 var player1;
@@ -126,7 +127,6 @@ function keyPressed() {
   if (keyCode === 32) {
     levelManager.keyWasPressed(keyCode);
   }
-
 
   if (keyCode === UP_ARROW) {
     handlePlayerFollowing(player1, player2, "up");
