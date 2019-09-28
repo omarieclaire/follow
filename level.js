@@ -3,6 +3,8 @@ class Level {
   constructor() {
     this.leaderRing = new LeaderRing(scl);
   };
+
+  resetLevel() {}
   //first, a function to check if the game is over
   isGameOverCheck(player1, player2) {
     if (player1.total <= 0 || player2.total <= 0) {
@@ -60,6 +62,11 @@ class PressKeyToContinue extends Level {
     this.keyWasPressed = false;
   }
 
+  //bool needs to be reset when game restarts
+  resetLevel() {
+    this.keyWasPressed = false;
+  }
+
   draw(player1, player2, foods) {
 
     // draw our title screen.
@@ -113,6 +120,11 @@ class Level0 extends Level {
 
   advanceToNextLevel(player1, player2) {
     return this.numTicks >= 50;
+  }
+
+  //ticks need to be reset when game restarts
+  resetLevel() {
+    this.numTicks = 0;
   }
 }
 
@@ -180,20 +192,24 @@ class Level3 extends Level {
 class FinalLevel extends Level {
   constructor() {
     super();
+    this.numTicks = 0;
   }
   draw(player1, player2, foods) {
-    this.dissolvePlayer(player1, player2);
+    // this.dissolvePlayer(player1, player2);
     console.log("you are dead");
+    background(255, 0, 0);
     noStroke();
-    text("GAME OVER!!!", windowWidth / 2, windowHeight / 6);
+    text("GAME OVER!!!", windowWidth / 2, windowHeight / 2);
+
+    this.numTicks++;
   }
 
   advanceToNextLevel(player1, player2) {
-    return false;
+    return this.numTicks >= 100;
   }
 
-  dissolvePlayer(player1, player2) {
-    background(255);
-  }
+  // dissolvePlayer(player1, player2) {
+  //   background(255);
+  // }
 
 }

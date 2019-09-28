@@ -10,7 +10,6 @@ class LeaderRing {
 
   drawRingOnFollowingPlayer(thePlayer) {
     if (thePlayer.direction == "right") {
-      // ellipse(thePlayer.x - 10, thePlayer.y, this.scl / 2 + 10 * this.scl / 2)
       ellipse(this.x, this.y, this.scl / 2 + 10 * this.scl / 2)
     } else if (thePlayer.direction == "left") {
       ellipse(this.x, this.y, this.scl / 2 + 10 * this.scl / 2)
@@ -19,7 +18,6 @@ class LeaderRing {
     } else if (thePlayer.direction == "down") {
       ellipse(this.x, this.y, this.scl / 2 + 10 * this.scl / 2)
     } else {
-      // ellipse(this.x, this.y, scl/2 + i * scl/2)
     }
   }
 

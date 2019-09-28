@@ -1,9 +1,8 @@
 
-//slowly move rings from one player to another
+//player collision bug
+//reset rings at screen edge
 //add sound
-//figure out keyPress
 //communicate death with animation
-//reset everything (especially player score and lvl)  at end of GAME
 
 
 var player1;
@@ -59,14 +58,10 @@ function setup() {
     foods[i] = new Food(scl);
     foods[i].location();
   }
+
 }
 
 function draw() {
-  //////////////////////////////// UPDATE
-  if (levelManager.isGameOverManager(player1, player2) == true) {
-    // return;
-    resetEverything(player1, player2, levelManager);
-  }
 
   levelManager.switchLevel(player1, player2);
 	//following punishment/rewards
@@ -101,7 +96,6 @@ function foodEaten() {
 
 //who is following who
 function handlePlayerFollowing(playerX, playerY, futureDirectionOfX) {
-  debugger;
   //this is happening right after playerX presses a directional key, BEFORE the direction of playerX changes
   if (playerX.direction == playerY.direction) { //only deal with cases where there is ALREADY a "follower"
     if (futureDirectionOfX != playerX.direction) { //is someone unfollowing someone?
@@ -163,11 +157,4 @@ function keyPressed() {
     handlePlayerFollowing(player2, player1, "left");
 		player2.changeDirectionLeft();
   }
-}
-
-function resetEverything(player1, player2, levelManager){
-  console.log("game was reset")
-  levelManager.resetLevels();
-  player1.resetPlayer();
-  player2.resetPlayer();
 }
