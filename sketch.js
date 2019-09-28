@@ -28,11 +28,11 @@ function preload() {
   food_img = loadImage('images/food.png');
   brick_img = loadImage('images/brick.png');
   intro_music = loadSound('sounds/intro.mp3');
-  intro_music.setVolume(vol);
+  intro_music.setVolume(0.2);
   eat_sound = loadSound('sounds/eat.mp3');
   eat_sound.setVolume(vol);
   hit_sound = loadSound('sounds/hit.mp3');
-  hit_sound.setVolume(vol);
+  hit_sound.setVolume(2);
   newlevel_music = loadSound('sounds/newlevel.mp3');
   newlevel_music.setVolume(vol);
   winning_music = loadSound('sounds/winning.mp3');
@@ -121,6 +121,7 @@ function playerCollision() {
 		// players never follow each other after a collission
 		player1.isFollowing = false;
 		player2.isFollowing = false;
+    hit_sound.play();
   }
 }
 

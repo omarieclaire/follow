@@ -67,7 +67,11 @@ class PressKeyToContinue extends Level {
   }
   draw(player1, player2, foods) {
     // draw our title screen.
-    background(200);
+    background(30);
+    fill(10, 255, 50);
+    textSize(standardTextSize);
+    textAlign(CENTER, TOP);
+    text("press spacebar to begin", windowWidth / 2, windowHeight / 2);
   }
   advanceToNextLevel(player1, player2) {
     return this.keyWasPressed == true;
@@ -111,11 +115,11 @@ class Level0 extends Level {
     fill(10, 255, 50);
     textSize(standardTextSize * 1.5);
     textAlign(CENTER, TOP);
-    text("leader", windowWidth / 2, windowHeight / 2);
+    text("welcome leader", windowWidth / 2, windowHeight / 2);
   }
 
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 50;
+    return this.numTicks >= 30;
   }
 
   //ticks need to be reset when game restarts
@@ -132,7 +136,6 @@ class Level1 extends Level {
   draw(player1, player2, foods) {
     this.basicLevelDraw(player1, player2, foods);
     if (intro_music.isPlaying()) {
-      // .isPlaying() returns a boolean
       intro_music.stop();
     } else {
       intro_music.play();
