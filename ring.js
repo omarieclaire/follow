@@ -3,8 +3,8 @@ class LeaderRing {
     this.scl = scl;
     // how much we move each time
     this.move = 0.05;
-    this.x = 10;
-    this.y = 10;
+    this.x = windowWidth/2;
+    this.y = windowHeight/2;
     this.lastPlayerLeading = undefined;
   }
 

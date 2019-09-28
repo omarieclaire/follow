@@ -1,14 +1,15 @@
 
-//communicate death with animation
-
+//rings communicate direction of player
+//rings jump from one player to another as one follows the other
+//reset follow ring at screen edge
 //make the player looping around the screen look better without causing bugs
-//reset rings at screen edge
-
+// manipulate circle colour!
+//reset everything if window resized
 
 var player1;
 var player2;
-var player1Color = [255, 51, 153, 255];
-var player2Color = [51, 153, 255, 255];
+var player1Color = [255, 51, 153, 235];
+var player2Color = [51, 153, 255, 235];
 var scl = 40;
 var vol = 0.4;
 var foods = [];
@@ -19,6 +20,7 @@ var level3;
 var finallevel;
 var levelManager;
 var pressKeyToContinue;
+var standardTextSize = 40;
 
 function preload() {
   p1_img = loadImage('images/p1.png');
@@ -120,6 +122,11 @@ function playerCollision() {
 		player1.isFollowing = false;
 		player2.isFollowing = false;
   }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  // resetEverything();
 }
 
 function keyPressed() {

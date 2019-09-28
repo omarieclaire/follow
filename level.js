@@ -17,24 +17,24 @@ class Level {
   basicLevelDraw(player1, player2, foods) { //basic level draw
     background(30);
     noStroke();
-    textSize(30);
+    textSize(standardTextSize);
     fill(255);
     // text(player1.total.toFixed(0), windowWidth / 2 + 200, windowHeight / 1.2);
     // fill(51, 153, 255);
     // text(player2.total.toFixed(0), windowWidth / 2 - 200, windowHeight / 1.2);
 
     //score text
-    textSize(scl);
+    textSize(standardTextSize);
     textAlign(CENTER, TOP);
     if (player1.isFollowing) {
       fill(255);
-      text("Pink is following Blue", windowWidth / 2, windowHeight / 6);
+      text("Blue is Leading", windowWidth / 2, windowHeight / 6);
       fill(255, 51, 153, 50);
       player1.show();
       fill(player2Color);
       player2.show();
     } else if (player2.isFollowing) {
-      text("Blue is Following Pink", windowWidth / 2, windowHeight / 6);
+      text("Pink is Leading", windowWidth / 2, windowHeight / 6);
       fill(player1Color);
       player1.show();
       fill(51, 153, 255, 50);
@@ -107,10 +107,11 @@ class Level0 extends Level {
   draw(player1, player2, foods) {
     this.numTicks++;
     // this.basicLevelDraw(player1, player2, foods);
-    background(0, 10, 0);
-    fill(255);
-    noStroke();
-    text("Welcome", windowWidth / 2, windowHeight / 6);
+    background(30);
+    fill(10, 255, 50);
+    textSize(standardTextSize * 1.5);
+    textAlign(CENTER, TOP);
+    text("leader", windowWidth / 2, windowHeight / 2);
   }
 
   advanceToNextLevel(player1, player2) {
