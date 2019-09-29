@@ -9,14 +9,15 @@ class LeaderRing {
   }
 
   drawRingOnLeadingPlayer(thePlayer) {
+    stroke(255,215,0, 200);
     if (thePlayer.direction == "right") {
-      ellipse(this.x, this.y, this.scl / 2 + 10 * this.scl / 2)
+      ellipse(this.x, this.y, this.scl / 2 + 5 * this.scl / 2)
     } else if (thePlayer.direction == "left") {
-      ellipse(this.x, this.y, this.scl / 2 + 10 * this.scl / 2)
+      ellipse(this.x, this.y, this.scl / 2 + 5 * this.scl / 2)
     } else if (thePlayer.direction == "up") {
-      ellipse(this.x, this.y, this.scl / 2 + 10 * this.scl / 2)
+      ellipse(this.x, this.y, this.scl / 2 + 5 * this.scl / 2)
     } else if (thePlayer.direction == "down") {
-      ellipse(this.x, this.y, this.scl / 2 + 10 * this.scl / 2)
+      ellipse(this.x, this.y, this.scl / 2 + 5 * this.scl / 2)
     } else {
     }
   }

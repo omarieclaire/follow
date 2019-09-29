@@ -19,27 +19,26 @@ class Level {
     noStroke();
     textSize(standardTextSize);
     fill(255);
-    // text(player1.total.toFixed(0), windowWidth / 2 + 200, windowHeight / 1.2);
-    // fill(51, 153, 255);
-    // text(player2.total.toFixed(0), windowWidth / 2 - 200, windowHeight / 1.2);
+    text(player1.total.toFixed(2), windowWidth / 2 + 200, windowHeight / 1.2);
+    fill(51, 153, 255);
+    text(player2.total.toFixed(2), windowWidth / 2 - 200, windowHeight / 1.2);
+    fill(255);
 
-    //score text
+    //player colour
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
     if (player1.isFollowing) {
-      fill(255);
-      text("Blue is Leading", windowWidth / 2, windowHeight / 6);
-      fill(255, 51, 153, 50);
+      fill(player1FadeColor);
       player1.show();
       fill(player2Color);
       player2.show();
     } else if (player2.isFollowing) {
-      text("Pink is Leading", windowWidth / 2, windowHeight / 6);
+      fill(player2FadeColor);
+      player2.show();
       fill(player1Color);
       player1.show();
-      fill(51, 153, 255, 50);
-      player2.show();
     } else {
+      //draw players when they do not lead or follow
       fill(player1Color);
       player1.show();
       fill(player2Color);
@@ -135,10 +134,19 @@ class Level1 extends Level {
   };
   draw(player1, player2, foods) {
     this.basicLevelDraw(player1, player2, foods);
+
+    if (player1.isFollowing) {
+      fill(255);
+      text("Blue is Leading", windowWidth / 2, windowHeight / 6);
+    } else if (player2.isFollowing) {
+      text("Pink is Leading", windowWidth / 2, windowHeight / 6);
+    } else {
+    }
+
     if (intro_music.isPlaying()) {
       intro_music.stop();
     } else {
-      intro_music.play();
+      // intro_music.play();
     }
   }
 
@@ -202,9 +210,11 @@ class FinalLevel extends Level {
   draw(player1, player2, foods) {
     // this.dissolvePlayer(player1, player2);
     console.log("you are dead");
-    background(255, 0, 0);
+    // background(255, 0, 0);
     noStroke();
     text("GAME OVER!!!", windowWidth / 2, windowHeight / 2);
+    stroke(255, 0, 0);
+    ellipse(player1.x, player1.y, 100);
 
     this.numTicks++;
   }

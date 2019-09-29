@@ -1,15 +1,19 @@
 
+//fix bright pink M
 //rings communicate direction of player
-//rings jump from one player to another as one follows the other
+//rings move slowly from one player to another as one follows the other
 //reset follow ring at screen edge
 //make the player looping around the screen look better without causing bugs
-// manipulate circle colour!
+// manipulate circle colour! M
 //reset everything if window resized
+//consider adding brick level
 
 var player1;
 var player2;
-var player1Color = [255, 51, 153, 235];
-var player2Color = [51, 153, 255, 235];
+var player1Color = [255, 51, 153, 235]; //MAGENTA
+var player2Color = [51, 153, 255, 235]; //BABY BLUE
+var player1FadeColor = [255, 51, 153, 50];
+var player2FadeColor = [51, 153, 255, 50];
 var scl = 40;
 var vol = 0.4;
 var foods = [];
@@ -28,7 +32,7 @@ function preload() {
   food_img = loadImage('images/food.png');
   brick_img = loadImage('images/brick.png');
   intro_music = loadSound('sounds/intro.mp3');
-  intro_music.setVolume(0.2);
+  intro_music.setVolume(0.02);
   eat_sound = loadSound('sounds/eat.mp3');
   eat_sound.setVolume(vol);
   hit_sound = loadSound('sounds/hit.mp3');

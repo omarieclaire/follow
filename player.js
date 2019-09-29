@@ -16,7 +16,11 @@ class Player {
     this.total = 5;
     this.isFollowing = false;
     this.isFollowed = false;
-    // this.playerRings = []; // store the rings within a local array
+
+    this.playerRings = []; // store the rings within a local array
+    for(var i = 0; i < this.total; i++) {
+      this.playerRings.push({});
+    }
 
   }
 
@@ -31,6 +35,10 @@ class Player {
     this.isFollowed = false;
     this.direction = this.initialDirection;
 
+    this.playerRings = []; // store the rings within a local array
+    for(var i = 0; i < this.total; i++) {
+      this.playerRings.push({});
+    }
     // console.log("reset: " + this.direction + "and reset: " + this.total);
     console.log("player was reset " + this.name);
     console.log("is following is " + this.isFollowing);
@@ -41,6 +49,10 @@ class Player {
     var d = dist(this.x, this.y, food.x, food.y);
     if (d < scl) {
       this.total++;
+      // pushing empty object into this.playerRings for now
+      // when we have a Ring class we'll push that into this.playerRings
+      // like: this.playerRings.push(new NewRingClass());
+      this.playerRings.push({});
       eat_sound.play();
       return true;
     } else {
@@ -82,10 +94,25 @@ class Player {
     this.direction = "right";
   }
 
+  incrementTotal(amount) {
+    this.total = this.total + amount;
+    // suppose total = 1.5
+    // and amount is 1.2
+    // new total: 2.7
+    // TODO: FIX THIS.
+    if(Number.isInteger(this.total)) {
+      if(amount < 0) {
+        this.playerRings.pop();
+      } else {
+        this.playerRings.push({});
+      }
+    }
+  }
+
   updateTotal(otherPlayer) {
     if (this.isFollowing) {
-      this.total = this.total - 0.005;
-			otherPlayer.total = otherPlayer.total + 0.005;
+      this.incrementTotal(-0.005);
+      otherPlayer.incrementTotal(0.005);
     }
   }
 
@@ -108,32 +135,29 @@ class Player {
 
 
 //FAIL
-  // show() {
-  //   noStroke();
-  //   //colored player circle
-  //   ellipse(this.x, this.y, scl/4, scl/4);
-  //   noFill();
-  //   stroke(255, 200);
-  //   //make array of player rings be empty
-  //   //loop through the rings
-  //   for (var i = 1; i < this.total; i++) {
-  //     //push the values for each new ring to the empty playerRings array
-  //     var playerRings = [];
-  //     playerRings.push([this.x, this.y, scl/2 + i * scl/2]);
-  //     ellipse(playerRings);
-  //   }
+  show() {
+    noStroke();
+    //colored player circle
+    ellipse(this.x, this.y, scl/4, scl/4);
+    noFill();
+    stroke(255, 200);
+     //make array of player rings be empty
+    //loop through the rings
+    for (var i = 1; i < this.playerRings.length + 1; i++) {
+      ellipse(this.x, this.y, scl/2 + i*scl/2);
+    }
 
 
-    show() {
-      noStroke();
-      //colored player circle
-      ellipse(this.x, this.y, scl/4, scl/4);
-      //rings around players
-      noFill();
-      stroke(255, 200);
-      for (var i = 1; i < this.total; i++) {
-        ellipse(this.x, this.y, scl/2 + i * scl/2);
-      }
+    // show() {
+    //   noStroke();
+    //   //colored player circle
+    //   ellipse(this.x, this.y, scl/4, scl/4);
+    //   //rings around players
+    //   noFill();
+    //   stroke(255, 200);
+    //   for (var i = 1; i < this.total; i++) {
+    //     ellipse(this.x, this.y, scl/2 + i * scl/2);
+    //   }
 
 
 
