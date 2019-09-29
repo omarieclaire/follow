@@ -2,6 +2,7 @@
 class Level {
   constructor() {
     this.leaderRing = new LeaderRing(scl);
+
   };
   resetLevel() {}
   //first, a function to check if the game is over
@@ -46,6 +47,7 @@ class Level {
     }
 
     this.leaderRing.drawLeaderRing(player1, player2);
+
 
   }
   draw(player1, player2, foods) {

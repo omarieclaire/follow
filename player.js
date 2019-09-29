@@ -18,13 +18,12 @@ class Player {
     this.isFollowed = false;
 
     this.playerRings = []; // store the rings within a local array
-    for(var i = 0; i < this.total; i++) {
-      this.playerRings.push({});
+    for (var i = 0; i < this.total; i++) {
+      this.playerRings.push(new Rings(this));
     }
-
   }
 
-  resetPlayer(){
+  resetPlayer() {
     this.xspeed = this.initialxspeed;
     this.x = this.initialX;
     this.y = this.initialY;
@@ -36,10 +35,10 @@ class Player {
     this.direction = this.initialDirection;
 
     this.playerRings = []; // store the rings within a local array
-    for(var i = 0; i < this.total; i++) {
-      this.playerRings.push({});
+    for (var i = 0; i < this.total; i++) {
+      this.playerRings.push(new Rings(this));
     }
-    // console.log("reset: " + this.direction + "and reset: " + this.total);
+    console.log("reset: " + this.direction + "and reset: " + this.total);
     console.log("player was reset " + this.name);
     console.log("is following is " + this.isFollowing);
 
@@ -52,7 +51,7 @@ class Player {
       // pushing empty object into this.playerRings for now
       // when we have a Ring class we'll push that into this.playerRings
       // like: this.playerRings.push(new NewRingClass());
-      this.playerRings.push({});
+      this.playerRings.push(new Rings(this));
       eat_sound.play();
       return true;
     } else {
@@ -66,7 +65,7 @@ class Player {
   }
 
   flipDirection() {
-    if(this.direction == "up") {
+    if (this.direction == "up") {
       this.changeDirectionDown();
     } else if (this.direction == "down") {
       this.changeDirectionUp();
@@ -95,30 +94,35 @@ class Player {
   }
 
   incrementTotal(amount) {
+    var oldTotal = this.total;
     this.total = this.total + amount;
-    // suppose total = 1.5
-    // and amount is 1.2
-    // new total: 2.7
-    // TODO: FIX THIS.
-    if(Number.isInteger(this.total)) {
-      if(amount < 0) {
+    //floor of the old total minus floor of new total, then taking the absolute value of that (if pos we leave it, if neg we make it pos)
+    var diff = Math.abs(Math.floor(this.total) - Math.floor(oldTotal));
+    if (diff >= 1) {
+      if (amount < 0) {
         this.playerRings.pop();
       } else {
-        this.playerRings.push({});
+        this.playerRings.push(new Rings(this));
       }
     }
   }
 
   updateTotal(otherPlayer) {
     if (this.isFollowing) {
+      //decrement
       this.incrementTotal(-0.005);
+      //increment
       otherPlayer.incrementTotal(0.005);
     }
   }
   //directional speed of player
   update(amount) {
+    for (var i = 0; i < this.playerRings.length; i++) {
+      this.playerRings[i].move();
+    }
+
     //for most circumstances we don't pass a value
-    if(typeof(amount) === 'undefined') {
+    if (typeof(amount) === 'undefined') {
       this.x = this.x + this.xspeed * scl;
       this.y = this.y + this.yspeed * scl;
       //for the collision bug we need to pass a value
@@ -140,17 +144,20 @@ class Player {
   }
 
 
-//FAIL
   show() {
     noStroke();
     //colored player circle
-    ellipse(this.x, this.y, scl/4, scl/4);
+    ellipse(this.x, this.y, scl, scl);
     noFill();
     stroke(255, 200);
-     //make array of player rings be empty
+    //make array of player rings be empty
     //loop through the rings
-    for (var i = 1; i < this.playerRings.length + 1; i++) {
-      ellipse(this.x, this.y, scl/2 + i*scl/2);
+    // for (var i = 1; i < this.playerRings.length + 1; i++) {
+    //   ellipse(this.x, this.y, scl/2 + i*scl/2);
+    // }
+
+    for (var i = 0; i < this.playerRings.length; i++) {
+      this.playerRings[i].draw(scl / 2 + i * scl / 2);
     }
 
 
@@ -167,7 +174,7 @@ class Player {
 
 
 
-//extra following rings
+    //extra following rings
     // if (this.isFollowing == true && this.direction == "right") {
     //   ellipse(this.x - 10, this.y, scl/2 + 10 * scl/2)
     // } else if (this.isFollowing == true && this.direction == "left") {
@@ -187,7 +194,7 @@ class Player {
 
     for (var i = 1; i < numberOfTrails; i++) {
       //having 1 + ensures that the divisor is always above 1 so the trail will never be bigger than the player
-      let newRadius = (scl/4) / (1 + i * radiusShrinkFactor);
+      let newRadius = (scl / 4) / (1 + i * radiusShrinkFactor);
       if (this.direction == "up") {
         let newYCoordinate = this.y + (i * spaceBetweenCircles);
         ellipse(this.x, newYCoordinate, newRadius);

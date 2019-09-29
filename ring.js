@@ -2,7 +2,7 @@ class LeaderRing {
   constructor(scl) {
     this.scl = scl;
     // how much we move each time
-    this.move = 0.05;
+    this.move = 0.4;
     this.x = windowWidth / 2;
     this.y = windowHeight / 2;
     this.lastPlayerLeading = undefined;

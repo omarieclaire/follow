@@ -4,16 +4,22 @@
 // - rings move slowly from one player to another as one follows the other
 // - reset follow ring at screen edge
 //manipulate circle colour! M
-//reset everything if window resized
 //consider adding brick level
 //why does leader ring have so much drag? -understand better
 
+//popping rings on and off broken
+
+// think about it in the steady state:
+// * the number of rings we draw depends on this.total
+// * now suppose player1 is following player2, then player1's total is decreasing.
+// * *
+
 var player1;
 var player2;
-var player1Color = [255, 51, 153, 235]; //MAGENTA
-var player2Color = [51, 153, 255, 235]; //BABY BLUE
-var player1FadeColor = [255, 51, 153, 50];
-var player2FadeColor = [51, 153, 255, 50];
+var player1Color = [255, 51, 153, 250]; //MAGENTA
+var player2Color = [51, 153, 255, 250]; //BABY BLUE
+var player1FadeColor = [255, 51, 153, 100];
+var player2FadeColor = [51, 153, 255, 100];
 var scl = 40;
 var vol = 0.4;
 var foods = [];
@@ -120,8 +126,6 @@ function playerCollision() {
   let d = dist(player1.x, player1.y, player2.x, player2.y);
   //added 10 to hopefully fix the bug
   if (d < player1.r + player2.r) {
-    console.log("bounce player1 " + player1.x, player1.y);
-    console.log("bounce player2 " + player2.x, player2.y);
 		player1.flipDirection();
 		player2.flipDirection();
     //add xspeed or yspeed after collision to fix collision bug
