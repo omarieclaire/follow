@@ -1,18 +1,10 @@
 
-//create new class for rings, built off of leader ring. should communicate direction of player and score
 // - rings communicate direction of player
 // - rings move slowly from one player to another as one follows the other
 // - reset follow ring at screen edge
 //manipulate circle colour! M
 //consider adding brick level
-//why does leader ring have so much drag? -understand better
 
-//popping rings on and off broken
-
-// think about it in the steady state:
-// * the number of rings we draw depends on this.total
-// * now suppose player1 is following player2, then player1's total is decreasing.
-// * *
 
 var player1;
 var player2;

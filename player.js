@@ -143,49 +143,15 @@ class Player {
     }
   }
 
-
   show() {
     noStroke();
     //colored player circle
     ellipse(this.x, this.y, scl, scl);
     noFill();
     stroke(255, 200);
-    //make array of player rings be empty
-    //loop through the rings
-    // for (var i = 1; i < this.playerRings.length + 1; i++) {
-    //   ellipse(this.x, this.y, scl/2 + i*scl/2);
-    // }
-
     for (var i = 0; i < this.playerRings.length; i++) {
       this.playerRings[i].draw(scl / 2 + i * scl / 2);
     }
-
-
-    // show() {
-    //   noStroke();
-    //   //colored player circle
-    //   ellipse(this.x, this.y, scl/4, scl/4);
-    //   //rings around players
-    //   noFill();
-    //   stroke(255, 200);
-    //   for (var i = 1; i < this.total; i++) {
-    //     ellipse(this.x, this.y, scl/2 + i * scl/2);
-    //   }
-
-
-
-    //extra following rings
-    // if (this.isFollowing == true && this.direction == "right") {
-    //   ellipse(this.x - 10, this.y, scl/2 + 10 * scl/2)
-    // } else if (this.isFollowing == true && this.direction == "left") {
-    //   ellipse(this.x + 10, this.y, scl/2 + 10 * scl/2)
-    // } else if (this.isFollowing == true && this.direction == "up") {
-    //   ellipse(this.x, this.y + 10, scl/2 + 10 * scl/2)
-    // } else if (this.isFollowing == true && this.direction == "down") {
-    //   ellipse(this.x, this.y - 10, scl/2 + 10 * scl/2)
-    // } else {
-    //   // ellipse(this.x, this.y, scl/2 + i * scl/2)
-    // }
 
     //player trail
     let numberOfTrails = 10;

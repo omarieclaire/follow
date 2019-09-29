@@ -210,7 +210,17 @@ class FinalLevel extends Level {
     noStroke();
     text("GAME OVER!!!", windowWidth / 2, windowHeight / 2);
     stroke(255, 0, 0);
-    ellipse(player1.x, player1.y, 100);
+    if (player1.total <= 0) {
+      noFill();
+
+      ellipse(player1.x, player1.y, 100);
+
+    } else if (player2.total <= 0) {
+      noFill();
+      ellipse(player2.x, player2.y, 100);
+
+    } else {
+    }
 
     this.numTicks++;
   }
