@@ -115,12 +115,13 @@ class Player {
       otherPlayer.incrementTotal(0.005);
     }
   }
-
+  //directional speed of player
   update(amount) {
-    //directional speed of player
+    //for most circumstances we don't pass a value
     if(typeof(amount) === 'undefined') {
       this.x = this.x + this.xspeed * scl;
       this.y = this.y + this.yspeed * scl;
+      //for the collision bug we need to pass a value
     } else {
       this.x = this.x + this.xspeed * amount;
       this.y = this.y + this.yspeed * amount;

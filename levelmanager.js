@@ -7,12 +7,14 @@ class LevelManager {
     this.gameOverLevel = tmp_gameOverLevel;
     this.gameOverMode = false;
   }
-  
+
   resetLevelManager() {
     // reset all the levels
     for (var i = 0; i < this.allTheLevels.length; i++) {
       this.allTheLevels[i].resetLevel();
     }
+    player1.resetPlayer();
+    player2.resetPlayer();
     //reset the game over level
     this.gameOverLevel.resetLevel();
     console.log(this.initialLevelIndex);
@@ -41,8 +43,6 @@ class LevelManager {
     if (this.gameOverMode) {
       if (this.gameOverLevel.advanceToNextLevel(player1, player2) == true) {
         this.resetLevelManager();
-        player1.resetPlayer();
-        player2.resetPlayer();
       }
 
     } else {

@@ -3,7 +3,6 @@
 // - rings communicate direction of player
 // - rings move slowly from one player to another as one follows the other
 // - reset follow ring at screen edge
-//debug collision bug
 //manipulate circle colour! M
 //reset everything if window resized
 //consider adding brick level
@@ -125,6 +124,7 @@ function playerCollision() {
     console.log("bounce player2 " + player2.x, player2.y);
 		player1.flipDirection();
 		player2.flipDirection();
+    //add xspeed or yspeed after collision to fix collision bug
     player1.update(100);
     player2.update(100);
 		// players never follow each other after a collission
@@ -136,7 +136,7 @@ function playerCollision() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  // resetEverything();
+  levelManager.resetLevelManager();
 }
 
 function keyPressed() {
