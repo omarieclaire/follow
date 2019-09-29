@@ -3,23 +3,22 @@ class LeaderRing {
     this.scl = scl;
     // how much we move each time
     this.move = 0.05;
-    this.x = windowWidth/2;
-    this.y = windowHeight/2;
+    this.x = windowWidth / 2;
+    this.y = windowHeight / 2;
     this.lastPlayerLeading = undefined;
   }
 
   drawRingOnLeadingPlayer(thePlayer) {
-    stroke(255,215,0, 200);
+    stroke(255, 215, 0);
     if (thePlayer.direction == "right") {
-      ellipse(this.x, this.y, this.scl / 2 + 5 * this.scl / 2)
+      ellipse(this.x, this.y, this.scl / 2 + 10 * this.scl / 2)
     } else if (thePlayer.direction == "left") {
-      ellipse(this.x, this.y, this.scl / 2 + 5 * this.scl / 2)
+      ellipse(this.x, this.y, this.scl / 2 + 10 * this.scl / 2)
     } else if (thePlayer.direction == "up") {
-      ellipse(this.x, this.y, this.scl / 2 + 5 * this.scl / 2)
+      ellipse(this.x, this.y, this.scl / 2 + 10 * this.scl / 2)
     } else if (thePlayer.direction == "down") {
-      ellipse(this.x, this.y, this.scl / 2 + 5 * this.scl / 2)
-    } else {
-    }
+      ellipse(this.x, this.y, this.scl / 2 + 10 * this.scl / 2)
+    } else {}
   }
 
   playerLocDiff(player) {
@@ -28,6 +27,19 @@ class LeaderRing {
     let lerp = p5.Vector.lerp(v1, v2, this.move);
     this.x = lerp.x;
     this.y = lerp.y;
+  }
+
+  loopLeaderRingAtScreenEdge() {
+    console.log("hello");
+    // if (this.x < 0 - 20) {
+    //   this.x = width - scl;
+    // } else if (this.x > width - scl + 20) {
+    //   this.x = 0 - 20;
+    // } else if (this.y < 0 - 20) {
+    //   this.y = height - scl;
+    // } else if (this.y > height - scl + 20) {
+    //   this.y = 0 - 20;
+    // }
   }
 
   drawLeaderRing(player1, player2) {
@@ -48,4 +60,5 @@ class LeaderRing {
       }
     }
   }
+
 }

@@ -1,12 +1,13 @@
 
-//fix bright pink M
-//rings communicate direction of player
-//rings move slowly from one player to another as one follows the other
-//reset follow ring at screen edge
-//make the player looping around the screen look better without causing bugs
-// manipulate circle colour! M
+//create new class for rings, built off of leader ring. should communicate direction of player and score
+// - rings communicate direction of player
+// - rings move slowly from one player to another as one follows the other
+// - reset follow ring at screen edge
+//debug collision bug
+//manipulate circle colour! M
 //reset everything if window resized
 //consider adding brick level
+//why does leader ring have so much drag? -understand better
 
 var player1;
 var player2;
@@ -68,7 +69,6 @@ function setup() {
 }
 
 function draw() {
-
   levelManager.switchLevel(player1, player2);
 	//following punishment/rewards
   player1.updateTotal(player2);
@@ -119,13 +119,18 @@ function handlePlayerFollowing(playerX, playerY, futureDirectionOfX) {
 
 function playerCollision() {
   let d = dist(player1.x, player1.y, player2.x, player2.y);
+  //added 10 to hopefully fix the bug
   if (d < player1.r + player2.r) {
+    console.log("bounce player1 " + player1.x, player1.y);
+    console.log("bounce player2 " + player2.x, player2.y);
 		player1.flipDirection();
 		player2.flipDirection();
+    player1.update(100);
+    player2.update(100);
 		// players never follow each other after a collission
 		player1.isFollowing = false;
 		player2.isFollowing = false;
-    hit_sound.play();
+    // hit_sound.play();
   }
 }
 

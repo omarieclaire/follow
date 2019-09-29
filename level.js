@@ -18,11 +18,11 @@ class Level {
     background(30);
     noStroke();
     textSize(standardTextSize);
-    fill(255);
-    text(player1.total.toFixed(2), windowWidth / 2 + 200, windowHeight / 1.2);
-    fill(51, 153, 255);
-    text(player2.total.toFixed(2), windowWidth / 2 - 200, windowHeight / 1.2);
-    fill(255);
+    // fill(player1Color);
+    // text(player1.total.toFixed(2), windowWidth / 2 + 200, windowHeight / 1.2);
+    // fill(player2Color);
+    // text(player2.total.toFixed(2), windowWidth / 2 - 200, windowHeight / 1.2);
+    // fill(255);
 
     //player colour
     textSize(standardTextSize);
@@ -67,10 +67,18 @@ class PressKeyToContinue extends Level {
   draw(player1, player2, foods) {
     // draw our title screen.
     background(30);
-    fill(10, 255, 50);
+
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
-    text("press spacebar to begin", windowWidth / 2, windowHeight / 2);
+
+    fill(player1Color);
+    text("player 1 use arrow keys to move", windowWidth / 2, windowHeight / 5);
+    fill(player2Color);
+    text("player 2 use asdw keys to move", windowWidth / 2, windowHeight / 3);
+    fill(200);
+    textSize(standardTextSize / 2);
+
+    text("press spacebar to begin", windowWidth / 2, windowHeight / 1.5);
   }
   advanceToNextLevel(player1, player2) {
     return this.keyWasPressed == true;
@@ -79,25 +87,6 @@ class PressKeyToContinue extends Level {
     this.keyWasPressed = true;
   }
 }
-//////////keypress to skip level?
-// class PressKeyToContinue extends Level {
-//   constructor() {
-//     super();
-//     this.keyWasPressed = false;
-//   }
-//   draw(player1, player2, foods) {
-//     fill(20, 10, 100);
-//     rect(20, 30, 30);
-//   }
-//
-//   advanceToNextLevel(player1, player2) {
-//     return this.keyWasPressed == true;
-//   }
-//
-//   keyWasPressedLevel(keyCode) {
-//     this.keyWasPressed = true;
-//   }
-// }
 
 //////////welcome level
 class Level0 extends Level {
@@ -112,13 +101,14 @@ class Level0 extends Level {
     // this.basicLevelDraw(player1, player2, foods);
     background(30);
     fill(10, 255, 50);
-    textSize(standardTextSize * 1.5);
+    textSize(standardTextSize);
     textAlign(CENTER, TOP);
-    text("welcome leader", windowWidth / 2, windowHeight / 2);
+    text("welcome", windowWidth / 2, windowHeight / 2);
+
   }
 
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 30;
+    return this.numTicks >= 200;
   }
 
   //ticks need to be reset when game restarts
@@ -131,17 +121,22 @@ class Level0 extends Level {
 class Level1 extends Level {
   constructor() {
     super();
+    this.numTicks = 0;
+
   };
   draw(player1, player2, foods) {
+    this.numTicks++;
     this.basicLevelDraw(player1, player2, foods);
 
     if (player1.isFollowing) {
-      fill(255);
+      fill(player2Color);
+      noStroke();
       text("Blue is Leading", windowWidth / 2, windowHeight / 6);
     } else if (player2.isFollowing) {
+      fill(player1Color);
+      noStroke();
       text("Pink is Leading", windowWidth / 2, windowHeight / 6);
-    } else {
-    }
+    } else {}
 
     if (intro_music.isPlaying()) {
       intro_music.stop();
@@ -151,16 +146,15 @@ class Level1 extends Level {
   }
 
   advanceToNextLevel(player1, player2) {
-    if (player1.total >= 5 || player2.total >= 5) {
-      console.log("switching from level 1 to level 2");
-      return true;
-    } else {
-      return false;
-    }
+    return this.numTicks >= 2000;
+  }
+  //ticks need to be reset when game restarts
+  resetLevel() {
+    this.numTicks = 0;
   }
 
 }
-//////////no food level
+//////////food level
 class Level2 extends Level {
   constructor() {
     super();

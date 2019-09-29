@@ -116,20 +116,25 @@ class Player {
     }
   }
 
-  update() {
-    //speed of player
-    this.x = this.x + this.xspeed * scl;
-    this.y = this.y + this.yspeed * scl;
+  update(amount) {
+    //directional speed of player
+    if(typeof(amount) === 'undefined') {
+      this.x = this.x + this.xspeed * scl;
+      this.y = this.y + this.yspeed * scl;
+    } else {
+      this.x = this.x + this.xspeed * amount;
+      this.y = this.y + this.yspeed * amount;
+    }
 
     //loop player around screen
-    if (this.x < 0) { //-20
-      this.x = width - scl;
-    } else if (this.x > width - scl + 20) {
-      this.x = 0; // -20
-    } else if (this.y < 0) { //-20
-      this.y = height - scl;
-    } else if (this.y > height - scl + 20) {
-      this.y = 0; //-20
+    if (this.x < 0 - 20) {
+      this.x = windowWidth - scl;
+    } else if (this.x > windowWidth - scl + 20) {
+      this.x = 0 - 20;
+    } else if (this.y < 0 - 20) {
+      this.y = windowHeight - scl;
+    } else if (this.y > windowHeight - scl + 20) {
+      this.y = 0 - 20;
     }
   }
 
