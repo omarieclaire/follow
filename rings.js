@@ -8,11 +8,14 @@ class Rings {
   }
 
   move() {
+
       let v1 = createVector(this.x, this.y);
       let v2 = createVector(this.player.x, this.player.y);
-      let lerp = p5.Vector.lerp(v1, v2, .98);
+      let lerp = p5.Vector.lerp(v1, v2, .99);
       this.x = lerp.x;
       this.y = lerp.y;
+
+      var scl = 40;
 
       if (this.x < 0 - 20) {
         this.x = windowWidth - scl;
