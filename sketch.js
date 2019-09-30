@@ -12,6 +12,8 @@
 
 var player1;
 var player2;
+var foodColor = [255]; //white
+var pointColor = [255, 215, 0, 250]; //gold
 var player1Color = [255, 51, 153, 250]; //MAGENTA
 var player2Color = [51, 153, 255, 250]; //BABY BLUE
 var player1FadeColor = [255, 51, 153, 100];
@@ -50,8 +52,8 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   //Special function to construct an object
-  player1 = new Player("1", " ", 0, windowWidth / 2 + 200, windowHeight / 2);
-  player2 = new Player("2", " ", -0, windowWidth / 2 - 200, windowHeight / 2);
+  player1 = new Player("1", " ", 0, windowWidth / 2 + 200, windowHeight / 2, scl);
+  player2 = new Player("2", " ", -0, windowWidth / 2 - 200, windowHeight / 2, scl);
 	level0 = new Level0();
 	level1 = new Level1();
   level2 = new Level2();

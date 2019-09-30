@@ -1,6 +1,7 @@
 class Player {
   //constructor is a method which is run only once to set up the object
-  constructor(temp_name, temp_playerDir, temp_xspeed, temp_x, temp_y) {
+  constructor(temp_name, temp_playerDir, temp_xspeed, temp_x, temp_y, scl) {
+    this.scl = scl;
     this.name = temp_name;
     this.direction = temp_playerDir;
     //sotre inittial diection for reset
@@ -19,7 +20,7 @@ class Player {
 
     this.playerRings = []; // store the rings within a local array
     for (var i = 0; i < this.total; i++) { //for each point in score
-      this.playerRings.push(new Rings(this)); //push a new ring to array
+      this.playerRings.push(new Rings(this, this.scl)); //push a new ring to array
     }
   }
 
@@ -36,7 +37,7 @@ class Player {
 
     this.playerRings = []; // store the rings within a local array
     for (var i = 0; i < this.total; i++) {
-      this.playerRings.push(new Rings(this));
+      this.playerRings.push(new Rings(this, this.scl));
     }
     console.log("reset: " + this.direction + "and reset: " + this.total);
     console.log("player was reset " + this.name);
@@ -46,10 +47,10 @@ class Player {
 
   eat(food) {
     var d = dist(this.x, this.y, food.x, food.y);
-    if (d < scl) {
+    if (d < this.scl) {
       this.total++;
-      this.playerRings.push(new Rings(this));
-      // eat_sound.play();
+      this.playerRings.push(new Rings(this, this.scl));
+      eat_sound.play();
       return true;
     } else {
       return false;
@@ -90,7 +91,7 @@ class Player {
     this.direction = "right";
   }
 
-  changeRingTotal(amount) {
+  changeRingTotal(amount, x, y) {
     var oldTotal = this.total;
     this.total = this.total + amount;
     //floor of old total minus floor of new total, then the absolute value of that (if pos we leave it, if neg we make it pos)
@@ -99,17 +100,22 @@ class Player {
       if (amount < 0) {
         this.playerRings.pop(); //get rid of a ring
       } else {
-        this.playerRings.push(new Rings(this)); //add a ring
+        // create a ring that follows 'this' and has the start x and y coordinates passed to changeRingTotal
+        this.playerRings.push(new Rings(this, this.scl, x, y)); //add a ring
       }
     }
   }
-
+//update the total score on a given player which also changes the rings
   updateTotal(otherPlayer) {
     if (this.isFollowing) {
       //decrement
-      this.changeRingTotal(-0.005);
+      //note: we never use this.x and this.y in this case because of the above logic (amount < 0)
+      this.changeRingTotal(-0.005, this.x, this.y);
       //increment
-      otherPlayer.changeRingTotal(0.005);
+
+      //other player is simply an object. we pass the values below into changeringtotal.
+      //create a ring that follows other player
+      otherPlayer.changeRingTotal(0.005, this.x, this.y);
     }
   }
   //directional speed of player
@@ -120,8 +126,8 @@ class Player {
 
     //for most circumstances we don't pass a value
     if (typeof(amount) === 'undefined') {
-      this.x = this.x + this.xspeed * scl;
-      this.y = this.y + this.yspeed * scl;
+      this.x = this.x + this.xspeed * this.scl;
+      this.y = this.y + this.yspeed * this.scl;
       //for the collision bug we need to pass a value
     } else {
       this.x = this.x + this.xspeed * amount;
@@ -130,24 +136,44 @@ class Player {
 
     //loop player around screen
     if (this.x < 0 - 20) {
-      this.x = windowWidth - scl;
-    } else if (this.x > windowWidth - scl + 20) {
+      this.x = windowWidth - this.scl;
+      for (var i = 0; i < this.playerRings.length; i++) {
+        var theRing = this.playerRings[i];
+        theRing.updateLocation(windowWidth - this.scl, theRing.y);
+      }
+      // Rings.x = windowWidth - this.scl;
+      // leaderRing.x = windowWidth - this.scl;
+    } else if (this.x > windowWidth - this.scl + 20) {
       this.x = 0 - 20;
+      for (var i = 0; i < this.playerRings.length; i++) {
+        var theRing = this.playerRings[i];
+        theRing.updateLocation(0 - 20, theRing.y);
+      }
     } else if (this.y < 0 - 20) {
-      this.y = windowHeight - scl;
-    } else if (this.y > windowHeight - scl + 20) {
+      this.y = windowHeight - this.scl;
+      for (var i = 0; i < this.playerRings.length; i++) {
+        var theRing = this.playerRings[i];
+        theRing.updateLocation(theRing.x, windowHeight - this.scl);
+      }
+    } else if (this.y > windowHeight - this.scl + 20) {
       this.y = 0 - 20;
+      for (var i = 0; i < this.playerRings.length; i++) {
+        var theRing = this.playerRings[i];
+        theRing.updateLocation(theRing.x, 0 - 20);
+      }
     }
   }
+
+  //FOLLOW ME
 
   show() {
     noStroke();
     //colored player circle
-    ellipse(this.x, this.y, scl, scl);
+    ellipse(this.x, this.y, this.scl, this.scl);
     noFill();
     stroke(255, 200);
     for (var i = 0; i < this.playerRings.length; i++) {
-      this.playerRings[i].draw(scl / 2 + i * scl / 2);
+      this.playerRings[i].draw(this.scl / 2 + i * this.scl / 2);
     }
 
     //player trail
@@ -157,7 +183,7 @@ class Player {
 
     for (var i = 1; i < numberOfTrails; i++) {
       //having 1 + ensures that the divisor is always above 1 so the trail will never be bigger than the player
-      let newRadius = (scl / 4) / (1 + i * radiusShrinkFactor);
+      let newRadius = (this.scl / 4) / (1 + i * radiusShrinkFactor);
       if (this.direction == "up") {
         let newYCoordinate = this.y + (i * spaceBetweenCircles);
         ellipse(this.x, newYCoordinate, newRadius);

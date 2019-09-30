@@ -133,11 +133,11 @@ class Level1 extends Level {
     if (player1.isFollowing) {
       fill(player2Color);
       noStroke();
-      text("Blue is Leading", windowWidth / 2, windowHeight / 6);
+      text("Blue is Leading", windowWidth / 2, windowHeight / 1.2);
     } else if (player2.isFollowing) {
       fill(player1Color);
       noStroke();
-      text("Pink is Leading", windowWidth / 2, windowHeight / 6);
+      text("Pink is Leading", windowWidth / 2, windowHeight / 1.2);
     } else {}
 
     if (intro_music.isPlaying()) {

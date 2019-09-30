@@ -23,7 +23,8 @@ class Food {
   }
 
   show() {
-    stroke(255);
+    stroke(foodColor);
+    strokeWeight(.5);
     noFill();
     ellipse(this.foodLocation.x, this.foodLocation.y, this.scl, this.scl);
     for (var i = 0; i < this.total; i++) {
