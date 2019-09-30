@@ -18,8 +18,8 @@ class Player {
     this.isFollowed = false;
 
     this.playerRings = []; // store the rings within a local array
-    for (var i = 0; i < this.total; i++) {
-      this.playerRings.push(new Rings(this));
+    for (var i = 0; i < this.total; i++) { //for each point in score
+      this.playerRings.push(new Rings(this)); //push a new ring to array
     }
   }
 
@@ -48,11 +48,8 @@ class Player {
     var d = dist(this.x, this.y, food.x, food.y);
     if (d < scl) {
       this.total++;
-      // pushing empty object into this.playerRings for now
-      // when we have a Ring class we'll push that into this.playerRings
-      // like: this.playerRings.push(new NewRingClass());
       this.playerRings.push(new Rings(this));
-      eat_sound.play();
+      // eat_sound.play();
       return true;
     } else {
       return false;
@@ -93,16 +90,16 @@ class Player {
     this.direction = "right";
   }
 
-  incrementTotal(amount) {
+  changeRingTotal(amount) {
     var oldTotal = this.total;
     this.total = this.total + amount;
-    //floor of the old total minus floor of new total, then taking the absolute value of that (if pos we leave it, if neg we make it pos)
+    //floor of old total minus floor of new total, then the absolute value of that (if pos we leave it, if neg we make it pos)
     var diff = Math.abs(Math.floor(this.total) - Math.floor(oldTotal));
     if (diff >= 1) {
       if (amount < 0) {
-        this.playerRings.pop();
+        this.playerRings.pop(); //get rid of a ring
       } else {
-        this.playerRings.push(new Rings(this));
+        this.playerRings.push(new Rings(this)); //add a ring
       }
     }
   }
@@ -110,9 +107,9 @@ class Player {
   updateTotal(otherPlayer) {
     if (this.isFollowing) {
       //decrement
-      this.incrementTotal(-0.005);
+      this.changeRingTotal(-0.005);
       //increment
-      otherPlayer.incrementTotal(0.005);
+      otherPlayer.changeRingTotal(0.005);
     }
   }
   //directional speed of player

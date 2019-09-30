@@ -1,3 +1,7 @@
+// what is lerp doing in rings?
+
+// why aren't rings starting at player x and y? am i not understanding lerp?
+//why can't I get the wrapping to work?
 
 // - rings communicate direction of player
 // - rings move slowly from one player to another as one follows the other

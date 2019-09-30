@@ -89,8 +89,8 @@ class PressKeyToContinue extends Level {
     this.keyWasPressed = true;
   }
 }
-
-//////////welcome level
+//////////////////////////////////////
+//////////welcome level///////////////
 class Level0 extends Level {
   constructor() {
     // 'super' calls the 'constructor' of Level (the class we inherit from)
@@ -118,8 +118,8 @@ class Level0 extends Level {
     this.numTicks = 0;
   }
 }
-
-//////////training level - no food
+////////////////////////////////////////
+////// training level - no food ////////
 class Level1 extends Level {
   constructor() {
     super();
@@ -156,7 +156,8 @@ class Level1 extends Level {
   }
 
 }
-//////////food level
+//////////////////////////////////////
+//////////food level//////////////////
 class Level2 extends Level {
   constructor() {
     super();
@@ -176,7 +177,8 @@ class Level2 extends Level {
     }
   }
 }
-//////////whatever level
+////////////////////////////////////
+///////// whatever level ///////////
 class Level3 extends Level {
   constructor() {
     super();
@@ -196,8 +198,8 @@ class Level3 extends Level {
     }
   }
 }
-
-//////////post-death level
+///////////////////////////////////////
+//////// post-death level ////////////
 class FinalLevel extends Level {
   constructor() {
     super();
@@ -212,25 +214,18 @@ class FinalLevel extends Level {
     stroke(255, 0, 0);
     if (player1.total <= 0) {
       noFill();
-
       ellipse(player1.x, player1.y, 100);
-
     } else if (player2.total <= 0) {
       noFill();
       ellipse(player2.x, player2.y, 100);
-
-    } else {
-    }
-
+    } else {}
     this.numTicks++;
   }
-
   advanceToNextLevel(player1, player2) {
     return this.numTicks >= 100;
   }
-
-  // dissolvePlayer(player1, player2) {
-  //   background(255);
-  // }
-
+  resetLevel() {
+    this.numTicks = 0;
+    noStroke();
+  }
 }
