@@ -1,14 +1,5 @@
-//if lerp is high, rings too fast, can't see themselves
-//if lerp is low, rings are off
 
-//do a numTicks thing where I  increse from zero to 1 in small decimal places, and that is the number i pass to lerp
-
-// why aren't rings starting at player x and y? am i not understanding lerp?
-//why can't I get the wrapping to work?
-
-// - rings communicate direction of player
-// - rings move slowly from one player to another as one follows the other
-// - reset follow ring at screen edge
+//fullscreen players not being drawn to the correct place
 //manipulate circle colour! M
 //consider adding brick level
 
@@ -145,7 +136,13 @@ function windowResized() {
 }
 
 function keyPressed() {
-	//32
+
+  if (keyCode === 70) {
+    let fs = fullscreen();
+    fullscreen(!fs);
+    levelManager.resetLevelManager();
+  }
+
   if (keyCode === 32) {
     levelManager.keyWasPressed(keyCode);
   }

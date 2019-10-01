@@ -173,14 +173,15 @@ class Player {
     noFill();
     stroke(255, 200);
     for (var i = 0; i < this.playerRings.length; i++) {
-      if (this.playerRings[i].length - 1) {
-        stroke(pointColor)
+      if (i == this.playerRings.length - 1 && this.isFollowed) {
+        stroke(255, 0 , 0);
+      }
+      if (i == this.playerRings.length - 1 && this.isFollowing) {
+        stroke(pointColor);
       } else {
         stroke(255);
       }
       this.playerRings[i].draw(this.scl / 2 + i * this.scl / 2);
-
-      //if i = this.playerRings.length - 1  stroke is X, else stroke is
     }
 
     //player trail
