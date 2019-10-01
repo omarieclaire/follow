@@ -1,4 +1,7 @@
-// what is lerp doing in rings?
+//if lerp is high, rings too fast, can't see themselves
+//if lerp is low, rings are off
+
+//do a numTicks thing where I  increse from zero to 1 in small decimal places, and that is the number i pass to lerp
 
 // why aren't rings starting at player x and y? am i not understanding lerp?
 //why can't I get the wrapping to work?
