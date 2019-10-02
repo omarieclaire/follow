@@ -174,10 +174,11 @@ class Player {
     push(); //set original drawstate
     for (var i = 0; i < this.playerRings.length; i++) {
       if (this.isFollowed && i == this.playerRings.length - 1) {
-        strokeWeight(20);
-        stroke(255, 0 , 0);
+        strokeWeight(5);
+        stroke(pointColor);
 
       } else {
+        strokeWeight(.5);
         stroke(255);
       }
       this.playerRings[i].draw(this.scl / 2 + i * this.scl / 2);
