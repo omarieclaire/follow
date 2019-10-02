@@ -105,7 +105,7 @@ class Level0 extends Level {
     fill(10, 255, 50);
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
-    text("welcome", windowWidth / 2, windowHeight / 2);
+    text("Do Not Follow", windowWidth / 2, windowHeight / 2);
 
   }
 
@@ -148,7 +148,7 @@ class Level1 extends Level {
   }
 
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 2000;
+    return this.numTicks >= 4000;
   }
   //ticks need to be reset when game restarts
   resetLevel() {

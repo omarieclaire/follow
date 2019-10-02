@@ -1,11 +1,16 @@
-//fix leaderring to outer rings
-//fullscreen players not being drawn to the correct place
+//communicate direction more
+
+
 //manipulate circle colour! M
 //consider adding brick level
 
 //push for coordination
-
+//collision bug is back
 //work with push and pop
+
+//give flavour text boxes to coins - i'm just looking for a leader?
+//player should WANT to be leading?
+// i'll do what ever you tell me to do
 
 
 var player1;
