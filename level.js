@@ -19,11 +19,11 @@ class Level {
     background(30);
     noStroke();
     textSize(standardTextSize);
-    // fill(player1Color);
-    // text(player1.total.toFixed(2), windowWidth / 2 + 200, windowHeight / 1.2);
-    // fill(player2Color);
-    // text(player2.total.toFixed(2), windowWidth / 2 - 200, windowHeight / 1.2);
-    // fill(255);
+    fill(player1Color);
+    text(player1.total.toFixed(2), windowWidth / 2 + 200, windowHeight / 1.2);
+    fill(player2Color);
+    text(player2.total.toFixed(2), windowWidth / 2 - 200, windowHeight / 1.2);
+    fill(255);
 
     //player colour
     textSize(standardTextSize);
@@ -207,22 +207,33 @@ class FinalLevel extends Level {
   }
   draw(player1, player2, foods) {
     // this.dissolvePlayer(player1, player2);
-    console.log("you are dead");
+    // console.log("you are dead");
     // background(255, 0, 0);
     noStroke();
     text("GAME OVER!!!", windowWidth / 2, windowHeight / 2);
     stroke(255, 0, 0);
-    if (player1.total <= 0) {
-      noFill();
+
+    if (player2.total <= 0 && player1.total <= 0) {
       ellipse(player1.x, player1.y, 100);
-    } else if (player2.total <= 0) {
-      noFill();
       ellipse(player2.x, player2.y, 100);
-    } else {}
+      console.log("both dead dead");
+
+    } else if (player2.total <= 0 && player1.total > 0) {
+      ellipse(player2.x, player2.y, 100);
+
+      console.log("p2 dead");
+
+      ellipse(player2.x, player2.y, 100);
+    } else if (player1.total <= 0 && player2.total > 0){
+      console.log("p1 dead");
+      ellipse(player1.x, player1.y, 100);
+
+    } else {
+    }
     this.numTicks++;
   }
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 100;
+    return this.numTicks >= 300;
   }
   resetLevel() {
     this.numTicks = 0;

@@ -1,16 +1,25 @@
-//communicate direction more
 
-
-//manipulate circle colour! M
-//consider adding brick level
-
-//push for coordination
-//collision bug is back
-//work with push and pop
-
-//give flavour text boxes to coins - i'm just looking for a leader?
+// HIGH LEVEL
+//communicate direction BETTER
 //player should WANT to be leading?
-// i'll do what ever you tell me to do
+
+// FOSTER COMMS
+// - draw line betwe players?
+// - bounce together for sudden gold and new ring
+
+// BALANCE
+// - turn up ring loss speed
+
+// VISUAL COMMS
+// - make tail come off last ringLocation
+// - make death prettier / more compelling
+// - manipulate circle colour!
+// - consider adding brick level
+
+
+// GENERAL IMPROVEMENTS
+//collision bug is back
+// - give flavour text boxes to coins - i'm just looking for a leader? ("i'll do what ever you tell me to do")
 
 
 var player1;
@@ -129,6 +138,10 @@ function playerCollision() {
   let d = dist(player1.x, player1.y, player2.x, player2.y);
   //added 10 to hopefully fix the bug
   if (d < player1.r + player2.r) {
+    player1.total = player1.total - 1;
+    player2.total = player2.total - 1;
+    player1.playerRings.pop();
+    player2.playerRings.pop();
     player1.flipDirection();
     player2.flipDirection();
     //add xspeed or yspeed after collision to fix collision bug
