@@ -17,7 +17,6 @@
 
 // FOSTER COMMS
 // - draw line betwe players?
-// - bounce together for sudden gold and new ring
 
 // BALANCE
 // - turn up ring loss speed

@@ -136,31 +136,32 @@ class Player {
     }
 
     //loop player around screen
-    if (this.x < 0 - 20) {
-      this.x = windowWidth - this.scl;
+    var windowLoopSpacer = 30;
+    if (this.x < 0 - windowLoopSpacer) {
+      this.x = windowWidth - windowLoopSpacer;
       for (var i = 0; i < this.playerRings.length; i++) {
         var theRing = this.playerRings[i];
-        theRing.updateLocation(windowWidth - this.scl, theRing.y);
+        theRing.updateLocation(windowWidth - windowLoopSpacer, theRing.y);
       }
       // Rings.x = windowWidth - this.scl;
       // leaderRing.x = windowWidth - this.scl;
-    } else if (this.x > windowWidth - this.scl + 20) {
-      this.x = 0 - 20;
+    } else if (this.x > windowWidth + windowLoopSpacer) {
+      this.x = 0 - windowLoopSpacer;
       for (var i = 0; i < this.playerRings.length; i++) {
         var theRing = this.playerRings[i];
-        theRing.updateLocation(0 - 20, theRing.y);
+        theRing.updateLocation(0 - windowLoopSpacer, theRing.y);
       }
-    } else if (this.y < 0 - 20) {
-      this.y = windowHeight - this.scl;
+    } else if (this.y < 0 - windowLoopSpacer) {
+      this.y = windowHeight - windowLoopSpacer;
       for (var i = 0; i < this.playerRings.length; i++) {
         var theRing = this.playerRings[i];
-        theRing.updateLocation(theRing.x, windowHeight - this.scl);
+        theRing.updateLocation(theRing.x, windowHeight - windowLoopSpacer);
       }
-    } else if (this.y > windowHeight - this.scl + 20) {
-      this.y = 0 - 20;
+    } else if (this.y > windowHeight + windowLoopSpacer) {
+      this.y = 0 - windowLoopSpacer;
       for (var i = 0; i < this.playerRings.length; i++) {
         var theRing = this.playerRings[i];
-        theRing.updateLocation(theRing.x, 0 - 20);
+        theRing.updateLocation(theRing.x, 0 - windowLoopSpacer);
       }
     }
 // following player jitter
