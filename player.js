@@ -19,6 +19,9 @@ class Player {
     this.playerColor = tmp_playerColor;
     this.playerFadedColor = tmp_playerFadedColor;
 
+    this.poppedRing = undefined;
+    this.numTicksPoppedRing = 0;
+
     this.playerRings = []; // store the rings within a local array
     for (var i = 0; i < this.total; i++) { //for each point in score
       this.playerRings.push(new Rings(this, this.scl)); //push a new ring to array
@@ -35,6 +38,8 @@ class Player {
     this.isFollowing = false;
     this.isFollowed = false;
     this.direction = this.initialDirection;
+    this.poppedRing = undefined;
+    this.numTicksPoppedRing = 0;
 
     this.playerRings = []; // store the rings within a local array
     for (var i = 0; i < this.total; i++) {
@@ -78,7 +83,10 @@ class Player {
     var d = dist(this.x, this.y, spike.x, spike.y);
     if(d < this.scl) {
       this.total--;
-      this.playerRings.pop();
+      this.poppedRing = this.playerRings.pop();
+      // we need otherPlayer to handle flip direction because we needs
+      // to update isFollowed and isFollowing whenever a player's direction
+      // is changed.
       this.flipDirection(otherPlayer);
       return true;
     } else {
@@ -140,15 +148,17 @@ class Player {
   }
 //update the total score on a given player which also changes the rings
   updateTotal(otherPlayer) {
+    //ring movement from one player to another
+    var ringTransferSpd = 0.01;
     if (this.isFollowing) {
       //decrement
       //note: we never use this.x and this.y in this case because of the above logic (amount < 0)
-      this.changeRingTotal(-0.005, this.x, this.y);
+      this.changeRingTotal(- ringTransferSpd, this.x, this.y);
       //increment
 
       //other player is simply an object. we pass the values below into changeringtotal.
       //create a ring that follows other player
-      otherPlayer.changeRingTotal(0.005, this.x, this.y);
+      otherPlayer.changeRingTotal(ringTransferSpd, this.x, this.y);
     }
   }
   //directional speed of player
@@ -227,6 +237,14 @@ class Player {
         stroke(255);
       }
       this.playerRings[i].draw(this.scl / 2 + i * this.scl / 2);
+    }
+    // draw popped ring
+    if(typeof(this.poppedRing) !== 'undefined' && this.numTicksPoppedRing < 200) {
+      this.poppedRing.drawDeadRing(this.scl / 2 + this.playerRings.length * this.scl / 2);
+      this.numTicksPoppedRing++;
+    } else {
+      this.numTicks = 0;
+      this.poppedRing = undefined;
     }
     pop(); //pop back to original drawstate
 

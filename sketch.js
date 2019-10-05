@@ -1,21 +1,7 @@
-// put an animation on the follower
-
-// eat, lead, don't follow
-//Follow me! a game that ask you to follow the other player.
-
-// after 10 miunutes of not following - level switches up
-// make foods move around a bit?
-// punishment should be immediately obvious
-//if you follow you die
-
-
-
 // HIGH LEVEL
-//communicate direction BETTER
-//player should WANT to be leading?
-
-// FOSTER COMMS
-// - draw line betwe players?
+// IMMEDIATELY communicate follow status to both players
+// communicate direction more
+// player should _want_ to be leading
 
 // BALANCE
 // - turn up ring loss speed
@@ -25,13 +11,17 @@
 // - make tail come off last ringLocation
 // - make death prettier / more compelling
 // - manipulate circle colour!
-// - consider adding brick level
-// - lose ring animation
-
+// - lose ring animation - store ring when I pop it off.
 
 // GENERAL IMPROVEMENTS
 // - give flavour text boxes to coins - i'm just looking for a leader? ("i'll do what ever you tell me to do")
 
+// MAYBE???
+// - allow player to skip the training level? have no training level?
+// - should foods move around a bit?
+// - punishment should be immediately obvious
+// - if you follow you die
+// - draw line between players?
 
 var player1;
 var player2;
@@ -39,8 +29,8 @@ var foodColor = [255]; //white
 var pointColor = [255, 215, 0, 250]; //gold
 var player1Color = [255, 51, 153, 250]; //MAGENTA
 var player2Color = [51, 153, 255, 250]; //BABY BLUE
-var player1FadeColor = [255, 51, 153, 100];
-var player2FadeColor = [51, 153, 255, 100];
+var player1FadeColor = [184, 125, 155, 200];
+var player2FadeColor = [145, 200, 255, 200];
 var scl = 40;
 var vol = 0.4;
 var foods = [];
@@ -126,8 +116,8 @@ function playerCollision() {
     console.log("playerCollision: collision true");
     player1.total = player1.total - 1;
     player2.total = player2.total - 1;
-    player1.playerRings.pop();
-    player2.playerRings.pop();
+    player1.poppedRing = player1.playerRings.pop();
+    player2.poppedRing = player2.playerRings.pop();
     player1.flipDirection(player2);
     player2.flipDirection(player1);
     //add xspeed or yspeed after collision to fix collision bug

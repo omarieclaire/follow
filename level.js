@@ -36,6 +36,25 @@ class Level {
   draw(player1, player2, foods, spikes) {
     this.basicLevelDraw(player1, player2, foods, spikes);
   }
+
+  foodEaten(player1, player2, foods) {
+    for (let i = 0; i < foods.length; i++) {
+      if (player1.eat(foods[i])) {
+        foods[i].location();
+      }
+
+      if (player2.eat(foods[i])) {
+        foods[i].location();
+      }
+    }
+  }
+
+  spikeHit(player1, player2, spikes) {
+    for(let i = 0; i < spikes.length; i++) {
+      player1.collideWithSpike(spikes[i], player2);
+      player2.collideWithSpike(spikes[i], player1);
+    }
+  }
 }
 
 class PressKeyToContinue extends Level {
@@ -145,18 +164,6 @@ class Level2 extends Level {
     super();
   };
 
-  foodEaten(player1, player2, foods) {
-    for (let i = 0; i < foods.length; i++) {
-      if (player1.eat(foods[i])) {
-        foods[i].location();
-      }
-
-      if (player2.eat(foods[i])) {
-        foods[i].location();
-      }
-    }
-  }
-
   spikeHit(player1, player2, spikes) {
     for(let i = 0; i < spikes.length; i++) {
       player1.collideWithSpike(spikes[i], player2);
@@ -193,9 +200,15 @@ class Level3 extends Level {
     super();
   };
   draw(player1, player2, foods, spikes) {
+    this.foodEaten(player1, player2, foods);
+    this.spikeHit(player1, player2, spikes);
+
     this.basicLevelDraw(player1, player2, foods, spikes);
     for (let i = 0; i < foods.length; i++) {
       foods[i].show();
+    }
+    for (let i = 0; i < spikes.length; i++) {
+      spikes[i].show();
     }
   }
   advanceToNextLevel(player1, player2) {
