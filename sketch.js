@@ -3,20 +3,15 @@
 // communicate direction more
 // player should _want_ to be leading
 
-// BALANCE
-// - turn up ring loss speed
-
 // VISUAL COMMS
 // - standardize ring offset
 // - make tail come off last ringLocation
 // - make death prettier / more compelling
 // - manipulate circle colour!
-// - lose ring animation - store ring when I pop it off.
-
-// GENERAL IMPROVEMENTS
-// - give flavour text boxes to coins - i'm just looking for a leader? ("i'll do what ever you tell me to do")
+// - improve ring loss animation
 
 // MAYBE???
+// - give flavour text boxes to coins - i'm just looking for a leader? ("i'll do what ever you tell me to do")
 // - allow player to skip the training level? have no training level?
 // - should foods move around a bit?
 // - punishment should be immediately obvious
@@ -111,7 +106,6 @@ function draw() {
 
 function playerCollision() {
   let d = dist(player1.x, player1.y, player2.x, player2.y);
-  //added 10 to hopefully fix the bug
   if (d < player1.r + player2.r) {
     console.log("playerCollision: collision true");
     player1.total = player1.total - 1;

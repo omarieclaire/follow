@@ -19,10 +19,10 @@ class Level {
     background(30);
     noStroke();
     textSize(standardTextSize);
-    fill(player1Color);
-    text(player1.total.toFixed(2), windowWidth / 2 + 200, windowHeight / 1.2);
-    fill(player2Color);
-    text(player2.total.toFixed(2), windowWidth / 2 - 200, windowHeight / 1.2);
+    // fill(player1Color);
+    // text(player1.total.toFixed(2), windowWidth / 2 + 200, windowHeight / 1.2);
+    // fill(player2Color);
+    // text(player2.total.toFixed(2), windowWidth / 2 - 200, windowHeight / 1.2);
     fill(255);
 
     //player colour
@@ -106,12 +106,12 @@ class Level0 extends Level {
     fill(10, 255, 50);
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
-    text("Do Not Follow", windowWidth / 2, windowHeight / 2);
+    text("Are you a follower?", windowWidth / 2, windowHeight / 2);
 
   }
 
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 200;
+    return this.numTicks >= 2000;
   }
 
   //ticks need to be reset when game restarts
@@ -236,18 +236,15 @@ class FinalLevel extends Level {
     stroke(255, 0, 0);
 
     if (player2.total <= 0 && player1.total <= 0) {
-      ellipse(player1.x, player1.y, 100);
-      ellipse(player2.x, player2.y, 100);
-      console.log("both dead dead");
+      for (var i = 0; i < 250; i--) {
+      }
+      ellipse(player1.x, player1.y, 50);
+      ellipse(player2.x, player2.y, 50);
+
 
     } else if (player2.total <= 0 && player1.total > 0) {
-      ellipse(player2.x, player2.y, 100);
-
-      console.log("p2 dead");
-
-      ellipse(player2.x, player2.y, 100);
+      ellipse(player2.x, player2.y, 50);
     } else if (player1.total <= 0 && player2.total > 0){
-      console.log("p1 dead");
       ellipse(player1.x, player1.y, 100);
 
     } else {
@@ -255,7 +252,7 @@ class FinalLevel extends Level {
     this.numTicks++;
   }
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 300;
+    return this.numTicks >= 100;
   }
   resetLevel() {
     this.numTicks = 0;
