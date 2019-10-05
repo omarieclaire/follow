@@ -1,4 +1,3 @@
-// am i drawing invisible foods?
 // put an animation on the follower
 
 // eat, lead, don't follow
@@ -22,6 +21,7 @@
 // - turn up ring loss speed
 
 // VISUAL COMMS
+// - standardize ring offset
 // - make tail come off last ringLocation
 // - make death prettier / more compelling
 // - manipulate circle colour!
@@ -30,7 +30,6 @@
 
 
 // GENERAL IMPROVEMENTS
-//collision bug is back
 // - give flavour text boxes to coins - i'm just looking for a leader? ("i'll do what ever you tell me to do")
 
 
@@ -45,6 +44,7 @@ var player2FadeColor = [51, 153, 255, 100];
 var scl = 40;
 var vol = 0.4;
 var foods = [];
+var spikes = [];
 var level0;
 var level1;
 var level2;
@@ -88,11 +88,16 @@ function setup() {
   var allTheLevels = [pressKeyToContinue, level0, level1, level2, level3];
   levelManager = new LevelManager(0, allTheLevels, finalLevel);
 
+
   for (var i = 0; i < 1; i++) {
     foods[i] = new Food(scl);
     foods[i].location();
   }
 
+  for (var i = 0; i < 1; i++) {
+    spikes[i] = new Spike(scl);
+    spikes[i].location();
+  }
 }
 
 function draw() {
@@ -111,7 +116,7 @@ function draw() {
   playerCollision();
 
   ////////////////////////// DRAW
-  levelManager.drawLevel(player1, player2, foods);
+  levelManager.drawLevel(player1, player2, foods, spikes);
 }
 
 //who is following who

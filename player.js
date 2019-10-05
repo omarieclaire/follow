@@ -58,6 +58,18 @@ class Player {
     }
   }
 
+  collideWithSpike(spike) {
+    var d = dist(this.x, this.y, spike.x, spike.y);
+    if(d < this.scl) {
+      this.total--;
+      this.playerRings.pop();
+      this.flipDirection();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   dir(x, y) {
     this.xspeed = x;
     this.yspeed = y;

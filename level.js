@@ -15,7 +15,7 @@ class Level {
     }
   }
   keyWasPressedLevel(keyCode) {}
-  basicLevelDraw(player1, player2, foods) { //basic level draw
+  basicLevelDraw(player1, player2, foods, spikes) { //basic level draw
     background(30);
     noStroke();
     textSize(standardTextSize);
@@ -33,8 +33,28 @@ class Level {
 
     this.leaderRing.drawLeaderRing(player1, player2);
   }
-  draw(player1, player2, foods) {
-    this.basicLevelDraw(player1, player2, foods);
+  draw(player1, player2, foods, spikes) {
+    this.basicLevelDraw(player1, player2, foods, spikes);
+  }
+
+  // NOTE: this is a copy of a function in sketch
+  // TODO: figure out a better place for this and avoid copying the function.
+  handlePlayerFollowing(playerX, playerY, futureDirectionOfX) {
+    //this is happening right after playerX presses a directional key, BEFORE the direction of playerX changes
+    if (playerX.direction == playerY.direction) { //only deal with cases where there is ALREADY a "follower"
+      if (futureDirectionOfX != playerX.direction) { //is someone unfollowing someone?
+        playerX.isFollowing = false; //then turn off all follows
+        playerY.isFollowing = false;
+        playerX.isFollowed = false;
+        playerY.isFollowed = false;
+      }
+    } else { // if there is no current follower
+      if (futureDirectionOfX == playerY.direction) {
+        playerX.isFollowing = true;
+        playerY.isFollowed = true;
+
+      }
+    }
   }
 }
 
@@ -48,7 +68,7 @@ class PressKeyToContinue extends Level {
   resetLevel() {
     this.keyWasPressed = false;
   }
-  draw(player1, player2, foods) {
+  draw(player1, player2, foods, spikes) {
     // draw our title screen.
     background(30);
 
@@ -80,7 +100,7 @@ class Level0 extends Level {
     this.numTicks = 0;
   };
   //can create a draw inside any level to customize it
-  draw(player1, player2, foods) {
+  draw(player1, player2, foods, spikes) {
     this.numTicks++;
     // this.basicLevelDraw(player1, player2, foods);
     background(30);
@@ -108,9 +128,9 @@ class Level1 extends Level {
     this.numTicks = 0;
 
   };
-  draw(player1, player2, foods) {
+  draw(player1, player2, foods, spikes) {
     this.numTicks++;
-    this.basicLevelDraw(player1, player2, foods);
+    this.basicLevelDraw(player1, player2, foods, spikes);
 
     if (player1.isFollowing) {
       fill(player2Color);
@@ -130,7 +150,7 @@ class Level1 extends Level {
   }
 
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 4000;
+    return this.numTicks >= 100;
   }
   //ticks need to be reset when game restarts
   resetLevel() {
@@ -157,13 +177,24 @@ class Level2 extends Level {
     }
   }
 
-  draw(player1, player2, foods) {
+  spikeHit(player1, player2, spikes) {
+    for(let i = 0; i < spikes.length; i++) {
+      player1.collideWithSpike(spikes[i]);
+      player2.collideWithSpike(spikes[i]);
+    }
+  }
+
+  draw(player1, player2, foods, spikes) {
 
     this.foodEaten(player1, player2, foods);
+    this.spikeHit(player1, player2, spikes);
 
-    this.basicLevelDraw(player1, player2, foods);
+    this.basicLevelDraw(player1, player2, foods, spikes);
     for (let i = 0; i < foods.length; i++) {
       foods[i].show();
+    }
+    for (let i = 0; i < spikes.length; i++) {
+      spikes[i].show();
     }
   }
   advanceToNextLevel(player1, player2) {
@@ -181,8 +212,8 @@ class Level3 extends Level {
   constructor() {
     super();
   };
-  draw(player1, player2, foods) {
-    this.basicLevelDraw(player1, player2, foods);
+  draw(player1, player2, foods, spikes) {
+    this.basicLevelDraw(player1, player2, foods, spikes);
     for (let i = 0; i < foods.length; i++) {
       foods[i].show();
     }
@@ -203,7 +234,7 @@ class FinalLevel extends Level {
     super();
     this.numTicks = 0;
   }
-  draw(player1, player2, foods) {
+  draw(player1, player2, foods, spikes) {
     // this.dissolvePlayer(player1, player2);
     // console.log("you are dead");
     // background(255, 0, 0);
