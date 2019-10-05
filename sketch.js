@@ -109,23 +109,10 @@ function draw() {
   // player1.ringLocation();
   // player2.ringLocation();
 
-  foodEaten();
   playerCollision();
 
   ////////////////////////// DRAW
   levelManager.drawLevel(player1, player2, foods);
-}
-
-function foodEaten() {
-  for (let i = 0; i < foods.length; i++) {
-    if (player1.eat(foods[i])) {
-      foods[i].location();
-    }
-
-    if (player2.eat(foods[i])) {
-      foods[i].location();
-    }
-  }
 }
 
 //who is following who

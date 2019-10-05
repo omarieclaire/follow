@@ -144,7 +144,23 @@ class Level2 extends Level {
   constructor() {
     super();
   };
+
+  foodEaten(player1, player2, foods) {
+    for (let i = 0; i < foods.length; i++) {
+      if (player1.eat(foods[i])) {
+        foods[i].location();
+      }
+
+      if (player2.eat(foods[i])) {
+        foods[i].location();
+      }
+    }
+  }
+
   draw(player1, player2, foods) {
+
+    this.foodEaten(player1, player2, foods);
+
     this.basicLevelDraw(player1, player2, foods);
     for (let i = 0; i < foods.length; i++) {
       foods[i].show();
