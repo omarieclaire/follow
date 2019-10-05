@@ -28,32 +28,14 @@ class Level {
     //player colour
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
-    if (player1.isFollowing) {
-      fill(player1FadeColor);
-      player1.show();
-      fill(player2Color);
-      player2.show();
-    } else if (player2.isFollowing) {
-      fill(player2FadeColor);
-      player2.show();
-      fill(player1Color);
-      player1.show();
-    } else {
-      //draw players when they do not lead or follow
-      fill(player1Color);
-      player1.show();
-      fill(player2Color);
-      player2.show();
-    }
+    player1.show();
+    player2.show();
 
     this.leaderRing.drawLeaderRing(player1, player2);
-
-
   }
   draw(player1, player2, foods) {
     this.basicLevelDraw(player1, player2, foods);
   }
-
 }
 
 class PressKeyToContinue extends Level {

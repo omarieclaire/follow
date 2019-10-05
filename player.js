@@ -1,6 +1,6 @@
 class Player {
   //constructor is a method which is run only once to set up the object
-  constructor(temp_name, temp_playerDir, temp_xspeed, xOffSet, scl) {
+  constructor(temp_name, temp_playerDir, temp_xspeed, xOffSet, scl, tmp_playerColor, tmp_playerFadedColor) {
     this.scl = scl;
     this.name = temp_name;
     this.direction = temp_playerDir;
@@ -16,6 +16,8 @@ class Player {
     this.total = 5;
     this.isFollowing = false;
     this.isFollowed = false;
+    this.playerColor = tmp_playerColor;
+    this.playerFadedColor = tmp_playerFadedColor;
 
     this.playerRings = []; // store the rings within a local array
     for (var i = 0; i < this.total; i++) { //for each point in score
@@ -161,6 +163,11 @@ class Player {
         theRing.updateLocation(theRing.x, 0 - 20);
       }
     }
+// following player jitter
+    if (this.isFollowing) {
+      this.x = this.x + random(-2, 2);
+      this.y = this.y + random(-2, 2);
+    }
   }
 
   //FOLLOW ME
@@ -168,6 +175,11 @@ class Player {
   show() {
     noStroke();
     //colored player circle
+    if(this.isFollowing){
+      fill(this.playerFadedColor);
+    } else {
+      fill(this.playerColor);
+    }
     ellipse(this.x, this.y, this.scl, this.scl);
     noFill();
     stroke(255, 200);

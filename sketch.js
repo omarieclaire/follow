@@ -1,3 +1,15 @@
+// am i drawing invisible foods?
+// put an animation on the follower
+
+// eat, lead, don't follow
+//Follow me! a game that ask you to follow the other player.
+
+// after 10 miunutes of not following - level switches up
+// make foods move around a bit?
+// punishment should be immediately obvious
+//if you follow you die
+
+
 
 // HIGH LEVEL
 //communicate direction BETTER
@@ -15,6 +27,7 @@
 // - make death prettier / more compelling
 // - manipulate circle colour!
 // - consider adding brick level
+// - lose ring animation
 
 
 // GENERAL IMPROVEMENTS
@@ -64,8 +77,8 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   //Special function to construct an object
-  player1 = new Player("1", " ", 0, 200, scl);
-  player2 = new Player("2", " ", -0, -200, scl);
+  player1 = new Player("1", " ", 0, 200, scl, player1Color, player1FadeColor);
+  player2 = new Player("2", " ", -0, -200, scl, player2Color, player2FadeColor);
   level0 = new Level0();
   level1 = new Level1();
   level2 = new Level2();
