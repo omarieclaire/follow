@@ -43,7 +43,23 @@ class Player {
     console.log("reset: " + this.direction + "and reset: " + this.total);
     console.log("player was reset " + this.name);
     console.log("is following is " + this.isFollowing);
+  }
 
+  handlePlayerFollowing(otherPlayer, ourFutureDirection) {
+    //this is happening right after playerX presses a directional key, BEFORE the direction of playerX changes
+    if (this.direction == otherPlayer.direction) { //only deal with cases where there is ALREADY a "follower"
+      if (ourFutureDirection != this.direction) { //is someone unfollowing someone?
+        this.isFollowing = false; //then turn off all follows
+        otherPlayer.isFollowing = false;
+        this.isFollowed = false;
+        otherPlayer.isFollowed = false;
+      }
+    } else { // if there is no current follower
+      if (ourFutureDirection == otherPlayer.direction) {
+        this.isFollowing = true;
+        otherPlayer.isFollowed = true;
+      }
+    }
   }
 
   eat(food) {
@@ -58,12 +74,12 @@ class Player {
     }
   }
 
-  collideWithSpike(spike) {
+  collideWithSpike(spike, otherPlayer) {
     var d = dist(this.x, this.y, spike.x, spike.y);
     if(d < this.scl) {
       this.total--;
       this.playerRings.pop();
-      this.flipDirection();
+      this.flipDirection(otherPlayer);
       return true;
     } else {
       return false;
@@ -75,32 +91,36 @@ class Player {
     this.yspeed = y;
   }
 
-  flipDirection() {
+  flipDirection(otherPlayer) {
     if (this.direction == "up") {
-      this.changeDirectionDown();
+      this.changeDirectionDown(otherPlayer);
     } else if (this.direction == "down") {
-      this.changeDirectionUp();
+      this.changeDirectionUp(otherPlayer);
     } else if (this.direction == "left") {
-      this.changeDirectionRight();
+      this.changeDirectionRight(otherPlayer);
     } else if (this.direction == "right") {
-      this.changeDirectionLeft();
+      this.changeDirectionLeft(otherPlayer);
     }
   }
 
-  changeDirectionDown() {
+  changeDirectionDown(otherPlayer) {
     this.dir(0, 0.1);
+    this.handlePlayerFollowing(otherPlayer, "down");
     this.direction = "down";
   }
-  changeDirectionUp() {
+  changeDirectionUp(otherPlayer) {
     this.dir(0, -0.1);
+    this.handlePlayerFollowing(otherPlayer, "up");
     this.direction = "up";
   }
-  changeDirectionLeft() {
+  changeDirectionLeft(otherPlayer) {
     this.dir(-0.1, 0);
+    this.handlePlayerFollowing(otherPlayer, "left");
     this.direction = "left";
   }
-  changeDirectionRight() {
+  changeDirectionRight(otherPlayer) {
     this.dir(0.1, 0);
+    this.handlePlayerFollowing(otherPlayer, "right");
     this.direction = "right";
   }
 

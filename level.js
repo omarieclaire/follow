@@ -36,26 +36,6 @@ class Level {
   draw(player1, player2, foods, spikes) {
     this.basicLevelDraw(player1, player2, foods, spikes);
   }
-
-  // NOTE: this is a copy of a function in sketch
-  // TODO: figure out a better place for this and avoid copying the function.
-  handlePlayerFollowing(playerX, playerY, futureDirectionOfX) {
-    //this is happening right after playerX presses a directional key, BEFORE the direction of playerX changes
-    if (playerX.direction == playerY.direction) { //only deal with cases where there is ALREADY a "follower"
-      if (futureDirectionOfX != playerX.direction) { //is someone unfollowing someone?
-        playerX.isFollowing = false; //then turn off all follows
-        playerY.isFollowing = false;
-        playerX.isFollowed = false;
-        playerY.isFollowed = false;
-      }
-    } else { // if there is no current follower
-      if (futureDirectionOfX == playerY.direction) {
-        playerX.isFollowing = true;
-        playerY.isFollowed = true;
-
-      }
-    }
-  }
 }
 
 class PressKeyToContinue extends Level {
@@ -179,8 +159,8 @@ class Level2 extends Level {
 
   spikeHit(player1, player2, spikes) {
     for(let i = 0; i < spikes.length; i++) {
-      player1.collideWithSpike(spikes[i]);
-      player2.collideWithSpike(spikes[i]);
+      player1.collideWithSpike(spikes[i], player2);
+      player2.collideWithSpike(spikes[i], player1);
     }
   }
 

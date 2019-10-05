@@ -119,41 +119,25 @@ function draw() {
   levelManager.drawLevel(player1, player2, foods, spikes);
 }
 
-//who is following who
-function handlePlayerFollowing(playerX, playerY, futureDirectionOfX) {
-  //this is happening right after playerX presses a directional key, BEFORE the direction of playerX changes
-  if (playerX.direction == playerY.direction) { //only deal with cases where there is ALREADY a "follower"
-    if (futureDirectionOfX != playerX.direction) { //is someone unfollowing someone?
-      playerX.isFollowing = false; //then turn off all follows
-      playerY.isFollowing = false;
-      playerX.isFollowed = false;
-      playerY.isFollowed = false;
-    }
-  } else { // if there is no current follower
-    if (futureDirectionOfX == playerY.direction) {
-      playerX.isFollowing = true;
-      playerY.isFollowed = true;
-
-    }
-  }
-}
-
 function playerCollision() {
   let d = dist(player1.x, player1.y, player2.x, player2.y);
   //added 10 to hopefully fix the bug
   if (d < player1.r + player2.r) {
+    console.log("playerCollision: collision true");
     player1.total = player1.total - 1;
     player2.total = player2.total - 1;
     player1.playerRings.pop();
     player2.playerRings.pop();
-    player1.flipDirection();
-    player2.flipDirection();
+    player1.flipDirection(player2);
+    player2.flipDirection(player1);
     //add xspeed or yspeed after collision to fix collision bug
     player1.update(100);
     player2.update(100);
     // players never follow each other after a collission
     player1.isFollowing = false;
     player2.isFollowing = false;
+    player1.isFollowed = false;
+    player2.isFollowed = false;
     // hit_sound.play();
   }
 }
@@ -176,35 +160,27 @@ function keyPressed() {
   }
 
   if (keyCode === UP_ARROW) {
-    handlePlayerFollowing(player1, player2, "up");
-    player1.changeDirectionUp();
+    player1.changeDirectionUp(player2);
 
   } else if (keyCode === DOWN_ARROW) {
-    handlePlayerFollowing(player1, player2, "down");
-    player1.changeDirectionDown();
+    player1.changeDirectionDown(player2);
 
   } else if (keyCode === RIGHT_ARROW) {
-    handlePlayerFollowing(player1, player2, "right");
-    player1.changeDirectionRight();
+    player1.changeDirectionRight(player2);
 
   } else if (keyCode === LEFT_ARROW) {
-    handlePlayerFollowing(player1, player2, "left");
-    player1.changeDirectionLeft();
+    player1.changeDirectionLeft(player2);
 
   } else if (keyCode === 87) {
-    handlePlayerFollowing(player2, player1, "up");
-    player2.changeDirectionUp();
+    player2.changeDirectionUp(player1);
 
   } else if (keyCode === 83) {
-    handlePlayerFollowing(player2, player1, "down");
-    player2.changeDirectionDown();
+    player2.changeDirectionDown(player1);
 
   } else if (keyCode === 68) {
-    handlePlayerFollowing(player2, player1, "right");
-    player2.changeDirectionRight();
+    player2.changeDirectionRight(player1);
 
   } else if (keyCode === 65) {
-    handlePlayerFollowing(player2, player1, "left");
-    player2.changeDirectionLeft();
+    player2.changeDirectionLeft(player1);
   }
 }
