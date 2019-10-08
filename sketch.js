@@ -5,7 +5,7 @@
 
 // TODO
 // - standardize ring offset
-// - make barriers/better more aggressive looking
+// - make spikes rotate and pulse
 // - make tail come off last ring
 // - food is coloured, and you get a ring of that colour?
 // - smiley face when leading, frowny face when following, neutral face when neutral
@@ -41,8 +41,10 @@
 
 // WHY
 // - why does this have a var and the others don't?   var allTheLevels = [pressKeyToContinue, level0, level1, level2, level3];
-// - why do some things require "setup" and others don't?
+// - why do some things require "setup" and others don't? For example, "Rings" aren't set up
 // - why do I have collision bugs?
+// - I should walk through the "move" of the rings
+// - Why is noCursor not working?
 
 // Thanks: Ida, Aaron, Game Center, Mailis,
 
@@ -86,7 +88,11 @@ function preload() {
 
 // Setup is where I set up a bunch of important objects
 function setup() {
+  noCursor();
+
   createCanvas(windowWidth, windowHeight);
+  // p5 specific function for working with degrees
+  angleMode(DEGREES);
   //special functions to construct an object from a class
   player1 = new Player("1", " ", 0, 200, scl, player1Color, player1FadeColor);
   player2 = new Player("2", " ", -0, -200, scl, player2Color, player2FadeColor);

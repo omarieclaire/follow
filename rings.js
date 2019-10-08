@@ -13,7 +13,6 @@ class Rings {
     //the player that THIS ring follows
     this.player = player;
     this.spectrum = 0;
-
   }
 //function to manage the rings when they reach the edge of the screen
   updateLocation(newX,newY) {
@@ -23,17 +22,17 @@ class Rings {
 
   move() {
     //this.x and this.y of the rings
-      let v1 = createVector(this.x, this.y);
-      //this.x and this.y of a player
-      let v2 = createVector(this.player.x, this.player.y);
-      let lerp = p5.Vector.lerp(v1, v2, this.spectrum);
-      this.x = lerp.x;
-      this.y = lerp.y;
-      if (this.spectrum >= 1) {
-        this.spectrum = 1;
-      } else {
-        this.spectrum = this.spectrum + 0.01;
-      }
+    let v1 = createVector(this.x, this.y);
+    //this.x and this.y of a player
+    let v2 = createVector(this.player.x, this.player.y);
+    let lerp = p5.Vector.lerp(v1, v2, this.spectrum);
+    this.x = lerp.x;
+    this.y = lerp.y;
+    if (this.spectrum >= 1) {
+      this.spectrum = 1;
+    } else {
+      this.spectrum = this.spectrum + 0.01;
+    }
   }
 
   draw(radius) {

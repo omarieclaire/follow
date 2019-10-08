@@ -234,14 +234,14 @@ class FinalLevel extends Level {
     stroke(255, 0, 0);
 
     if (player2.total <= 0 && player1.total <= 0) {
-      // nofill();
+      noFill();
       ellipse(player1.x, player1.y, 50);
       ellipse(player2.x, player2.y, 50);
     } else if (player2.total <= 0 && player1.total > 0) {
-      // nofill();
+      noFill();
       ellipse(player2.x, player2.y, 50);
     } else if (player1.total <= 0 && player2.total > 0){
-      // nofill();
+      noFill();
       ellipse(player1.x, player1.y, 100);
 
     } else {}

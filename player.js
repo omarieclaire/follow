@@ -236,8 +236,9 @@ class Player {
       }
       this.playerRings[i].draw(this.scl / 2 + i * this.scl / 2);
     }
-    // draw popped ring
-    if(typeof(this.poppedRing) !== 'undefined' && this.numTicksPoppedRing < 200) {
+
+    // draw dead ring
+    if(typeof(this.poppedRing) !== 'undefined' && this.numTicksPoppedRing < 150) {
       this.poppedRing.drawDeadRing(this.scl / 2 + this.playerRings.length * this.scl / 2);
       this.numTicksPoppedRing++;
     } else {

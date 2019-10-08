@@ -2,6 +2,7 @@ class Spike {
   constructor(temp_scl) {
     this.spikeColor = [255, 0, 0, 250]; //red
     this.scl = temp_scl;
+    this.total = 3;
     this.spikeLocation = this.makeRandomVector();
     this.x = this.spikeLocation.x;
     this.y = this.spikeLocation.y;
@@ -26,10 +27,20 @@ class Spike {
     stroke(this.spikeColor);
     strokeWeight(.5);
     noFill();
-    ellipse(this.spikeLocation.x, this.spikeLocation.y, this.scl, this.scl);
+    var angle = 0;
+    rotate(angle);
+    // translate changes the origin point for everything after it
+    translate(this.spikeLocation.x, this.spikeLocation.y);
+    // triangle(-scl / 2, scl / 2, 1, -scl / 2, scl / 2, scl / 2);
+    for (var i = 0; i < this.total; i++) {
+      triangle(-scl / 3, scl / 6, scl / 3, scl / 6, 0, - scl / 2);
+      //upsidedown triangle
+      triangle(-scl / 3, - scl / 6, scl / 3, - scl / 6, 0, scl / 2);
+
+    }
+
     // for (var i = 0; i < this.total; i++) {
-      // fill(random(220, 270), random(220, 270), 0);
-      // ellipse(this.foodLocation.x, this.foodLocation.y, random(scl / 2, scl / 8), random(scl / 2, scl / 8));
+    //   angle = angle + 3;
     // }
   }
 }
