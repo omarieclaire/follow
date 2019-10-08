@@ -42,7 +42,7 @@ class Spike {
       this.angle = this.angle + 3;
 
     }
-    this.angle = this.angle + 1;
+    this.angle = this.angle + .5;
 
   }
 }

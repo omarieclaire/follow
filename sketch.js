@@ -4,7 +4,10 @@
 // Player should *want* to be leading
 
 // TODO
+// - Death ring should be player -sized!
+// - NO ghost ring when it's a follow-loss please!
 // - improve ring loss animation (arrays etc)
+// - more spikes, moving spikes
 // - standardize ring offset
 // - make tail come off last ring
 // - food is coloured, and you get a ring of that colour?

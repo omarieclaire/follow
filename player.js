@@ -11,7 +11,7 @@ class Player {
     this.x = windowWidth / 2 + xOffSet;
     this.initialXOffset = xOffSet;
     this.y = windowHeight / 2;
-    this.r = 20;
+    this.r = scl;
     this.yspeed = 0;
     this.total = 5;
     this.isFollowing = false;
@@ -31,7 +31,7 @@ class Player {
     this.xspeed = this.initialxspeed;
     this.x = windowWidth/2 + this.initialXOffset;
     this.y = windowHeight / 2;
-    this.r = 20;
+    this.r = scl;
     this.yspeed = 0;
     this.total = 5;
     this.isFollowing = false;
@@ -237,7 +237,7 @@ class Player {
     }
 
     // draw dead ring
-    if(this.poppedRings.length > 0 && this.numTicksPoppedRing < 300) {
+    if(this.poppedRings.length > 0 && this.numTicksPoppedRing < 50) {
       for (var i = 0; i < this.poppedRings.length; i++) {
         var thePoppedRing = this.poppedRings[i];
         if(typeof(thePoppedRing) !== 'undefined') {
@@ -259,7 +259,7 @@ class Player {
     pop(); //pop back to original drawstate
 
     //player trail
-    let numberOfTrails = 10;
+    let numberOfTrails = 5;
     let spaceBetweenCircles = 15;
     let radiusShrinkFactor = 0.5;
 

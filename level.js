@@ -232,17 +232,16 @@ class FinalLevel extends Level {
     noStroke();
     text("GAME OVER!!!", windowWidth / 2, windowHeight / 2);
     stroke(255, 0, 0);
-
     if (player2.total <= 0 && player1.total <= 0) {
       noFill();
-      ellipse(player1.x, player1.y, 50);
-      ellipse(player2.x, player2.y, 50);
+      ellipse(player1.x, player1.y, player1.r);
+      ellipse(player2.x, player2.y, player1.r);
     } else if (player2.total <= 0 && player1.total > 0) {
       noFill();
-      ellipse(player2.x, player2.y, 50);
+      ellipse(player2.x, player2.y, player1.r);
     } else if (player1.total <= 0 && player2.total > 0){
       noFill();
-      ellipse(player1.x, player1.y, 100);
+      ellipse(player1.x, player1.y, player1.r);
 
     } else {}
     this.numTicks++;

@@ -40,7 +40,10 @@ class Rings {
   }
 
   drawDeadRing(initialRadius) {
+    push();
     stroke(255, 0, 0);
+    strokeWeight(.25);
     ellipse(this.x, this.y, initialRadius);
+    pop();
   }
 }
