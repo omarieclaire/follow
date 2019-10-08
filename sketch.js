@@ -4,13 +4,12 @@
 // Player should *want* to be leading
 
 // TODO
+// - improve ring loss animation (arrays etc)
 // - standardize ring offset
-// - make spikes rotate and pulse
 // - make tail come off last ring
 // - food is coloured, and you get a ring of that colour?
 // - smiley face when leading, frowny face when following, neutral face when neutral
 // - make death prettier / more compelling
-// - improve ring loss animation (arrays etc)
 // - make player trail look better
 // - integrate music
 // - move player collision to player class?
@@ -137,8 +136,9 @@ function playerCollision() {
   if (d < player1.r + player2.r) {
     player1.total = player1.total - 1;
     player2.total = player2.total - 1;
-    player1.poppedRing = player1.playerRings.pop();
-    player2.poppedRing = player2.playerRings.pop();
+    player1.poppedRings.push(player1.playerRings.pop());
+    player2.poppedRings.push(player2.playerRings.pop());
+    console.log("popping rings");
     player1.flipDirection(player2);
     player2.flipDirection(player1);
     //add xspeed or yspeed after collision to fix collision bug

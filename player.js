@@ -18,8 +18,7 @@ class Player {
     this.isFollowed = false;
     this.playerColor = tmp_playerColor;
     this.playerFadedColor = tmp_playerFadedColor;
-
-    this.poppedRing = undefined;
+    this.poppedRings =  [];
     this.numTicksPoppedRing = 0;
 
     this.playerRings = []; // store the rings within a local array
@@ -38,7 +37,7 @@ class Player {
     this.isFollowing = false;
     this.isFollowed = false;
     this.direction = this.initialDirection;
-    this.poppedRing = undefined;
+    this.poppedRings =  [];
     this.numTicksPoppedRing = 0;
 
     this.playerRings = []; // store the rings within a local array
@@ -83,7 +82,7 @@ class Player {
     var d = dist(this.x, this.y, spike.x, spike.y);
     if(d < this.scl) {
       this.total--;
-      this.poppedRing = this.playerRings.pop();
+      this.poppedRings.push(this.playerRings.pop());
       // we need otherPlayer to handle flip direction because we needs
       // to update isFollowed and isFollowing whenever a player's direction
       // is changed.
@@ -139,7 +138,7 @@ class Player {
     var diff = Math.abs(Math.floor(this.total) - Math.floor(oldTotal));
     if (diff >= 1) {
       if (amount < 0) {
-        this.playerRings.pop(); //get rid of a ring
+        this.poppedRings.push(this.playerRings.pop());
       } else {
         // create a ring that follows 'this' and has the start x and y coordinates passed to changeRingTotal
         this.playerRings.push(new Rings(this, this.scl, x, y)); //add a ring
@@ -238,12 +237,24 @@ class Player {
     }
 
     // draw dead ring
-    if(typeof(this.poppedRing) !== 'undefined' && this.numTicksPoppedRing < 150) {
-      this.poppedRing.drawDeadRing(this.scl / 2 + this.playerRings.length * this.scl / 2);
+    if(this.poppedRings.length > 0 && this.numTicksPoppedRing < 300) {
+      for (var i = 0; i < this.poppedRings.length; i++) {
+        var thePoppedRing = this.poppedRings[i];
+        if(typeof(thePoppedRing) !== 'undefined') {
+          thePoppedRing.drawDeadRing(this.scl / 2 + this.playerRings.length * this.scl / 2);
+        } else {
+          // the popped ring should never be undefined. but somehow it is occasionally.
+          // if a ring was undefined then we would not have been able to draw it.
+          // not sure how a ring gets popped and then becomes undefined.
+          // we should try to get the chrome debugger to work here and
+          // investigate.
+          //debug();
+        }
+      }
       this.numTicksPoppedRing++;
     } else {
-      this.numTicks = 0;
-      this.poppedRing = undefined;
+      this.numTicksPoppedRing = 0;
+      this.poppedRings.pop();
     }
     pop(); //pop back to original drawstate
 
