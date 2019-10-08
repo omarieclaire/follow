@@ -39,7 +39,7 @@ class Rings {
   draw(radius) {
     ellipse(this.x, this.y, radius);
   }
-  
+
   drawDeadRing(initialRadius) {
     stroke(55);
     ellipse(this.x, this.y, initialRadius);

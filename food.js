@@ -1,10 +1,15 @@
 class Food {
   constructor(temp_scl) {
-    // this.isfollowing = false;
     this.scl = temp_scl;
     this.total = 3;
     this.x;
     this.y;
+  }
+
+  foodMove() {
+    for (var i = 0; i <= 10; i++) {
+      this.x = this.x + 1;
+    }
   }
 
   //picking place for food
@@ -28,8 +33,10 @@ class Food {
     noFill();
     ellipse(this.foodLocation.x, this.foodLocation.y, this.scl, this.scl);
     for (var i = 0; i < this.total; i++) {
-      // fill(random(220, 270), random(220, 270), 0);
-      ellipse(this.foodLocation.x, this.foodLocation.y, random(scl / 2, scl / 8), random(scl / 2, scl / 8));
+      // fill(random(220, 10), random(220, 10), 0);
+//old food
+      // ellipse(this.foodLocation.x, this.foodLocation.y, random(scl / 2, scl / 8), random(scl / 2, scl / 8));
+      ellipse(this.foodLocation.x, this.foodLocation.y, random(scl / 2, scl / 8));
     }
   }
 }

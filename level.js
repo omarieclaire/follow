@@ -8,7 +8,6 @@ class Level {
   //first, a function to check if the game is over
   isGameOverCheck(player1, player2) {
     if (player1.total <= 0 || player2.total <= 0) {
-      // console.log("Game is over");
       return true;
     } else {
       return false;
@@ -106,12 +105,11 @@ class Level0 extends Level {
     fill(10, 255, 50);
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
-    text("Are you a follower?", windowWidth / 2, windowHeight / 2);
-
+    text("Welcome", windowWidth / 2, windowHeight / 2);
   }
 
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 2000;
+    return this.numTicks >= 200;
   }
 
   //ticks need to be reset when game restarts
@@ -149,7 +147,7 @@ class Level1 extends Level {
   }
 
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 100;
+    return this.numTicks >= 200;
   }
   //ticks need to be reset when game restarts
   resetLevel() {
@@ -236,19 +234,17 @@ class FinalLevel extends Level {
     stroke(255, 0, 0);
 
     if (player2.total <= 0 && player1.total <= 0) {
-      for (var i = 0; i < 250; i--) {
-      }
+      // nofill();
       ellipse(player1.x, player1.y, 50);
       ellipse(player2.x, player2.y, 50);
-
-
     } else if (player2.total <= 0 && player1.total > 0) {
+      // nofill();
       ellipse(player2.x, player2.y, 50);
     } else if (player1.total <= 0 && player2.total > 0){
+      // nofill();
       ellipse(player1.x, player1.y, 100);
 
-    } else {
-    }
+    } else {}
     this.numTicks++;
   }
   advanceToNextLevel(player1, player2) {

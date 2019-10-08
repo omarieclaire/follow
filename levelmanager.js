@@ -39,7 +39,6 @@ class LevelManager {
 
   //advance to the next level when conditions are met
   switchLevel(player1, player2) {
-    //from the list of levels, get me the current one.
     if (this.gameOverMode) {
       if (this.gameOverLevel.advanceToNextLevel(player1, player2) == true) {
         this.resetLevelManager();
@@ -60,11 +59,9 @@ class LevelManager {
     this.isGameOverManager(player1, player2);
 
     if (this.gameOverMode == true) {
-      // draw the game over level
-      console.log("final level!")
       this.gameOverLevel.draw(player1, player2, foods, spikes);
     } else {
-      //from the list of levels, get me the current one.
+      //set theCurrentLevel var = from the list of levels, get me the current one.
       var theCurrentLevel = this.allTheLevels[this.currLevelIndex];
       theCurrentLevel.draw(player1, player2, foods, spikes);
     }

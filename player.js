@@ -146,16 +146,14 @@ class Player {
       }
     }
   }
-//update the total score on a given player which also changes the rings
+//update the score on players - also changes rings
   updateTotal(otherPlayer) {
     //ring movement from one player to another
     var ringTransferSpd = 0.01;
     if (this.isFollowing) {
-      //decrement
-      //note: we never use this.x and this.y in this case because of the above logic (amount < 0)
+      //decrement! (note: we never use this.x and this.y here bc of the above logic (amount < 0))
       this.changeRingTotal(- ringTransferSpd, this.x, this.y);
-      //increment
-
+      //increment!
       //other player is simply an object. we pass the values below into changeringtotal.
       //create a ring that follows other player
       otherPlayer.changeRingTotal(ringTransferSpd, this.x, this.y);
@@ -178,9 +176,9 @@ class Player {
     }
 
     //loop player around screen
-    var windowLoopSpacer = 30;
+    var windowLoopSpacer = 20;
     if (this.x < 0 - windowLoopSpacer) {
-      this.x = windowWidth - windowLoopSpacer;
+      this.x = windowWidth + windowLoopSpacer;
       for (var i = 0; i < this.playerRings.length; i++) {
         var theRing = this.playerRings[i];
         theRing.updateLocation(windowWidth - windowLoopSpacer, theRing.y);
@@ -194,7 +192,7 @@ class Player {
         theRing.updateLocation(0 - windowLoopSpacer, theRing.y);
       }
     } else if (this.y < 0 - windowLoopSpacer) {
-      this.y = windowHeight - windowLoopSpacer;
+      this.y = windowHeight + windowLoopSpacer;
       for (var i = 0; i < this.playerRings.length; i++) {
         var theRing = this.playerRings[i];
         theRing.updateLocation(theRing.x, windowHeight - windowLoopSpacer);
