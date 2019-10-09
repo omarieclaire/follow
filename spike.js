@@ -26,13 +26,13 @@ class Spike {
   }
 
   show() {
+    push();
     stroke(this.spikeColor);
     strokeWeight(.5);
     noFill();
     // translate changes the origin point for everything after it
     translate(this.spikeLocation.x, this.spikeLocation.y);
     rotate(this.angle);
-
     for (var i = 0; i < this.total; i++) {
       // line(10, 10, 50, 50);
       triangle(-scl / 3, scl / 6, scl / 3, scl / 6, 0, - scl / 2);
@@ -40,6 +40,7 @@ class Spike {
       this.angle = this.angle + 3;
     }
     this.angle = this.angle + 3;
+    pop();
 
   }
 }

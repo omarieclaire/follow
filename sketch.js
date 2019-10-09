@@ -17,6 +17,7 @@
 // - move player collision to player class?
 // - arrow keys shouldn't work until after welcome level
 // - improve sound files (audacity)
+// - have a tick for the level, and once the tick reaches a certain level, add a spike to the array
 
 // MAYBE???
 // - give flavour text boxes to coins - i'm just looking for a leader? ("i'll do what ever you tell me to do"? or should I give flavour text to players?)
@@ -61,7 +62,6 @@ var player2FadeColor = [145, 200, 255, 200]; // faded blue
 var scl = 40; // scale of almost everything in the game
 var vol = 0.4; // music volume standard
 var foods = [];
-var spikes = [];
 var level0;
 var level1;
 var level2;
@@ -118,10 +118,7 @@ function setup() {
     foods[i] = new Food(scl);
     foods[i].location();
   }
-  for (var i = 0; i < 1; i++) {
-    spikes[i] = new Spike(scl);
-    spikes[i].location();
-  }
+
   for(let i = 0; i < 50; i++){
       explodeParticles.push(new ExplodeParticle);
   }
@@ -141,7 +138,7 @@ function draw() {
   playerCollision();
 
   // Finally actually drawing!
-  levelManager.drawLevel(player1, player2, foods, spikes);
+  levelManager.drawLevel(player1, player2, foods);
 
   // speed = map(mouseX, 0, width, 0, 50);
   // translate(width/2, height/2);

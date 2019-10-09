@@ -14,7 +14,7 @@ class Level {
     }
   }
   keyWasPressedLevel(keyCode) {}
-  basicLevelDraw(player1, player2, foods, spikes) { //basic level draw
+  basicLevelDraw(player1, player2, foods) { //basic level draw
     background(30);
     noStroke();
     textSize(standardTextSize);
@@ -23,7 +23,6 @@ class Level {
     // fill(player2Color);
     // text(player2.total.toFixed(2), windowWidth / 2 - 200, windowHeight / 1.2);
     fill(255);
-
     //player colour
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
@@ -32,8 +31,8 @@ class Level {
 
     this.leaderRing.drawLeaderRing(player1, player2);
   }
-  draw(player1, player2, foods, spikes) {
-    this.basicLevelDraw(player1, player2, foods, spikes);
+  draw(player1, player2, foods) {
+    this.basicLevelDraw(player1, player2, foods);
   }
 
   foodEaten(player1, player2, foods) {
@@ -66,7 +65,7 @@ class PressKeyToContinue extends Level {
   resetLevel() {
     this.keyWasPressed = false;
   }
-  draw(player1, player2, foods, spikes) {
+  draw(player1, player2, foods) {
     // draw our title screen.
     background(30);
 
@@ -98,7 +97,7 @@ class Level0 extends Level {
     this.numTicks = 0;
   };
   //can create a draw inside any level to customize it
-  draw(player1, player2, foods, spikes) {
+  draw(player1, player2, foods) {
     this.numTicks++;
     // this.basicLevelDraw(player1, player2, foods);
     background(30);
@@ -125,9 +124,9 @@ class Level1 extends Level {
     this.numTicks = 0;
 
   };
-  draw(player1, player2, foods, spikes) {
+  draw(player1, player2, foods) {
     this.numTicks++;
-    this.basicLevelDraw(player1, player2, foods, spikes);
+    this.basicLevelDraw(player1, player2, foods);
 
     if (player1.isFollowing) {
       fill(player2Color);
@@ -147,7 +146,7 @@ class Level1 extends Level {
   }
 
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 3000;
+    return this.numTicks >= 100;
   }
   //ticks need to be reset when game restarts
   resetLevel() {
@@ -160,6 +159,12 @@ class Level1 extends Level {
 class Level2 extends Level {
   constructor() {
     super();
+    this.spikes = [];
+    //create spikes
+    for (var i = 0; i < 2; i++) {
+      this.spikes[i] = new Spike(scl);
+      this.spikes[i].location();
+    }
   };
 
   spikeHit(player1, player2, spikes) {
@@ -169,21 +174,21 @@ class Level2 extends Level {
     }
   }
 
-  draw(player1, player2, foods, spikes) {
+  draw(player1, player2, foods) {
 
     this.foodEaten(player1, player2, foods);
-    this.spikeHit(player1, player2, spikes);
+    this.spikeHit(player1, player2, this.spikes);
 
-    this.basicLevelDraw(player1, player2, foods, spikes);
+    this.basicLevelDraw(player1, player2, foods);
     for (let i = 0; i < foods.length; i++) {
       foods[i].show();
     }
-    for (let i = 0; i < spikes.length; i++) {
-      spikes[i].show();
+    for (let i = 0; i < this.spikes.length; i++) {
+      this.spikes[i].show();
     }
   }
   advanceToNextLevel(player1, player2) {
-    if (player1.total > 7 || player2.total > 7) {
+    if (player1.total > 7000 || player2.total > 7000) {
       console.log("switching from level 2 to level 3");
       return true;
     } else {
@@ -197,16 +202,12 @@ class Level3 extends Level {
   constructor() {
     super();
   };
-  draw(player1, player2, foods, spikes) {
+  draw(player1, player2, foods) {
     this.foodEaten(player1, player2, foods);
-    this.spikeHit(player1, player2, spikes);
 
-    this.basicLevelDraw(player1, player2, foods, spikes);
+    this.basicLevelDraw(player1, player2, foods);
     for (let i = 0; i < foods.length; i++) {
       foods[i].show();
-    }
-    for (let i = 0; i < spikes.length; i++) {
-      spikes[i].show();
     }
   }
   advanceToNextLevel(player1, player2) {
@@ -225,7 +226,7 @@ class FinalLevel extends Level {
     super();
     this.numTicks = 0;
   }
-  draw(player1, player2, foods, spikes) {
+  draw(player1, player2, foods) {
     // this.dissolvePlayer(player1, player2);
     // console.log("you are dead");
     // background(255, 0, 0);
