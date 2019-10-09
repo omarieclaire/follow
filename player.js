@@ -170,10 +170,6 @@ class Player {
   }
   //directional speed of player
   update(amount) {
-    for (var i = 0; i < this.playerRings.length; i++) {
-      this.playerRings[i].move();
-    }
-
     //for most circumstances we don't pass a value
     if (typeof(amount) === 'undefined') {
       this.x = this.x + this.xspeed * this.scl;
@@ -212,11 +208,15 @@ class Player {
         var theRing = this.playerRings[i];
         theRing.updateLocation(theRing.x, 0 - windowLoopSpacer);
       }
+
     }
 // following player jitter
     if (this.isFollowing) {
       this.x = this.x + random(-2, 2);
       this.y = this.y + random(-2, 2);
+    }
+    for (var i = 0; i < this.playerRings.length; i++) {
+      this.playerRings[i].move();
     }
   }
 
