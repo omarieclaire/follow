@@ -4,25 +4,24 @@
 // Player should *want* to be leading
 
 // TODO
-// - Death ring should be player -sized!
-// - NO ghost ring when it's a follow-loss please!
-// - improve ring loss animation (arrays etc)
+// - sort out sound playing
+// - improve ring loss animation
 // - more spikes, moving spikes
 // - standardize ring offset
 // - make tail come off last ring
 // - food is coloured, and you get a ring of that colour?
 // - smiley face when leading, frowny face when following, neutral face when neutral
-// - make death prettier / more compelling
+// - make death more compelling
 // - make player trail look better
 // - integrate music
 // - move player collision to player class?
-// - arrow keys don't work until after welcome level
+// - arrow keys shouldn't work until after welcome level
 // - improve sound files (audacity)
-// - integrate rippling ring from common
 
 // MAYBE???
 // - give flavour text boxes to coins - i'm just looking for a leader? ("i'll do what ever you tell me to do"? or should I give flavour text to players?)
 // - should foods move around a bit?
+// - integrate rippling ring from common
 // - punishment should be immediately obvious!
 // - Instructions? "if you follow you die" "if one of you dies, you die." ""
 // - draw line between players?
@@ -71,6 +70,8 @@ var finallevel;
 var levelManager;
 var pressKeyToContinue;
 var standardTextSize = 40; // text size standard
+let explodeParticles = [];
+let speed;
 
 function preload() {
   p1_img = loadImage('images/p1.png');
@@ -82,16 +83,22 @@ function preload() {
   hit_sound.setVolume(2);
   newlevel_music = loadSound('sounds/newlevel.mp3');
   newlevel_music.setVolume(vol);
-  winning_music = loadSound('sounds/winning.mp3');
-  winning_music.setVolume(vol);
+  following_music = loadSound('sounds/following.mp3');
+  following_music.setVolume(vol);
   losing_music = loadSound('sounds/losing.mp3');
   intro_music.setVolume(vol);
+  ringMove_music = loadSound('sounds/ringmove.mp3');
+  ringMove_music.setVolume(vol);
+  ambience_music = loadSound('sounds/ambience.mp3');
+  ambience_music.setVolume(vol);
+
+
+
 }
 
 // Setup is where I set up a bunch of important objects
 function setup() {
   noCursor();
-
   createCanvas(windowWidth, windowHeight);
   // p5 specific function for working with degrees
   angleMode(DEGREES);
@@ -115,6 +122,9 @@ function setup() {
     spikes[i] = new Spike(scl);
     spikes[i].location();
   }
+  for(let i = 0; i < 50; i++){
+      explodeParticles.push(new ExplodeParticle);
+  }
 }
 
 // Draw is where I call anything that needs to be constantly updated/needs to constantly change own state
@@ -132,6 +142,27 @@ function draw() {
 
   // Finally actually drawing!
   levelManager.drawLevel(player1, player2, foods, spikes);
+
+  // speed = map(mouseX, 0, width, 0, 50);
+  // translate(width/2, height/2);
+  //
+  // for(let i = 0; i < explodeParticles.length; i++){
+  //     explodeParticles[i].update();
+  //     explodeParticles[i].show();
+  // }
+  playSound();
+
+}
+
+function playSound (){
+  if (ambience_music.isPlaying()) {
+    // ambience_music.stop();
+    // console.log("music stopping!")
+
+  } else {
+    // ambience_music.play();
+    // console.log("music playing!")
+  }
 }
 
 function playerCollision() {

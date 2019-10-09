@@ -22,6 +22,7 @@ class Spike {
     this.spikeLocation = this.makeRandomVector();
     this.x = this.spikeLocation.x;
     this.y = this.spikeLocation.y;
+
   }
 
   show() {
@@ -32,17 +33,13 @@ class Spike {
     translate(this.spikeLocation.x, this.spikeLocation.y);
     rotate(this.angle);
 
-    // triangle(-scl / 2, scl / 2, 1, -scl / 2, scl / 2, scl / 2);
     for (var i = 0; i < this.total; i++) {
       // line(10, 10, 50, 50);
       triangle(-scl / 3, scl / 6, scl / 3, scl / 6, 0, - scl / 2);
-
-      //upsidedown triangle
-      triangle(-scl / 3, - scl / 6, scl / 3, - scl / 6, 0, scl / 2);
+      triangle(-scl / 3, - scl / 6, scl / 3, - scl / 6, 0, scl / 2); //upside down
       this.angle = this.angle + 3;
-
     }
-    this.angle = this.angle + .5;
+    this.angle = this.angle + 3;
 
   }
 }

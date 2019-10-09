@@ -147,7 +147,7 @@ class Level1 extends Level {
   }
 
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 200;
+    return this.numTicks >= 3000;
   }
   //ticks need to be reset when game restarts
   resetLevel() {

@@ -1,11 +1,10 @@
 class Player {
   //constructor is a method which is run only once to set up the object
   constructor(temp_name, temp_playerDir, temp_xspeed, xOffSet, scl, tmp_playerColor, tmp_playerFadedColor) {
-    this.scl = scl;
+    this.scl = scl; //note: I don't reset this in the reset, maybe I should
     this.name = temp_name;
     this.direction = temp_playerDir;
-    //sotre inittial diection for reset
-    this.initialDirection = temp_playerDir;
+    this.initialDirection = temp_playerDir; //store inittial diection for reset
     this.xspeed = temp_xspeed;
     this.initialxspeed = temp_xspeed;
     this.x = windowWidth / 2 + xOffSet;
@@ -62,6 +61,17 @@ class Player {
       if (ourFutureDirection == otherPlayer.direction) {
         this.isFollowing = true;
         otherPlayer.isFollowed = true;
+        // TODO loop follow music while following
+        // if (following_music.isPlaying()) {
+        //   following_music.stop();
+        // } else {
+        //   following_music.play();
+        // }
+        if (ringMove_music.isPlaying()) {
+          ringMove_music.stop();
+        } else {
+          ringMove_music.play();
+        }
       }
     }
   }
@@ -83,7 +93,7 @@ class Player {
     if(d < this.scl) {
       this.total--;
       this.poppedRings.push(this.playerRings.pop());
-      // we need otherPlayer to handle flip direction because we needs
+      // need otherPlayer to handle flip direction because we need
       // to update isFollowed and isFollowing whenever a player's direction
       // is changed.
       this.flipDirection(otherPlayer);
@@ -138,7 +148,7 @@ class Player {
     var diff = Math.abs(Math.floor(this.total) - Math.floor(oldTotal));
     if (diff >= 1) {
       if (amount < 0) {
-        this.poppedRings.push(this.playerRings.pop());
+        this.playerRings.pop();
       } else {
         // create a ring that follows 'this' and has the start x and y coordinates passed to changeRingTotal
         this.playerRings.push(new Rings(this, this.scl, x, y)); //add a ring
@@ -153,7 +163,7 @@ class Player {
       //decrement! (note: we never use this.x and this.y here bc of the above logic (amount < 0))
       this.changeRingTotal(- ringTransferSpd, this.x, this.y);
       //increment!
-      //other player is simply an object. we pass the values below into changeringtotal.
+      //other player is an object. we pass the values below into changeringtotal.
       //create a ring that follows other player
       otherPlayer.changeRingTotal(ringTransferSpd, this.x, this.y);
     }
