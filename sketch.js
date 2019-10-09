@@ -7,7 +7,6 @@
 // - sort out sound playing
 // - improve ring loss animation
 // - more spikes, moving spikes
-// - standardize ring offset
 // - make tail come off last ring
 // - food is coloured, and you get a ring of that colour?
 // - smiley face when leading, frowny face when following, neutral face when neutral
@@ -164,7 +163,12 @@ function playSound (){
 
 function playerCollision() {
   let d = dist(player1.x, player1.y, player2.x, player2.y);
-  if (d < player1.r + player2.r) {
+
+  if (d < player1.currentRadius()/2 + player2.currentRadius()/2) {
+    console.log("player 1: (" + player1.x + "," + player1.y + ")");
+      console.log("player 2: (" + player2.x + "," + player2.y + ")");
+      console.log("log: " + d + " < " + player1.currentRadius() + " + " + player2.currentRadius());
+    console.log("COLLISSION");
     player1.total = player1.total - 1;
     player2.total = player2.total - 1;
     player1.poppedRings.push(player1.playerRings.pop());

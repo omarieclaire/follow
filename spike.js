@@ -28,6 +28,7 @@ class Spike {
   show() {
     push();
     stroke(this.spikeColor);
+    ellipse(this.x, this.y, 3, 3);
     strokeWeight(.5);
     noFill();
     // translate changes the origin point for everything after it

@@ -19,6 +19,7 @@ class Player {
     this.playerFadedColor = tmp_playerFadedColor;
     this.poppedRings =  [];
     this.numTicksPoppedRing = 0;
+    this.ringSpacer = this.scl/4;
 
     this.playerRings = []; // store the rings within a local array
     for (var i = 0; i < this.total; i++) { //for each point in score
@@ -88,9 +89,13 @@ class Player {
     }
   }
 
+  currentRadius() {
+    return this.scl + 2*this.playerRings.length * this.ringSpacer;
+  }
+
   collideWithSpike(spike, otherPlayer) {
     var d = dist(this.x, this.y, spike.x, spike.y);
-    if(d < this.scl) {
+    if(d < this.currentRadius()) {
       this.total--;
       this.poppedRings.push(this.playerRings.pop());
       // need otherPlayer to handle flip direction because we need
@@ -243,7 +248,7 @@ class Player {
         strokeWeight(.5);
         stroke(255);
       }
-      this.playerRings[i].draw(this.scl / 2 + i * this.scl / 2);
+      this.playerRings[i].draw(this.scl + 2*(i + 1) * this.ringSpacer);
     }
 
     // draw dead ring
@@ -251,7 +256,7 @@ class Player {
       for (var i = 0; i < this.poppedRings.length; i++) {
         var thePoppedRing = this.poppedRings[i];
         if(typeof(thePoppedRing) !== 'undefined') {
-          thePoppedRing.drawDeadRing(this.scl / 2 + this.playerRings.length * this.scl / 2);
+          thePoppedRing.drawDeadRing(this.scl + this.playerRings.length * this.ringSpacer);
         } else {
           // the popped ring should never be undefined. but somehow it is occasionally.
           // if a ring was undefined then we would not have been able to draw it.
