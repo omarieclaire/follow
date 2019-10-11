@@ -1,24 +1,30 @@
 // HIGH LEVEL
-// immediately communicate follow status to both players
+// how do I *immediately communicate follow status* to both players? player isn't looking at other player
 // Communicate direction more (maybe display direction on screen somehow?)
 // Player should *want* to be leading
-
+// - more weight to decision - consciousness. could be alt control or some kind of timer where you are strateg.
 // TODO
-// - sort out sound playing
+// - ring faster in the beginning when transfering to the other player - consider loosening an "almost lost" ring
+// - alt controller - get a makey makey? get wireless arduino working again?
+// - set up sounds
 // - improve ring loss animation
-// - more spikes, moving spikes
+// - more spikes
+// - moving spikes
+// - it's unfair to be killed by a spike when it generates underneath you ()
 // - make tail come off last ring
+// - make tail look better
 // - food is coloured, and you get a ring of that colour?
 // - smiley face when leading, frowny face when following, neutral face when neutral
 // - make death more compelling
-// - make player trail look better
-// - integrate music
 // - move player collision to player class?
 // - arrow keys shouldn't work until after welcome level
 // - improve sound files (audacity)
 // - have a tick for the level, and once the tick reaches a certain level, add a spike to the array
 
 // MAYBE???
+// - draw triangle on front of player????
+// - turtles
+// - make health rings little circles that "follow" instead of wrap rings
 // - give flavour text boxes to coins - i'm just looking for a leader? ("i'll do what ever you tell me to do"? or should I give flavour text to players?)
 // - should foods move around a bit?
 // - integrate rippling ring from common
@@ -47,7 +53,7 @@
 // - I should walk through the "move" of the rings
 // - Why is noCursor not working?
 
-// Thanks: Ida, Aaron, Game Center, Mailis,
+// Thanks: Ida, Aaron, Game Center, Mailis, Jessica, Eric,
 
 
 var player1;
@@ -59,7 +65,7 @@ var player2Color = [51, 153, 255, 250]; // blue
 var player1FadeColor = [184, 125, 155, 200]; // faded pink
 var player2FadeColor = [145, 200, 255, 200]; // faded blue
 var scl = 40; // scale of almost everything in the game
-var vol = 0.4; // music volume standard
+var vol = 0.2; // music volume standard
 var foods = [];
 var level0;
 var level1;
@@ -97,6 +103,7 @@ function preload() {
 
 // Setup is where I set up a bunch of important objects
 function setup() {
+  ambience_music.play();
   noCursor();
   createCanvas(windowWidth, windowHeight);
   // p5 specific function for working with degrees
@@ -164,11 +171,11 @@ function playSound (){
 function playerCollision() {
   let d = dist(player1.x, player1.y, player2.x, player2.y);
 
-  if (d < player1.currentRadius()/2 + player2.currentRadius()/2) {
-    console.log("player 1: (" + player1.x + "," + player1.y + ")");
-      console.log("player 2: (" + player2.x + "," + player2.y + ")");
-      console.log("log: " + d + " < " + player1.currentRadius() + " + " + player2.currentRadius());
-    console.log("COLLISSION");
+  if (d <= player1.currentRadius()/2 + player2.currentRadius()/2) {
+    // console.log("player 1: (" + player1.x + "," + player1.y + ")");
+      // console.log("player 2: (" + player2.x + "," + player2.y + ")");
+      // console.log("log: " + d + " < " + player1.currentRadius() + " + " + player2.currentRadius());
+    // console.log("COLLISSION");
     player1.total = player1.total - 1;
     player2.total = player2.total - 1;
     player1.poppedRings.push(player1.playerRings.pop());

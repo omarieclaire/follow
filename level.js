@@ -146,7 +146,7 @@ class Level1 extends Level {
   }
 
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 100;
+    return this.numTicks >= 3000;
   }
   //ticks need to be reset when game restarts
   resetLevel() {
@@ -160,13 +160,13 @@ class Level2 extends Level {
   constructor() {
     super();
     this.spikes = [];
+    this.numTicks = 0;
     //create spikes
     for (var i = 0; i < 2; i++) {
       this.spikes[i] = new Spike(scl);
       this.spikes[i].location();
     }
   };
-
   spikeHit(player1, player2, spikes) {
     for(let i = 0; i < spikes.length; i++) {
       player1.collideWithSpike(spikes[i], player2);
@@ -175,6 +175,8 @@ class Level2 extends Level {
   }
 
   draw(player1, player2, foods) {
+    this.numTicks++;
+
 
     this.foodEaten(player1, player2, foods);
     this.spikeHit(player1, player2, this.spikes);
