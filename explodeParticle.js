@@ -16,12 +16,14 @@ class ExplodeParticle {
   }
 
   update() {
-    this.x = this.x + this.directionX;
-    this.y = this.y + this.directionY;
+    this.x = this.x + this.directionX * 0.3;
+    this.y = this.y + this.directionY * 0.3;
   }
 
   show() {
     push();
+    fill(255);
+    noStroke();
     ellipse(this.x, this.y, this.radius);
     pop();
 

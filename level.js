@@ -8,6 +8,7 @@ class Level {
   //first, a function to check if the game is over
   isGameOverCheck(player1, player2) {
     if (player1.total <= 0 || player2.total <= 0) {
+      deathSound.play();
       return true;
     } else {
       return false;
@@ -39,10 +40,13 @@ class Level {
     for (let i = 0; i < foods.length; i++) {
       if (player1.eat(foods[i])) {
         foods[i].location();
+        foodGenSound.play();
       }
 
       if (player2.eat(foods[i])) {
         foods[i].location();
+        foodGenSound.play();
+
       }
     }
   }
@@ -59,6 +63,9 @@ class PressKeyToContinue extends Level {
   constructor() {
     super();
     this.keyWasPressed = false;
+    intro_music.loop();
+    console.log("intro music playing");
+
   }
 
   //bool needs to be reset when game restarts
@@ -84,6 +91,10 @@ class PressKeyToContinue extends Level {
     return this.keyWasPressed == true;
   }
   keyWasPressedLevel(keyCode) {
+    intro_music.stop();
+    followingSound.play();
+    ambientSound.loop();
+    console.log("ambience playing");
     this.keyWasPressed = true;
   }
 }
@@ -130,21 +141,21 @@ class Level1 extends Level {
     this.basicLevelDraw(player1, player2, foods);
 
     if (player1.isFollowing) {
+      ringMoveSound.loop();
       fill(player2Color);
       noStroke();
-      text("Blue is Leading", windowWidth / 2, windowHeight / 1.2);
+      text(player1.direction + " Follower", windowWidth / 2, windowHeight / 1.2);
+      text(player2.direction + " Leader", windowWidth / 2, windowHeight / 1.2);
     } else if (player2.isFollowing) {
+      ringMoveSound.loop();
       fill(player1Color);
       noStroke();
-      text("Pink is Leading", windowWidth / 2, windowHeight / 1.2);
-    } else {}
+      text(player2.direction + " Leader", windowWidth / 2, windowHeight / 1.2);
+      text(player1.direction + " Follower", windowWidth / 2, windowHeight / 1.2);
 
-    if (intro_music.isPlaying()) {
-      intro_music.stop();
     } else {
-      // intro_music.play();
+      ringMoveSound.stop();
     }
-
   }
 
   advanceToNextLevel(player1, player2) {
@@ -236,23 +247,22 @@ class FinalLevel extends Level {
     // background(255, 0, 0);
     noStroke();
     text("GAME OVER!!!", windowWidth / 2, windowHeight / 2);
-
     stroke(255);
     if (player2.total <= 0 && player1.total <= 0) {
-      noFill();
+      // noFill();
       // ellipse(player1.x, player1.y, player1.r);
       // ellipse(player2.x, player2.y, player1.r);
       player1.deathDraw();
       player2.deathDraw();
 
     } else if (player2.total <= 0 && player1.total > 0) {
-      noFill();
+      // noFill();
       // ellipse(player2.x, player2.y, player1.r);
       // translate(player2.x, player2.y);
       player2.deathDraw();
 
     } else if (player1.total <= 0 && player2.total > 0){
-      noFill();
+      // noFill();
       // ellipse(player1.x, player1.y, player1.r);
 
       // translate(player1.x, player1.y);
@@ -263,7 +273,7 @@ class FinalLevel extends Level {
     this.numTicks++;
   }
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 100;
+    return this.numTicks >= 300;
   }
   resetLevel() {
     this.numTicks = 0;

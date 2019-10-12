@@ -12,7 +12,7 @@ class Player {
     this.y = windowHeight / 2;
     this.r = scl;
     this.yspeed = 0;
-    this.total = 5;
+    this.total = 10;
     this.isFollowing = false;
     this.isFollowed = false;
     this.playerColor = tmp_playerColor;
@@ -55,9 +55,9 @@ class Player {
     for(var i = 0; i < 100; i++) {
         this.explodeParticles.push(new ExplodeParticle());
     }
-    console.log("reset: " + this.direction + "and reset: " + this.total);
-    console.log("player was reset " + this.name);
-    console.log("is following is " + this.isFollowing);
+    // console.log("reset: " + this.direction + "and reset: " + this.total);
+    // console.log("player was reset " + this.name);
+    // console.log("is following is " + this.isFollowing);
   }
 
   handlePlayerFollowing(otherPlayer, ourFutureDirection) {
@@ -73,17 +73,7 @@ class Player {
       if (ourFutureDirection == otherPlayer.direction) {
         this.isFollowing = true;
         otherPlayer.isFollowed = true;
-        // TODO loop follow music while following
-        // if (following_music.isPlaying()) {
-        //   following_music.stop();
-        // } else {
-        //   following_music.play();
-        // }
-        if (ringMove_music.isPlaying()) {
-          ringMove_music.stop();
-        } else {
-          ringMove_music.play();
-        }
+        console.log("this is a bug. no one is following anyone");
       }
     }
   }
@@ -91,9 +81,10 @@ class Player {
   eat(food) {
     var d = dist(this.x, this.y, food.x, food.y);
     if (d < this.scl) {
+      eatSound.play();
+
       this.total++;
       this.playerRings.push(new Rings(this, this.scl));
-      eat_sound.play();
       return true;
     } else {
       return false;
@@ -110,17 +101,21 @@ class Player {
     }
   }
 
-  currentRadius() {
+  currentDiameter() {
     return this.scl + 2 * this.playerRings.length * this.ringSpacer;
   }
 
   collideWithSpike(spike, otherPlayer) {
     var d = dist(this.x, this.y, spike.x, spike.y);
-    if (d < this.currentRadius()) {
+    if (d < this.currentDiameter()) {
+      if (!hitSound.isPlaying()) {
+        hitSound.play();
+        console.log("hit sound is playing");
+      }
       this.total--;
       this.poppedRings.push(this.playerRings.pop());
-      // need otherPlayer to handle flip direction because we need
-      // to update isFollowed and isFollowing whenever a player's direction
+      // otherPlayer handles flip direction because we need to
+      // update isFollowed and isFollowing whenever a player's direction
       // is changed.
       this.flipDirection(otherPlayer);
       return true;
