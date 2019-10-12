@@ -3,11 +3,13 @@
 // Communicate direction more (maybe display direction on screen somehow?)
 // Player should *want* to be leading
 // - more weight to decision - consciousness. could be alt control or some kind of timer where you are strateg.
+
 // TODO
 // - ring faster in the beginning when transfering to the other player - consider loosening an "almost lost" ring
 // - alt controller - get a makey makey? get wireless arduino working again?
 // - set up sounds
 // - improve ring loss animation
+// - better feel to ring loss
 // - more spikes
 // - moving spikes
 // - it's unfair to be killed by a spike when it generates underneath you ()
@@ -53,7 +55,7 @@
 // - I should walk through the "move" of the rings
 // - Why is noCursor not working?
 
-// Thanks: Ida, Aaron, Game Center, Mailis, Jessica, Eric,
+// Thanks: Ida, Aaron, Game Center, Mailis, Jessica, Eric, Danny Hawk,
 
 
 var player1;
@@ -75,7 +77,6 @@ var finallevel;
 var levelManager;
 var pressKeyToContinue;
 var standardTextSize = 40; // text size standard
-let explodeParticles = [];
 let speed;
 
 function preload() {
@@ -96,14 +97,11 @@ function preload() {
   ringMove_music.setVolume(vol);
   ambience_music = loadSound('sounds/ambience.mp3');
   ambience_music.setVolume(vol);
-
-
-
 }
 
 // Setup is where I set up a bunch of important objects
 function setup() {
-  ambience_music.play();
+  // ambience_music.play();
   noCursor();
   createCanvas(windowWidth, windowHeight);
   // p5 specific function for working with degrees
@@ -124,10 +122,6 @@ function setup() {
     foods[i] = new Food(scl);
     foods[i].location();
   }
-
-  for(let i = 0; i < 50; i++){
-      explodeParticles.push(new ExplodeParticle);
-  }
 }
 
 // Draw is where I call anything that needs to be constantly updated/needs to constantly change own state
@@ -145,14 +139,6 @@ function draw() {
 
   // Finally actually drawing!
   levelManager.drawLevel(player1, player2, foods);
-
-  // speed = map(mouseX, 0, width, 0, 50);
-  // translate(width/2, height/2);
-  //
-  // for(let i = 0; i < explodeParticles.length; i++){
-  //     explodeParticles[i].update();
-  //     explodeParticles[i].show();
-  // }
   playSound();
 
 }
@@ -180,7 +166,7 @@ function playerCollision() {
     player2.total = player2.total - 1;
     player1.poppedRings.push(player1.playerRings.pop());
     player2.poppedRings.push(player2.playerRings.pop());
-    console.log("popping rings");
+    // console.log("popping rings");
     player1.flipDirection(player2);
     player2.flipDirection(player1);
     //add xspeed or yspeed after collision to fix collision bug

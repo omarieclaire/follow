@@ -68,7 +68,6 @@ class PressKeyToContinue extends Level {
   draw(player1, player2, foods) {
     // draw our title screen.
     background(30);
-
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
 
@@ -105,6 +104,8 @@ class Level0 extends Level {
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
     text("Welcome", windowWidth / 2, windowHeight / 2);
+
+
   }
 
   advanceToNextLevel(player1, player2) {
@@ -143,6 +144,7 @@ class Level1 extends Level {
     } else {
       // intro_music.play();
     }
+
   }
 
   advanceToNextLevel(player1, player2) {
@@ -234,17 +236,28 @@ class FinalLevel extends Level {
     // background(255, 0, 0);
     noStroke();
     text("GAME OVER!!!", windowWidth / 2, windowHeight / 2);
-    stroke(255, 0, 0);
+
+    stroke(255);
     if (player2.total <= 0 && player1.total <= 0) {
       noFill();
-      ellipse(player1.x, player1.y, player1.r);
-      ellipse(player2.x, player2.y, player1.r);
+      // ellipse(player1.x, player1.y, player1.r);
+      // ellipse(player2.x, player2.y, player1.r);
+      player1.deathDraw();
+      player2.deathDraw();
+
     } else if (player2.total <= 0 && player1.total > 0) {
       noFill();
-      ellipse(player2.x, player2.y, player1.r);
+      // ellipse(player2.x, player2.y, player1.r);
+      // translate(player2.x, player2.y);
+      player2.deathDraw();
+
     } else if (player1.total <= 0 && player2.total > 0){
       noFill();
-      ellipse(player1.x, player1.y, player1.r);
+      // ellipse(player1.x, player1.y, player1.r);
+
+      // translate(player1.x, player1.y);
+
+      player1.deathDraw();
 
     } else {}
     this.numTicks++;

@@ -17,19 +17,26 @@ class Player {
     this.isFollowed = false;
     this.playerColor = tmp_playerColor;
     this.playerFadedColor = tmp_playerFadedColor;
-    this.poppedRings =  [];
+    this.poppedRings = [];
     this.numTicksPoppedRing = 0;
-    this.ringSpacer = this.scl/4;
+    this.ringSpacer = this.scl / 4;
+    this.explodeParticles = [];
+
 
     this.playerRings = []; // store the rings within a local array
     for (var i = 0; i < this.total; i++) { //for each point in score
       this.playerRings.push(new Rings(this, this.scl)); //push a new ring to array
     }
+
+    this.explodeParticles = [];
+    for(var i = 0; i < 100; i++) {
+        this.explodeParticles.push(new ExplodeParticle());
+    }
   }
 
   resetPlayer() {
     this.xspeed = this.initialxspeed;
-    this.x = windowWidth/2 + this.initialXOffset;
+    this.x = windowWidth / 2 + this.initialXOffset;
     this.y = windowHeight / 2;
     this.r = scl;
     this.yspeed = 0;
@@ -37,12 +44,16 @@ class Player {
     this.isFollowing = false;
     this.isFollowed = false;
     this.direction = this.initialDirection;
-    this.poppedRings =  [];
+    this.poppedRings = [];
     this.numTicksPoppedRing = 0;
 
     this.playerRings = []; // store the rings within a local array
     for (var i = 0; i < this.total; i++) {
       this.playerRings.push(new Rings(this, this.scl));
+    }
+    this.explodeParticles = [];
+    for(var i = 0; i < 100; i++) {
+        this.explodeParticles.push(new ExplodeParticle());
     }
     console.log("reset: " + this.direction + "and reset: " + this.total);
     console.log("player was reset " + this.name);
@@ -89,13 +100,23 @@ class Player {
     }
   }
 
+  deathDraw() {
+
+    // speed = 10;
+    for (let i = 0; i < this.explodeParticles.length; i++) {
+      this.explodeParticles[i].initialPosition(this.x, this.y);
+      this.explodeParticles[i].update();
+      this.explodeParticles[i].show();
+    }
+  }
+
   currentRadius() {
-    return this.scl + 2*this.playerRings.length * this.ringSpacer;
+    return this.scl + 2 * this.playerRings.length * this.ringSpacer;
   }
 
   collideWithSpike(spike, otherPlayer) {
     var d = dist(this.x, this.y, spike.x, spike.y);
-    if(d < this.currentRadius()) {
+    if (d < this.currentRadius()) {
       this.total--;
       this.poppedRings.push(this.playerRings.pop());
       // need otherPlayer to handle flip direction because we need
@@ -160,13 +181,13 @@ class Player {
       }
     }
   }
-//update the score on players - also changes rings
+  //update the score on players - also changes rings
   updateTotal(otherPlayer) {
     //ring movement from one player to another
     var ringTransferSpd = 0.01;
     if (this.isFollowing) {
       //decrement! (note: we never use this.x and this.y here bc of the above logic (amount < 0))
-      this.changeRingTotal(- ringTransferSpd, this.x, this.y);
+      this.changeRingTotal(-ringTransferSpd, this.x, this.y);
       //increment!
       //other player is an object. we pass the values below into changeringtotal.
       //create a ring that follows other player
@@ -215,7 +236,7 @@ class Player {
       }
 
     }
-// following player jitter
+    // following player jitter
     if (this.isFollowing) {
       this.x = this.x + random(-2, 2);
       this.y = this.y + random(-2, 2);
@@ -230,7 +251,7 @@ class Player {
   show() {
     noStroke();
     //colored player circle
-    if(this.isFollowing){
+    if (this.isFollowing) {
       fill(this.playerFadedColor);
     } else {
       fill(this.playerColor);
@@ -248,14 +269,14 @@ class Player {
         strokeWeight(.5);
         stroke(255);
       }
-      this.playerRings[i].draw(this.scl + 2*(i + 1) * this.ringSpacer);
+      this.playerRings[i].draw(this.scl + 2 * (i + 1) * this.ringSpacer);
     }
 
     // draw dead ring
-    if(this.poppedRings.length > 0 && this.numTicksPoppedRing < 50) {
+    if (this.poppedRings.length > 0 && this.numTicksPoppedRing < 50) {
       for (var i = 0; i < this.poppedRings.length; i++) {
         var thePoppedRing = this.poppedRings[i];
-        if(typeof(thePoppedRing) !== 'undefined') {
+        if (typeof(thePoppedRing) !== 'undefined') {
           thePoppedRing.drawDeadRing(this.scl + this.playerRings.length * this.ringSpacer);
         } else {
           // the popped ring should never be undefined. but somehow it is occasionally.
