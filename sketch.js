@@ -6,7 +6,7 @@
 // - more weight to decision - consciousness. could be alt control or some kind of timer where you are strateg.
 
 // TODO
-// - draw rings pink if they are pink and blue if they are blue
+// - why does other player get a secondary deathdraw??
 // - why don't player collisions work if they are offscreen? (sound doesn't play and sometimes rings aren't lost)
 // - make spike collisions more forgiving - right now they kill you from far away sometimes
 // - ring easing for better feel (ring 23) https://p5js.jp/examples/input-easing.html AND https://easings.net/en#easeInCirc
@@ -63,8 +63,8 @@ var player1;
 var player2;
 var foodColor = [255]; // white
 var pointColor = [255, 215, 0, 250]; // gold
-var player1Color = [255, 51, 153, 250]; // magenta
-var player2Color = [51, 153, 255, 250]; // blue
+var player1Color = [255, 51, 153, 240]; // magenta
+var player2Color = [51, 153, 255, 240]; // blue
 var player1FadeColor = [184, 125, 155, 200]; // faded pink
 var player2FadeColor = [145, 200, 255, 200]; // faded blue
 var scl = 40; // scale of almost everything in the game
@@ -111,8 +111,8 @@ function setup() {
   // p5 specific function for working with degrees
   angleMode(DEGREES);
   //special functions to construct an object from a class
-  player1 = new Player("1", " ", 0, 200, scl, player1Color, player1FadeColor);
-  player2 = new Player("2", " ", -0, -200, scl, player2Color, player2FadeColor);
+  player1 = new Player("1", " ",-0, -200, scl, player1Color, player1FadeColor);
+  player2 = new Player("2", " ", 0, 200, scl, player2Color, player2FadeColor);
   level0 = new Level0();
   level1 = new Level1();
   level2 = new Level2();
@@ -186,27 +186,27 @@ function keyPressed() {
   }
 
   if (keyCode === UP_ARROW) {
-    player1.changeDirectionUp(player2);
-
-  } else if (keyCode === DOWN_ARROW) {
-    player1.changeDirectionDown(player2);
-
-  } else if (keyCode === RIGHT_ARROW) {
-    player1.changeDirectionRight(player2);
-
-  } else if (keyCode === LEFT_ARROW) {
-    player1.changeDirectionLeft(player2);
-
-  } else if (keyCode === 87) {
     player2.changeDirectionUp(player1);
 
-  } else if (keyCode === 83) {
+  } else if (keyCode === DOWN_ARROW) {
     player2.changeDirectionDown(player1);
 
-  } else if (keyCode === 68) {
+  } else if (keyCode === RIGHT_ARROW) {
     player2.changeDirectionRight(player1);
 
-  } else if (keyCode === 65) {
+  } else if (keyCode === LEFT_ARROW) {
     player2.changeDirectionLeft(player1);
+
+  } else if (keyCode === 87) {
+    player1.changeDirectionUp(player2);
+
+  } else if (keyCode === 83) {
+    player1.changeDirectionDown(player2);
+
+  } else if (keyCode === 68) {
+    player1.changeDirectionRight(player2);
+
+  } else if (keyCode === 65) {
+    player1.changeDirectionLeft(player2);
   }
 }

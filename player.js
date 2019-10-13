@@ -73,7 +73,7 @@ class Player {
       if (ourFutureDirection == otherPlayer.direction) {
         this.isFollowing = true;
         otherPlayer.isFollowed = true;
-        console.log("this is a bug. no one is following anyone");
+        // console.log("called by player collision? this is a bug. no one is following anyone");
       }
     }
   }
@@ -92,6 +92,8 @@ class Player {
   }
 
   deathDraw() {
+    fill(this.playerColor);
+    noStroke();
 
     // speed = 10;
     for (let i = 0; i < this.explodeParticles.length; i++) {
@@ -251,6 +253,7 @@ class Player {
     } else {
       fill(this.playerColor);
     }
+    // player circle / face
     ellipse(this.x, this.y, this.scl, this.scl);
     noFill();
     stroke(255, 200);
@@ -258,11 +261,13 @@ class Player {
     for (var i = 0; i < this.playerRings.length; i++) {
       if (this.isFollowed && i == this.playerRings.length - 1) {
         strokeWeight(5);
-        stroke(pointColor);
+        // stroke(pointColor);
+        stroke(this.playerColor);
+
 
       } else {
-        strokeWeight(.5);
-        stroke(255);
+        strokeWeight(.25);
+        stroke(this.playerColor);
       }
       this.playerRings[i].draw(this.scl + 2 * (i + 1) * this.ringSpacer);
     }

@@ -52,7 +52,7 @@ class Level {
   }
 
   spikeHit(player1, player2, spikes) {
-    for(let i = 0; i < spikes.length; i++) {
+    for (let i = 0; i < spikes.length; i++) {
       player1.collideWithSpike(spikes[i], player2);
       player2.collideWithSpike(spikes[i], player1);
     }
@@ -79,9 +79,9 @@ class PressKeyToContinue extends Level {
     textAlign(CENTER, TOP);
 
     fill(player1Color);
-    text("player 1 use arrow keys to move", windowWidth / 2, windowHeight / 5);
+    text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
     fill(player2Color);
-    text("player 2 use asdw keys to move", windowWidth / 2, windowHeight / 3);
+    text("player 2 use arrow keys to move", windowWidth / 2, windowHeight / 3);
     fill(200);
     textSize(standardTextSize / 2);
 
@@ -140,21 +140,31 @@ class Level1 extends Level {
     this.numTicks++;
     this.basicLevelDraw(player1, player2, foods);
 
+    //directional text
+    stroke(255);
+    strokeWeight(1);
+
     if (player1.isFollowing) {
-      ringMoveSound.loop();
-      fill(player2Color);
-      noStroke();
-      text(player1.direction + " Follower", windowWidth / 2, windowHeight / 1.2);
-      text(player2.direction + " Leader", windowWidth / 2, windowHeight / 1.2);
+      // ringMoveSound.loop();
+      stroke(player1Color);
+      text(player1.direction + " (follower)", windowWidth / 2, windowHeight / 1.43);
+      stroke(player2Color);
+      text(player2.direction, windowWidth / 2, windowHeight / 1.23);
+
     } else if (player2.isFollowing) {
-      ringMoveSound.loop();
-      fill(player1Color);
-      noStroke();
-      text(player2.direction + " Leader", windowWidth / 2, windowHeight / 1.2);
-      text(player1.direction + " Follower", windowWidth / 2, windowHeight / 1.2);
+      // ringMoveSound.loop();
+      stroke(player1Color);
+      text(player1.direction, windowWidth / 2, windowHeight / 1.43);
+      stroke(player2Color);
+      text(player2.direction + " (follower)", windowWidth / 2, windowHeight / 1.23);
 
     } else {
-      ringMoveSound.stop();
+      // ringMoveSound.stop();
+
+      stroke(player1Color);
+      text(player1.direction, windowWidth / 2, windowHeight / 1.43);
+      stroke(player2Color);
+      text(player2.direction, windowWidth / 2, windowHeight / 1.23);
     }
   }
 
@@ -181,7 +191,7 @@ class Level2 extends Level {
     }
   };
   spikeHit(player1, player2, spikes) {
-    for(let i = 0; i < spikes.length; i++) {
+    for (let i = 0; i < spikes.length; i++) {
       player1.collideWithSpike(spikes[i], player2);
       player2.collideWithSpike(spikes[i], player1);
     }
@@ -261,7 +271,7 @@ class FinalLevel extends Level {
       // translate(player2.x, player2.y);
       player2.deathDraw();
 
-    } else if (player1.total <= 0 && player2.total > 0){
+    } else if (player1.total <= 0 && player2.total > 0) {
       // noFill();
       // ellipse(player1.x, player1.y, player1.r);
 
