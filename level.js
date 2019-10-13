@@ -147,7 +147,7 @@ class Level1 extends Level {
     if (player1.isFollowing) {
       // ringMoveSound.loop();
       stroke(player1Color);
-      text(player1.direction + " (follower)", windowWidth / 2, windowHeight / 1.43);
+      text(player1.direction + " - follower!", windowWidth / 2, windowHeight / 1.43);
       stroke(player2Color);
       text(player2.direction, windowWidth / 2, windowHeight / 1.23);
 
@@ -156,7 +156,7 @@ class Level1 extends Level {
       stroke(player1Color);
       text(player1.direction, windowWidth / 2, windowHeight / 1.43);
       stroke(player2Color);
-      text(player2.direction + " (follower)", windowWidth / 2, windowHeight / 1.23);
+      text(player2.direction + " - follower!", windowWidth / 2, windowHeight / 1.23);
 
     } else {
       // ringMoveSound.stop();
@@ -266,17 +266,11 @@ class FinalLevel extends Level {
       player2.deathDraw();
 
     } else if (player2.total <= 0 && player1.total > 0) {
-      // noFill();
-      // ellipse(player2.x, player2.y, player1.r);
-      // translate(player2.x, player2.y);
+      noFill();
       player2.deathDraw();
 
     } else if (player1.total <= 0 && player2.total > 0) {
-      // noFill();
-      // ellipse(player1.x, player1.y, player1.r);
-
-      // translate(player1.x, player1.y);
-
+      noFill();
       player1.deathDraw();
 
     } else {}

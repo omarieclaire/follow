@@ -12,7 +12,7 @@ class Player {
     this.y = windowHeight / 2;
     this.r = scl;
     this.yspeed = 0;
-    this.total = 10;
+    this.total = 5;
     this.isFollowing = false;
     this.isFollowed = false;
     this.playerColor = tmp_playerColor;
@@ -29,7 +29,7 @@ class Player {
     }
 
     this.explodeParticles = [];
-    for(var i = 0; i < 100; i++) {
+    for(var i = 0; i < 800; i++) {
         this.explodeParticles.push(new ExplodeParticle());
     }
   }
@@ -52,7 +52,7 @@ class Player {
       this.playerRings.push(new Rings(this, this.scl));
     }
     this.explodeParticles = [];
-    for(var i = 0; i < 100; i++) {
+    for(var i = 0; i < 800; i++) {
         this.explodeParticles.push(new ExplodeParticle());
     }
     // console.log("reset: " + this.direction + "and reset: " + this.total);
