@@ -83,7 +83,7 @@ let speed;
 // foodgen_sound, newlevel (currently dupe sound), start game sound
 
 function preload() {
-  p1_img = loadImage('images/p1.png');
+  p1_img = loadImage('img/p1.png');
   intro_music = loadSound('sounds/intro.mp3');
   intro_music.setVolume(vol);
   foodGenSound = loadSound('sounds/eat.mp3');
