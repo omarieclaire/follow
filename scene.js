@@ -1,8 +1,10 @@
-// scenes need to: draw themselves & know when over (both success and failure)
+/////////////////////
+//// Main Scene /////
+/////////////////////
+// scenes need to: draw themselves & know when to end (success and failure)
 class Scene {
   constructor() {
     this.leaderRing = new LeaderRing(scl);
-
   };
   resetScene() {}
   //first, a function to check if the game is over
@@ -14,8 +16,13 @@ class Scene {
       return false;
     }
   }
+
   keyWasPressedScene(keyCode) {}
-  basicSceneDraw(player1, player2, foods) { //basic scene draw
+
+  ///////////////////////////
+  //// Basic Scene Draw /////
+  ///////////////////////////
+  basicSceneDraw(player1, player2, foods) {
     background(30);
     noStroke();
     textSize(standardTextSize);
@@ -27,30 +34,31 @@ class Scene {
     //player colour
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
+
     player1.show();
     player2.show();
 
     this.leaderRing.drawLeaderRing(player1, player2);
   }
+
   draw(player1, player2, foods) {
     this.basicSceneDraw(player1, player2, foods);
   }
-
+  // If food is eaten -> make more food
   foodEaten(player1, player2, foods) {
     for (let i = 0; i < foods.length; i++) {
       if (player1.eat(foods[i])) {
         foods[i].location();
         foodGenSound.play();
       }
-
       if (player2.eat(foods[i])) {
         foods[i].location();
         foodGenSound.play();
-
       }
     }
   }
 
+  // If spike is hit -> player loses ring
   spikeHit(player1, player2, spikes) {
     for (let i = 0; i < spikes.length; i++) {
       player1.collideWithSpike(spikes[i], player2);
@@ -59,7 +67,10 @@ class Scene {
   }
 }
 
-class PressKeyToContinue extends Scene {
+/////////////////////////////
+//// Instruction Scene  ////
+////////////////////////////
+class InstructionScene extends Scene {
   constructor() {
     super();
     this.keyWasPressed = false;
@@ -68,36 +79,39 @@ class PressKeyToContinue extends Scene {
 
   }
 
-  //bool needs to be reset when game restarts
+  //advance to next scene bool needs to be reset when game restarts
   resetScene() {
     this.keyWasPressed = false;
   }
+
   draw(player1, player2, foods) {
-    // draw our title screen.
     background(30);
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
-
     fill(player1Color);
     text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
     fill(player2Color);
     text("player 2 use arrow keys to move", windowWidth / 2, windowHeight / 3);
     fill(200);
     textSize(standardTextSize / 2);
-
     text("press spacebar to begin", windowWidth / 2, windowHeight / 1.5);
   }
+
   advanceToNextScene(player1, player2) {
     return this.keyWasPressed == true;
   }
+
   keyWasPressedScene(keyCode) {
     introSound.stop();
     // ambientSound.loop();
     this.keyWasPressed = true;
   }
 }
-//////////////////////////////////////
-//////////welcome scene///////////////
+
+//////////////////////////
+////  welcome scene  ////
+/////////////////////////
+
 class WelcomeScene extends Scene {
   constructor() {
     // 'super' calls the 'constructor' of Scene (the class we inherit from)
@@ -113,12 +127,10 @@ class WelcomeScene extends Scene {
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
     text("Welcome", windowWidth / 2, windowHeight / 2);
-
-
   }
 
   advanceToNextScene(player1, player2) {
-    return this.numTicks >= 200;
+    return this.numTicks >= 100;
   }
 
   //ticks need to be reset when game restarts
@@ -126,8 +138,9 @@ class WelcomeScene extends Scene {
     this.numTicks = 0;
   }
 }
-////////////////////////////////////////
-////// training scene - no food ////////
+////////////////////////
+//// training scene ////
+////////////////////////
 class TrainingScene extends Scene {
   constructor() {
     super();
@@ -138,36 +151,40 @@ class TrainingScene extends Scene {
     this.numTicks++;
     this.basicSceneDraw(player1, player2, foods);
 
-    //directional text
-    stroke(255);
-    strokeWeight(1);
 
-    if (player1.isFollowing) {
-      // ringMoveSound.loop();
-      stroke(player1Color);
-      text(player1.direction + " - follower!", windowWidth / 2, windowHeight / 1.43);
-      stroke(player2Color);
-      text(player2.direction + " - leader", windowWidth / 2, windowHeight / 1.23);
+    //only print directional cues if player is still living
+    if (player1.total > 1 && player2.total > 1) {
 
-    } else if (player2.isFollowing) {
-      // ringMoveSound.loop();
-      stroke(player1Color);
-      text(player1.direction + " - leader", windowWidth / 2, windowHeight / 1.43);
-      stroke(player2Color);
-      text(player2.direction + " - follower!", windowWidth / 2, windowHeight / 1.23);
+      //directional text
+      stroke(255);
+      strokeWeight(1);
 
-    } else {
-      // ringMoveSound.stop();
+      if (player1.isFollowing) {
+        // ringMoveSound.loop();
+        stroke(player1Color);
+        text(player1.direction + " - follower!", windowWidth / 2, windowHeight / 1.43);
+        stroke(player2Color);
+        text(player2.direction + " - leader", windowWidth / 2, windowHeight / 1.23);
 
-      stroke(player1Color);
-      text(player1.direction, windowWidth / 2, windowHeight / 1.43);
-      stroke(player2Color);
-      text(player2.direction, windowWidth / 2, windowHeight / 1.23);
+      } else if (player2.isFollowing) {
+        // ringMoveSound.loop();
+        stroke(player1Color);
+        text(player1.direction + " - leader", windowWidth / 2, windowHeight / 1.43);
+        stroke(player2Color);
+        text(player2.direction + " - follower!", windowWidth / 2, windowHeight / 1.23);
+
+      } else {
+        // ringMoveSound.stop();
+        stroke(player1Color);
+        text(player1.direction, windowWidth / 2, windowHeight / 1.43);
+        stroke(player2Color);
+        text(player2.direction, windowWidth / 2, windowHeight / 1.23);
+      }
     }
   }
 
   advanceToNextScene(player1, player2) {
-    return this.numTicks >= 10;
+    return this.numTicks >= 2000; // training scene length
   }
   //ticks need to be reset when game restarts
   resetScene() {
@@ -175,8 +192,9 @@ class TrainingScene extends Scene {
   }
 
 }
-//////////////////////////////////////
-//////////food scene//////////////////
+///////////////////////
+////  play scene  ////
+//////////////////////
 class PlayScene extends Scene {
   constructor() {
     super();
@@ -211,15 +229,16 @@ class PlayScene extends Scene {
     }
   }
   advanceToNextScene(player1, player2) {
-    if (player1.total > 7000 || player2.total > 7000) {
+    if (player1.total > 7000000 || player2.total > 700000) {
       return true;
     } else {
       return false;
     }
   }
 }
-////////////////////////////////////
-///////// whatever scene ///////////
+/////////////////////////
+//// whatever scene ////
+/////////////////////////
 class WhateverScene extends Scene {
   constructor() {
     super();
@@ -241,38 +260,41 @@ class WhateverScene extends Scene {
     }
   }
 }
-///////////////////////////////////////
-//////// post-death scene ////////////
+/////////////////////
+//// final scene ////
+/////////////////////
 class FinalScene extends Scene {
   constructor() {
     super();
     this.numTicks = 0;
   }
   draw(player1, player2, foods) {
-    // this.dissolvePlayer(player1, player2);
-    // console.log("you are dead");
-    // background(255, 0, 0);
-    noStroke();
-    text("GAME OVER!!!", windowWidth / 2, windowHeight / 2);
     stroke(255);
     player1.halt();
     player2.halt();
     if (player2.total <= 0 && player1.total <= 0) {
-      // noFill();
-      // ellipse(player1.x, player1.y, player1.r);
-      // ellipse(player2.x, player2.y, player1.r);
+      fill(1);
+      stroke(1);
+      ellipse(player1.x, player1.y, player1.r);
+      ellipse(player2.x, player2.y, player1.r);
       player1.deathDraw();
       player2.deathDraw();
-
     } else if (player2.total <= 0 && player1.total > 0) {
-      noFill();
+      fill(1);
+      stroke(1);
+      ellipse(player2.x, player2.y, player1.r);
       player2.deathDraw();
 
     } else if (player1.total <= 0 && player2.total > 0) {
-      noFill();
+      fill(1);
+      stroke(1);
+      ellipse(player1.x, player1.y, player1.r);
       player1.deathDraw();
 
     } else {}
+    // GAME OVER TEXT
+    noStroke();
+    text("GAME OVER!!!", windowWidth / 2, windowHeight / 2);
     this.numTicks++;
   }
   advanceToNextScene(player1, player2) {

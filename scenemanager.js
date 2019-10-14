@@ -1,10 +1,10 @@
 // SceneSwitcher needs to: know the current scene, check if it's time to advance
 class SceneManager {
-  constructor(tmp_initialScene, tmp_allTheScenes, tmp_gameOverScene) {
+  constructor(tmp_initialScene, tmp_allTheScenes, tmp_finalScene) {
     this.currSceneIndex = tmp_initialScene;
     this.initialSceneIndex = tmp_initialScene;
     this.allTheScenes = tmp_allTheScenes;
-    this.gameOverScene = tmp_gameOverScene;
+    this.finalScene = tmp_finalScene;
     this.gameOverMode = false;
   }
 
@@ -16,7 +16,7 @@ class SceneManager {
     player1.resetPlayer();
     player2.resetPlayer();
     //reset the game over scene
-    this.gameOverScene.resetScene();
+    this.finalScene.resetScene();
     console.log(this.initialSceneIndex);
     this.gameOverMode = false;
     this.currSceneIndex = this.initialSceneIndex;
@@ -40,7 +40,7 @@ class SceneManager {
   //advance to the next scene when conditions are met
   switchScene(player1, player2) {
     if (this.gameOverMode) {
-      if (this.gameOverScene.advanceToNextScene(player1, player2) == true) {
+      if (this.finalScene.advanceToNextScene(player1, player2) == true) {
         this.resetSceneManager();
       }
 
@@ -59,7 +59,7 @@ class SceneManager {
     this.isGameOverManager(player1, player2);
 
     if (this.gameOverMode == true) {
-      this.gameOverScene.draw(player1, player2, foods);
+      this.finalScene.draw(player1, player2, foods);
     } else {
       //set theCurrentScene var = from the list of scenes, get me the current one.
       var theCurrentScene = this.allTheScenes[this.currSceneIndex];
@@ -70,7 +70,7 @@ class SceneManager {
   keyWasPressed(keyCode) {
     console.log("key was pressed" + keyCode);
     if (this.gameOverMode) {
-      this.gameOverScene.keyWasPressed(keyCode);
+      this.finalScene.keyWasPressed(keyCode);
     } else {
       var theCurrentScene = this.allTheScenes[this.currSceneIndex];
       theCurrentScene.keyWasPressedScene(keyCode);

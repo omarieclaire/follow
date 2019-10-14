@@ -11,12 +11,12 @@
 // - TODO - have a tick for the Scene, and once the tick reaches a certain Scene, add a spike to the array
 // - TODO - ring easing for better feel (@ring 23) https://p5js.jp/examples/input-easing.html AND https://easings.net/en#easeInCirc
 // - TODO - set up sounds
-// - improve ring loss animation
-// - make tail come off last ring / make tail look better
-// - food is coloured, and you get a ring of that colour?
-// - smiley face when leading, frowny face when following, neutral face when neutral
-// - move player collision to player class?
-// - BUG - player collisions sometimes don't work if they are offscreen (sound doesn't play & rings aren't lost) -> reproduce by pressing "a" and ""->"" simultaneously at beginning of game
+// - TODO - improve ring loss animation
+// - TODO - make tail come off last ring / make tail look better
+// - TODO - food is coloured, and you get a ring of that colour?
+// - TODO - smiley face when leading, frowny face when following, neutral face when neutral
+// - TODO - move player collision to player class?
+// - TODO - BUG - player collisions sometimes don't work if they are offscreen (sound doesn't play & rings aren't lost) -> reproduce by pressing "a" and ""->"" simultaneously at beginning of game
 
 
 // MAYBE???
@@ -69,16 +69,17 @@ var player2FadeColor = [145, 200, 255, 200]; // faded blue
 var scl = 40; // scale of almost everything in the game
 var vol = 0.2; // music volume standard
 var foods = [];
+
 var welcomeScene;
 var trainingScene;
 var playScene;
 var whateverScene;
 var finalScene;
 var sceneManager;
-var pressKeyToContinue;
+var instructionScene;
+
 var standardTextSize = 40; // text size standard
 let speed;
-
 var introSound;
 var foodGenSound;
 var eatSound;
@@ -127,8 +128,8 @@ function setup() {
   playScene = new PlayScene();
   whateverScene = new WhateverScene();
   finalScene = new FinalScene();
-  pressKeyToContinue = new PressKeyToContinue();
-  var allTheScenes = [pressKeyToContinue, welcomeScene, trainingScene, playScene, whateverScene];
+  instructionScene = new InstructionScene();
+  var allTheScenes = [instructionScene, welcomeScene, trainingScene, playScene, whateverScene];
   sceneManager = new SceneManager(0, allTheScenes, finalScene);
   // set up an array of food objects and an array of spike objects
   for (var i = 0; i < 1; i++) {
