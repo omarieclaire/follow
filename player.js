@@ -80,7 +80,7 @@ class Player {
 
   eat(food) {
     var d = dist(this.x, this.y, food.x, food.y);
-    if (d < this.scl) {
+    if (d < this.currentDiameter()/2 + this.scl/2) {
       eatSound.play();
       this.changeRingTotal(1, this.x, this.y);
       return true;

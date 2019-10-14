@@ -6,22 +6,19 @@
 // - work on alt controller - buy makey makey, wireless arduino, led strips, spinning chair
 
 // TODO
-// - BUG - other (non dead) player gets an unexpected deathdraw a few seconds after dead player dies (player movement looks like it is stopping but actually it isn't)
-// - BUG - player collisions sometiems don't work if they are offscreen (sound doesn't play & rings aren't lost) -> reproduce by pressing "a" and ""->"" simultaneously at beginning of game
-// - BUG - unexpected "follow state" after player collision -> noticed at @player 176
-// - BUG - spikes and foods sometimes generate underneath players (or on top of eachother).
-// - BUG - players start moving before game (arrow keys shouldn't work until after welcome level)
-// - TODO players should have to move to trigger new level (not just numticks)
-
-// - TODO have a tick for the level, and once the tick reaches a certain level, add a spike to the array
-// - TODO ring easing for better feel (@ring 23) https://p5js.jp/examples/input-easing.html AND https://easings.net/en#easeInCirc
-// - TODO set up sounds
+// - BUG - player collisions sometimes don't work if they are offscreen (sound doesn't play & rings aren't lost) -> reproduce by pressing "a" and ""->"" simultaneously at beginning of game
+// - TODO - improve food collisions
+// - TODO - spikes and foods sometimes generate underneath players (or on top of eachother).
+// - TODO - players start moving before game (arrow keys shouldn't work until after welcome level)
+// - TODO - players should have to move to trigger new level (not just numticks)
+// - TODO - have a tick for the level, and once the tick reaches a certain level, add a spike to the array
+// - TODO - ring easing for better feel (@ring 23) https://p5js.jp/examples/input-easing.html AND https://easings.net/en#easeInCirc
+// - TODO - set up sounds
 // - improve ring loss animation
 // - make tail come off last ring / make tail look better
 // - food is coloured, and you get a ring of that colour?
 // - smiley face when leading, frowny face when following, neutral face when neutral
 // - move player collision to player class?
-// - improve sound files (audacity)
 
 // MAYBE???
 // - draw triangle on front of player????
@@ -36,6 +33,8 @@
 // - playerX wins? (you are both dead so...)
 // you are both dead. playerX had more rings at time of death so congratulations.
 // - alt controller and wireless keyboard both work
+// - BUG - requires major refactor to actually fix: unexpected "follow state" after player collision -> @player 176
+
 
 // IDEA
 // We are locked in a dance with the other, a dance we can step out of at any time.
