@@ -21,6 +21,7 @@ class Player {
     this.numTicksPoppedRing = 0;
     this.ringSpacer = this.scl / 4;
     this.explodeParticles = [];
+    this.followSoundClass = new FollowSound();
 
 
     this.playerRings = []; // store the rings within a local array
@@ -29,7 +30,7 @@ class Player {
     }
 
     this.explodeParticles = [];
-    for(var i = 0; i < 800; i++) {
+    for(var i = 0; i < 500; i++) {
         this.explodeParticles.push(new ExplodeParticle());
     }
   }
@@ -46,18 +47,17 @@ class Player {
     this.direction = this.initialDirection;
     this.poppedRings = [];
     this.numTicksPoppedRing = 0;
+    this.followSound = new FollowSound();
+
 
     this.playerRings = []; // store the rings within a local array
     for (var i = 0; i < this.total; i++) {
       this.playerRings.push(new Rings(this, this.scl));
     }
     this.explodeParticles = [];
-    for(var i = 0; i < 800; i++) {
+    for(var i = 0; i < 500; i++) {
         this.explodeParticles.push(new ExplodeParticle());
     }
-    // console.log("reset: " + this.direction + "and reset: " + this.total);
-    // console.log("player was reset " + this.name);
-    // console.log("is following is " + this.isFollowing);
   }
 
   handlePlayerFollowing(otherPlayer, ourFutureDirection) {
@@ -73,7 +73,7 @@ class Player {
       if (ourFutureDirection == otherPlayer.direction) {
         this.isFollowing = true;
         otherPlayer.isFollowed = true;
-        // console.log("called by player collision? this is a bug. no one is following anyone");
+        console.log("when called by player collision this is a bug. no one is following anyone");
       }
     }
   }
@@ -109,7 +109,7 @@ class Player {
 
   collideWithSpike(spike, otherPlayer) {
     var d = dist(this.x, this.y, spike.x, spike.y);
-    if (d < this.currentDiameter()) {
+    if (d < (this.currentDiameter()/2) + (this.scl/2)) {
       if (!hitSound.isPlaying()) {
         hitSound.play();
         console.log("hit sound is playing");
@@ -119,6 +119,7 @@ class Player {
       // otherPlayer handles flip direction because we need to
       // update isFollowed and isFollowing whenever a player's direction
       // is changed.
+      console.log("collid then flip");
       this.flipDirection(otherPlayer);
       return true;
     } else {
@@ -253,6 +254,9 @@ class Player {
     } else {
       fill(this.playerColor);
     }
+    //follow sound
+    this.followSoundClass.playFollowSound(this.isFollowing, this.isFollowed);
+
     // player circle / face
     ellipse(this.x, this.y, this.scl, this.scl);
     noFill();

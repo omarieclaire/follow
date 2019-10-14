@@ -1,27 +1,26 @@
 // HIGH LEVEL
-// right now the game is basically: don't go the direction someone else is going. is that what I want?
-// how do I *immediately communicate follow status* to both players? player isn't looking at other player
-// Communicate direction more (maybe display direction on screen somehow?)
-// Player should *want* to be leading
-// - more weight to decision - consciousness. could be alt control or some kind of timer where you are strateg.
+// - right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
+// - how do I *immediately* communicate follow status to both players?
+// - Communicate direction more
+// - Player should *want* to be leading?
+// - work on alt controller - buy makey makey, wireless arduino, led strips, spinning chair
 
 // TODO
-// - why does other player get a secondary deathdraw??
-// - why don't player collisions work if they are offscreen? (sound doesn't play and sometimes rings aren't lost)
-// - make spike collisions more forgiving - right now they kill you from far away sometimes
-// - ring easing for better feel (ring 23) https://p5js.jp/examples/input-easing.html AND https://easings.net/en#easeInCirc
-// - alt controller - get a makey makey? get wireless arduino working again?
-// - set up sounds
-// - When the "following" sound is @player 176, it unexpectedly plays when players collide w eachother! why?
+// - BUG - other (non dead) player gets an unexpected deathdraw a few seconds after dead player dies (player movement looks like it is stopping but actually it isn't)
+// - BUG - player collisions sometiems don't work if they are offscreen (sound doesn't play & rings aren't lost) -> reproduce by pressing "a" and ""->"" simultaneously at beginning of game
+// - BUG - unexpected "follow state" after player collision -> noticed at @player 176
+// - BUG - spikes and foods sometimes generate underneath players (or on top of eachother).
+// - BUG - players start moving before game (arrow keys shouldn't work until after welcome level)
+// - TODO players should have to move to trigger new level (not just numticks)
+
+// - TODO have a tick for the level, and once the tick reaches a certain level, add a spike to the array
+// - TODO ring easing for better feel (@ring 23) https://p5js.jp/examples/input-easing.html AND https://easings.net/en#easeInCirc
+// - TODO set up sounds
 // - improve ring loss animation
-// - spikes and foods shouldn't generate underneath players. also ideally they don't generate on top of eachother.
-// - have a tick for the level, and once the tick reaches a certain level, add a spike to the array.
-// - make tail come off last ring
-// - make tail look better
+// - make tail come off last ring / make tail look better
 // - food is coloured, and you get a ring of that colour?
 // - smiley face when leading, frowny face when following, neutral face when neutral
 // - move player collision to player class?
-// - arrow keys shouldn't work until after welcome level
 // - improve sound files (audacity)
 
 // MAYBE???
@@ -55,8 +54,9 @@
 // - why do I have collision bugs?
 // - I should walk through the "move" of the rings
 // - Why is noCursor not working?
+// - what is currentDiameter @player 103 doign?
 
-// Thanks: Ida, Aaron, Game Center, Mailis, Jessica, Eric, Danny Hawk,
+// Thanks: Aaron, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny Hawk,
 
 
 var player1;
@@ -80,12 +80,22 @@ var pressKeyToContinue;
 var standardTextSize = 40; // text size standard
 let speed;
 
+var introSound;
+var foodGenSound;
+var eatSound;
+var hitSound;
+var newLevelSound;
+var followingSound;
+var deathSound;
+var ringMoveSound;
+var ambientSound;
+
 // foodgen_sound, newlevel (currently dupe sound), start game sound
 
 function preload() {
   p1_img = loadImage('img/p1.png');
-  intro_music = loadSound('sounds/intro.mp3');
-  intro_music.setVolume(vol);
+  introSound = loadSound('sounds/intro.mp3');
+  introSound.setVolume(vol);
   foodGenSound = loadSound('sounds/eat.mp3');
   foodGenSound.setVolume(vol);
   eatSound = loadSound('sounds/eat.mp3');
@@ -149,6 +159,7 @@ function playerCollision() {
   let d = dist(player1.x, player1.y, player2.x, player2.y);
 
   if (d <= player1.currentDiameter() / 2 + player2.currentDiameter() / 2) {
+    console.log("collide!");
     hitSound.play();
 
     player1.total = player1.total - 1;

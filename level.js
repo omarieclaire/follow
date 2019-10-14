@@ -63,7 +63,7 @@ class PressKeyToContinue extends Level {
   constructor() {
     super();
     this.keyWasPressed = false;
-    intro_music.loop();
+    introSound.loop();
     console.log("intro music playing");
 
   }
@@ -91,10 +91,8 @@ class PressKeyToContinue extends Level {
     return this.keyWasPressed == true;
   }
   keyWasPressedLevel(keyCode) {
-    intro_music.stop();
-    followingSound.play();
-    ambientSound.loop();
-    console.log("ambience playing");
+    introSound.stop();
+    // ambientSound.loop();
     this.keyWasPressed = true;
   }
 }
@@ -149,12 +147,12 @@ class Level1 extends Level {
       stroke(player1Color);
       text(player1.direction + " - follower!", windowWidth / 2, windowHeight / 1.43);
       stroke(player2Color);
-      text(player2.direction, windowWidth / 2, windowHeight / 1.23);
+      text(player2.direction + " - leader", windowWidth / 2, windowHeight / 1.23);
 
     } else if (player2.isFollowing) {
       // ringMoveSound.loop();
       stroke(player1Color);
-      text(player1.direction, windowWidth / 2, windowHeight / 1.43);
+      text(player1.direction + " - leader", windowWidth / 2, windowHeight / 1.43);
       stroke(player2Color);
       text(player2.direction + " - follower!", windowWidth / 2, windowHeight / 1.23);
 
