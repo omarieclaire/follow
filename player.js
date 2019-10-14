@@ -82,9 +82,7 @@ class Player {
     var d = dist(this.x, this.y, food.x, food.y);
     if (d < this.scl) {
       eatSound.play();
-
-      this.total++;
-      this.playerRings.push(new Rings(this, this.scl));
+      this.changeRingTotal(1, this.x, this.y);
       return true;
     } else {
       return false;
@@ -114,8 +112,7 @@ class Player {
         hitSound.play();
         console.log("hit sound is playing");
       }
-      this.total--;
-      this.poppedRings.push(this.playerRings.pop());
+      this.changeRingTotal(-1, this.x, this.y);
       // otherPlayer handles flip direction because we need to
       // update isFollowed and isFollowing whenever a player's direction
       // is changed.
@@ -163,6 +160,11 @@ class Player {
     this.dir(0.1, 0);
     this.handlePlayerFollowing(otherPlayer, "right");
     this.direction = "right";
+  }
+
+  halt() {
+    this.xspeed = 0;
+    this.yspeed = 0;
   }
 
   changeRingTotal(amount, x, y) {

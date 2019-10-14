@@ -162,10 +162,9 @@ function playerCollision() {
     console.log("collide!");
     hitSound.play();
 
-    player1.total = player1.total - 1;
-    player2.total = player2.total - 1;
-    player1.poppedRings.push(player1.playerRings.pop());
-    player2.poppedRings.push(player2.playerRings.pop());
+    player1.changeRingTotal(-1, player1.x, player1.y);
+    player2.changeRingTotal(-1, player2.x, player2.y);
+
     // console.log("popping rings");
     player1.flipDirection(player2);
     player2.flipDirection(player1);

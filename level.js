@@ -167,7 +167,7 @@ class Level1 extends Level {
   }
 
   advanceToNextLevel(player1, player2) {
-    return this.numTicks >= 3000;
+    return this.numTicks >= 10;
   }
   //ticks need to be reset when game restarts
   resetLevel() {
@@ -256,6 +256,8 @@ class FinalLevel extends Level {
     noStroke();
     text("GAME OVER!!!", windowWidth / 2, windowHeight / 2);
     stroke(255);
+    player1.halt();
+    player2.halt();
     if (player2.total <= 0 && player1.total <= 0) {
       // noFill();
       // ellipse(player1.x, player1.y, player1.r);
