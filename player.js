@@ -73,7 +73,7 @@ class Player {
       if (ourFutureDirection == otherPlayer.direction) {
         this.isFollowing = true;
         otherPlayer.isFollowed = true;
-        console.log("when called by player collision this is a bug. no one is following anyone");
+        // console.log("when called by player collision this is a bug. no one is following anyone");
       }
     }
   }

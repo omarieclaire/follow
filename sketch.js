@@ -6,12 +6,10 @@
 // - work on alt controller - buy makey makey, wireless arduino, led strips, spinning chair
 
 // TODO
-// - BUG - player collisions sometimes don't work if they are offscreen (sound doesn't play & rings aren't lost) -> reproduce by pressing "a" and ""->"" simultaneously at beginning of game
-// - TODO - improve food collisions
-// - TODO - spikes and foods sometimes generate underneath players (or on top of eachother).
-// - TODO - players start moving before game (arrow keys shouldn't work until after welcome level)
-// - TODO - players should have to move to trigger new level (not just numticks)
-// - TODO - have a tick for the level, and once the tick reaches a certain level, add a spike to the array
+// - TODO - HARD spikes and foods sometimes generate underneath players (or on top of eachother).
+// - TODO - players start moving before game (arrow keys shouldn't work until after welcome Scene)
+// - TODO - players should have to move to trigger new Scene (not just numticks)
+// - TODO - have a tick for the Scene, and once the tick reaches a certain Scene, add a spike to the array
 // - TODO - ring easing for better feel (@ring 23) https://p5js.jp/examples/input-easing.html AND https://easings.net/en#easeInCirc
 // - TODO - set up sounds
 // - improve ring loss animation
@@ -19,9 +17,12 @@
 // - food is coloured, and you get a ring of that colour?
 // - smiley face when leading, frowny face when following, neutral face when neutral
 // - move player collision to player class?
+// - BUG - player collisions sometimes don't work if they are offscreen (sound doesn't play & rings aren't lost) -> reproduce by pressing "a" and ""->"" simultaneously at beginning of game
+
 
 // MAYBE???
 // - draw triangle on front of player????
+// - draw a black rect around the screen to help with looping instead of my weird math?
 // - turtles
 // - make health rings little circles that "follow" instead of wrap rings
 // - give flavour text boxes to coins - i'm just looking for a leader? ("i'll do what ever you tell me to do"? or should I give flavour text to players?)
@@ -48,7 +49,7 @@
 // Two facing monitors and controled with head (window)?
 
 // WHY
-// - why does this have a var and the others don't?   var allTheLevels = [pressKeyToContinue, level0, level1, level2, level3];
+// - why does this have a var and the others don't?   var allTheSceness = [pressKeyToContinue, scenes0, scenes1, scenes2, scenes3];
 // - why do some things require "setup" and others don't? For example, "Rings" aren't set up
 // - why do I have collision bugs?
 // - I should walk through the "move" of the rings
@@ -69,12 +70,12 @@ var player2FadeColor = [145, 200, 255, 200]; // faded blue
 var scl = 40; // scale of almost everything in the game
 var vol = 0.2; // music volume standard
 var foods = [];
-var level0;
-var level1;
-var level2;
-var level3;
-var finallevel;
-var levelManager;
+var welcomeScene;
+var trainingScene;
+var playScene;
+var whateverScene;
+var finalScene;
+var sceneManager;
 var pressKeyToContinue;
 var standardTextSize = 40; // text size standard
 let speed;
@@ -83,13 +84,13 @@ var introSound;
 var foodGenSound;
 var eatSound;
 var hitSound;
-var newLevelSound;
+var newSceneSound;
 var followingSound;
 var deathSound;
 var ringMoveSound;
 var ambientSound;
 
-// foodgen_sound, newlevel (currently dupe sound), start game sound
+// foodgen_sound, newScene (currently dupe sound), start game sound
 
 function preload() {
   p1_img = loadImage('img/p1.png');
@@ -101,8 +102,8 @@ function preload() {
   eatSound.setVolume(vol);
   hitSound = loadSound('sounds/hit.mp3');
   hitSound.setVolume(vol);
-  newLevelSound = loadSound('sounds/newlevel.mp3');
-  newLevelSound.setVolume(vol);
+  newSceneSound = loadSound('sounds/newscene.mp3');
+  newSceneSound.setVolume(vol);
   followingSound = loadSound('sounds/following.mp3');
   followingSound.setVolume(vol);
   deathSound = loadSound('sounds/losing.mp3');
@@ -120,16 +121,16 @@ function setup() {
   // p5 specific function for working with degrees
   angleMode(DEGREES);
   //special functions to construct an object from a class
-  player1 = new Player("1", " ",-0, -200, scl, player1Color, player1FadeColor);
+  player1 = new Player("1", " ", -0, -200, scl, player1Color, player1FadeColor);
   player2 = new Player("2", " ", 0, 200, scl, player2Color, player2FadeColor);
-  level0 = new Level0();
-  level1 = new Level1();
-  level2 = new Level2();
-  level3 = new Level3();
-  finalLevel = new FinalLevel();
+  welcomeScene = new WelcomeScene();
+  trainingScene = new TrainingScene();
+  playScene = new PlayScene();
+  whateverScene = new WhateverScene();
+  finalScene = new FinalScene();
   pressKeyToContinue = new PressKeyToContinue();
-  var allTheLevels = [pressKeyToContinue, level0, level1, level2, level3];
-  levelManager = new LevelManager(0, allTheLevels, finalLevel);
+  var allTheScenes = [pressKeyToContinue, welcomeScene, trainingScene, playScene, whateverScene];
+  sceneManager = new SceneManager(0, allTheScenes, finalScene);
   // set up an array of food objects and an array of spike objects
   for (var i = 0; i < 1; i++) {
     foods[i] = new Food(scl);
@@ -139,7 +140,7 @@ function setup() {
 
 // Draw is where I call anything that needs to be constantly updated/needs to constantly change own state
 function draw() {
-  levelManager.switchLevel(player1, player2);
+  sceneManager.switchScene(player1, player2);
   //implememt punishment/rewards for following/leading
   player1.updateTotal(player2);
   player2.updateTotal(player1);
@@ -151,7 +152,7 @@ function draw() {
   playerCollision();
 
   // Finally actually drawing!
-  levelManager.drawLevel(player1, player2, foods);
+  sceneManager.drawScene(player1, player2, foods);
 }
 
 function playerCollision() {
@@ -180,42 +181,44 @@ function playerCollision() {
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
-  levelManager.resetLevelManager();
+  sceneManager.resetSceneManager();
 }
 
 function keyPressed() {
   if (keyCode === 70) {
     let fs = fullscreen();
     fullscreen(!fs);
-    levelManager.resetLevelManager();
+    sceneManager.resetSceneManager();
   }
 
   if (keyCode === 32) {
-    levelManager.keyWasPressed(keyCode);
+    sceneManager.keyWasPressed(keyCode);
   }
 
-  if (keyCode === UP_ARROW) {
-    player2.changeDirectionUp(player1);
+  if (sceneManager.currSceneIndex == 2 || sceneManager.currSceneIndex == 3) { //SceneManager.currSceneIndex == 2
+    if (keyCode === UP_ARROW) {
+      player2.changeDirectionUp(player1);
 
-  } else if (keyCode === DOWN_ARROW) {
-    player2.changeDirectionDown(player1);
+    } else if (keyCode === DOWN_ARROW) {
+      player2.changeDirectionDown(player1);
 
-  } else if (keyCode === RIGHT_ARROW) {
-    player2.changeDirectionRight(player1);
+    } else if (keyCode === RIGHT_ARROW) {
+      player2.changeDirectionRight(player1);
 
-  } else if (keyCode === LEFT_ARROW) {
-    player2.changeDirectionLeft(player1);
+    } else if (keyCode === LEFT_ARROW) {
+      player2.changeDirectionLeft(player1);
 
-  } else if (keyCode === 87) {
-    player1.changeDirectionUp(player2);
+    } else if (keyCode === 87) {
+      player1.changeDirectionUp(player2);
 
-  } else if (keyCode === 83) {
-    player1.changeDirectionDown(player2);
+    } else if (keyCode === 83) {
+      player1.changeDirectionDown(player2);
 
-  } else if (keyCode === 68) {
-    player1.changeDirectionRight(player2);
+    } else if (keyCode === 68) {
+      player1.changeDirectionRight(player2);
 
-  } else if (keyCode === 65) {
-    player1.changeDirectionLeft(player2);
+    } else if (keyCode === 65) {
+      player1.changeDirectionLeft(player2);
+    }
   }
 }
