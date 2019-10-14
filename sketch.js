@@ -6,8 +6,7 @@
 // - work on alt controller - buy makey makey, wireless arduino, led strips, spinning chair
 
 // TODO
-// - TODO - HARD spikes and foods sometimes generate underneath players (or on top of eachother).
-// - TODO - players start moving before game (arrow keys shouldn't work until after welcome Scene)
+// - TODO - HARD - spikes and foods sometimes generate underneath players (or on top of eachother).
 // - TODO - players should have to move to trigger new Scene (not just numticks)
 // - TODO - have a tick for the Scene, and once the tick reaches a certain Scene, add a spike to the array
 // - TODO - ring easing for better feel (@ring 23) https://p5js.jp/examples/input-easing.html AND https://easings.net/en#easeInCirc
