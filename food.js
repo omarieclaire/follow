@@ -4,7 +4,19 @@ class Food {
     this.total = 3;
     this.x;
     this.y;
-    this.color = [255, 255, 1];
+    this.color = this.foodColorPicker();
+  }
+
+  foodColorPicker() {
+    console.log("hello");
+    var arrayOfColors = [
+      [255, 0, 0 ],
+      [0, 255, 0],
+      [0, 0, 255]
+    ];
+    var randomNumber = floor(random(arrayOfColors.length));
+    console.log("random: " + randomNumber);
+    return arrayOfColors[randomNumber];
   }
 
   foodMove() {
@@ -35,6 +47,7 @@ class Food {
 
     this.x = this.foodLocation.x;
     this.y = this.foodLocation.y;
+    this.color = this.foodColorPicker();
   }
 
   show() {
