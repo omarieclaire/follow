@@ -6,6 +6,14 @@
 // - work on alt controller - buy makey makey, wireless arduino, led strips, spinning chair
 
 // TODO
+// scenemanager.js:76 Uncaught TypeError: theCurrentScene.keyWasPressedScene is not a function
+//     at SceneManager.keyWasPressed (scenemanager.js:76)
+//     at keyPressed (sketch.js:199)
+//     at p5._onkeydown (p5.js:54624)
+
+
+// - TODO - spikes still generating on player
+// - TODO - player transfer color
 // - TODO - spikes sometimes generate underneath players (or food and spikes top of eachother).
 // - TODO - players should have to move to trigger new Scene (not just numticks)
 // - TODO - ring easing for better feel (@ring 23) https://p5js.jp/examples/input-easing.html AND https://easings.net/en#easeInCirc
@@ -19,6 +27,7 @@
 
 
 // MAYBE???
+// - shared score
 // - draw triangle on front of player????
 // - draw a black rect around the screen to help with looping instead of my weird math?
 // - turtles
@@ -60,14 +69,15 @@
 
 var player1;
 var player2;
-var foodColor = [255]; // white
+var foodColor = [255, 255, 1]; // white
+var ringColor = [255, 0, 0]; // red
 var pointColor = [255, 215, 0, 250]; // gold
 var player1Color = [255, 51, 153, 240]; // magenta
 var player2Color = [51, 153, 255, 240]; // blue
 var player1FadeColor = [184, 125, 155, 200]; // faded pink
 var player2FadeColor = [145, 200, 255, 200]; // faded blue
 var scl = 40; // scale of almost everything in the game
-var vol = 0.2; // music volume standard
+var vol = 0.01; // music volume standard
 var foods = [];
 
 var welcomeScene;
@@ -133,7 +143,7 @@ function setup() {
   sceneManager = new SceneManager(0, allTheScenes, finalScene);
   // set up an array of food objects and an array of spike objects
   for (var i = 0; i < 1; i++) {
-    foods[i] = new Food(scl);
+    foods[i] = new Food(scl, foodColor);
     foods[i].location(player1, player2);
   }
 }
@@ -142,13 +152,14 @@ function setup() {
 function draw() {
   // console.log("p1 x is " + player1.x + " ///// p2 x is " + player2.x);
   sceneManager.switchScene(player1, player2);
-  //implememt punishment/rewards for following/leading
-  player1.updateTotal(player2);
-  player2.updateTotal(player1);
 
   // update location of player1 and player2
   player1.update();
   player2.update();
+
+  //implememt punishment/rewards for following/leading
+  player1.updateTotal(player2);
+  player2.updateTotal(player1);
 
   playerCollision();
 
@@ -192,34 +203,5 @@ function keyPressed() {
     sceneManager.resetSceneManager();
   }
 
-  if (keyCode === 32) {
-    sceneManager.keyWasPressed(keyCode);
-  }
-
-  if (sceneManager.currSceneIndex == 2 || sceneManager.currSceneIndex == 3) { //SceneManager.currSceneIndex == 2
-    if (keyCode === UP_ARROW) {
-      player2.changeDirectionUp(player1);
-
-    } else if (keyCode === DOWN_ARROW) {
-      player2.changeDirectionDown(player1);
-
-    } else if (keyCode === RIGHT_ARROW) {
-      player2.changeDirectionRight(player1);
-
-    } else if (keyCode === LEFT_ARROW) {
-      player2.changeDirectionLeft(player1);
-
-    } else if (keyCode === 87) {
-      player1.changeDirectionUp(player2);
-
-    } else if (keyCode === 83) {
-      player1.changeDirectionDown(player2);
-
-    } else if (keyCode === 68) {
-      player1.changeDirectionRight(player2);
-
-    } else if (keyCode === 65) {
-      player1.changeDirectionLeft(player2);
-    }
-  }
+  sceneManager.keyWasPressed(keyCode, player1, player2);
 }

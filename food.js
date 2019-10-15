@@ -4,6 +4,7 @@ class Food {
     this.total = 3;
     this.x;
     this.y;
+    this.color = [255, 255, 1];
   }
 
   foodMove() {
@@ -37,7 +38,7 @@ class Food {
   }
 
   show() {
-    stroke(foodColor);
+    stroke(this.color);
     strokeWeight(.5);
     noFill();
     ellipse(this.foodLocation.x, this.foodLocation.y, this.scl, this.scl);

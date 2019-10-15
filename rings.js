@@ -1,6 +1,7 @@
 class Rings {
-  constructor(player, scl, initX, initY) {
+  constructor(player, scl, ringColor, initX, initY) {
     this.scl = scl;
+    this.ringColor = ringColor;
     //if we don't pass in an x or a y, just leave them as is
     if (typeof(initX) === 'undefined' || typeof(initY) === 'undefined') {
       this.x = player.x;
@@ -44,13 +45,16 @@ class Rings {
   }
 
   draw(radius) {
+    push();
+    stroke(this.ringColor);
     ellipse(this.x, this.y, radius);
+    pop();
   }
 
   drawDeadRing(initialRadius) {
     push();
-    stroke(255, 0, 0);
-    strokeWeight(.25);
+    // stroke(255, 0, 0);
+    strokeWeight(.5);
     ellipse(this.x, this.y, initialRadius);
     pop();
   }

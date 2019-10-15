@@ -4,7 +4,7 @@
 // scenes need to: draw themselves & know when to end (success and failure)
 class Scene {
   constructor() {
-    this.leaderRing = new LeaderRing(scl);
+    // this.leaderRing = new LeaderRing(scl);
   };
   resetScene() {}
   //first, a function to check if the game is over
@@ -17,7 +17,7 @@ class Scene {
     }
   }
 
-  keyWasPressed(keyCode) {}
+  keyWasPressed(keyCode, player1, player2) {}
 
   ///////////////////////////
   //// Basic Scene Draw /////
@@ -38,7 +38,7 @@ class Scene {
     player1.show();
     player2.show();
 
-    this.leaderRing.drawLeaderRing(player1, player2);
+    // this.leaderRing.drawLeaderRing(player1, player2);
   }
 
   draw(player1, player2, foods) {
@@ -65,6 +65,36 @@ class Scene {
       player2.collideWithSpike(spikes[i], player1);
     }
   }
+
+  //////////////////////////
+  //// player movement /////
+  //////////////////////////
+  movePlayerOnKeyPress(keyCode, player1, player2) {
+    if (keyCode === UP_ARROW) {
+      player2.changeDirectionUp(player1);
+
+    } else if (keyCode === DOWN_ARROW) {
+      player2.changeDirectionDown(player1);
+
+    } else if (keyCode === RIGHT_ARROW) {
+      player2.changeDirectionRight(player1);
+
+    } else if (keyCode === LEFT_ARROW) {
+      player2.changeDirectionLeft(player1);
+
+    } else if (keyCode === 87) {
+      player1.changeDirectionUp(player2);
+
+    } else if (keyCode === 83) {
+      player1.changeDirectionDown(player2);
+
+    } else if (keyCode === 68) {
+      player1.changeDirectionRight(player2);
+
+    } else if (keyCode === 65) {
+      player1.changeDirectionLeft(player2);
+    }
+  }
 }
 
 /////////////////////////////
@@ -73,7 +103,7 @@ class Scene {
 class InstructionScene extends Scene {
   constructor() {
     super();
-    this.keyWasPressed = false;
+    this.wasKeyPressed = false;
     introSound.loop();
     console.log("intro music playing");
 
@@ -93,18 +123,18 @@ class InstructionScene extends Scene {
   }
 
   advanceToNextScene(player1, player2) {
-    return this.keyWasPressed == true;
+    return this.wasKeyPressed == true;
   }
 
-  keyWasPressedScene(keyCode) {
+  keyWasPressed(keyCode, player1, player2) {
     introSound.stop();
     // ambientSound.loop();
-    this.keyWasPressed = true;
+    this.wasKeyPressed = true;
   }
 
   //advance to next scene bool needs to be reset when game restarts
   resetScene() {
-    this.keyWasPressed = false;
+    this.wasKeyPressed = false;
   }
 }
 
@@ -147,6 +177,10 @@ class TrainingScene extends Scene {
     this.numTicks = 0;
 
   };
+
+  keyWasPressed(keyCode, player1, player2) {
+    this.movePlayerOnKeyPress(keyCode, player1, player2);
+  }
   draw(player1, player2, foods) {
     this.numTicks++;
     this.basicSceneDraw(player1, player2, foods);
@@ -155,6 +189,8 @@ class TrainingScene extends Scene {
     //only print directional cues if player is still living TEXTDISPLAYBUG
     if (player1.total > 0 && player2.total > 0) {
       //directional text
+
+      push();
       stroke(255);
       strokeWeight(1);
 
@@ -165,7 +201,7 @@ class TrainingScene extends Scene {
       if (player1.isFollowing) {
         // ringMoveSound.loop();
         stroke(player1Color);
-        text("Follower!", windowWidth / 4, windowHeight / 1.23);
+        text("Follower", windowWidth / 4, windowHeight / 1.23);
         stroke(player2Color);
         text("Leader", windowWidth - windowWidth / 4, windowHeight / 1.23);
 
@@ -174,15 +210,15 @@ class TrainingScene extends Scene {
         stroke(player1Color);
         text("Leader", windowWidth / 4, windowHeight / 1.23);
         stroke(player2Color);
-        text("Follower!", windowWidth - windowWidth / 4, windowHeight / 1.23);
+        text("Follower", windowWidth - windowWidth / 4, windowHeight / 1.23);
 
       } else {
         // ringMoveSound.stop();
 
       }
+      pop();
     }
     else {
-      // console.log("nobughere!")
     }
   }
 
@@ -216,6 +252,10 @@ class PlayScene extends Scene {
     }
   }
 
+  keyWasPressed(keyCode, player1, player2) {
+    this.movePlayerOnKeyPress(keyCode, player1, player2);
+  }
+
   draw(player1, player2, foods) {
     this.numTicks++;
     this.foodEaten(player1, player2, foods);
@@ -227,17 +267,13 @@ class PlayScene extends Scene {
     }
 
     // every 1000 ticks, add a spike.
-    if(this.numTicks % 1000 == 0) {
+    if(this.numTicks % 5000 == 0) {
       this.spikes.push(new Spike(scl));
     }
 
     for (let i = 0; i < this.spikes.length; i++) {
       this.spikes[i].show();
     }
-
-
-
-
 
   }
   advanceToNextScene(player1, player2) {
@@ -313,7 +349,7 @@ class FinalScene extends Scene {
     // GAME OVER TEXT
     noStroke();
     text("GAME OVER!!!", windowWidth / 2, windowHeight / 2);
-    text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
+    // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
 
     this.numTicks++;
   }

@@ -67,13 +67,12 @@ class SceneManager {
     }
   }
 
-  keyWasPressed(keyCode) {
-    console.log("key was pressed" + keyCode);
+  keyWasPressed(keyCode, player1, player2) {
     if (this.gameOverMode) {
-      this.finalScene.keyWasPressed(keyCode);
+      this.finalScene.keyWasPressed(keyCode, player1, player2);
     } else {
       var theCurrentScene = this.allTheScenes[this.currSceneIndex];
-      theCurrentScene.keyWasPressedScene(keyCode);
+      theCurrentScene.keyWasPressed(keyCode, player1, player2);
     }
   }
 

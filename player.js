@@ -19,19 +19,20 @@ class Player {
     this.playerFadedColor = tmp_playerFadedColor;
     this.poppedRings = [];
     this.numTicksPoppedRing = 0;
-    this.ringSpacer = this.scl/4;
+    this.ringSpacer = this.scl / 4;
     this.explodeParticles = [];
     this.followSoundClass = new FollowSound();
+    // this.newColor = [0, 255, 255];
 
 
     this.playerRings = []; // store the rings within a local array
     for (var i = 0; i < this.total; i++) { //for each point in score
-      this.playerRings.push(new Rings(this, this.scl)); //push a new ring to array
+      this.playerRings.push(new Rings(this, this.scl, ringColor)); //push a new ring to array
     }
 
     this.explodeParticles = [];
-    for(var i = 0; i < 500; i++) {
-        this.explodeParticles.push(new ExplodeParticle());
+    for (var i = 0; i < 500; i++) {
+      this.explodeParticles.push(new ExplodeParticle());
     }
   }
 
@@ -52,11 +53,11 @@ class Player {
 
     this.playerRings = []; // store the rings within a local array
     for (var i = 0; i < this.total; i++) {
-      this.playerRings.push(new Rings(this, this.scl));
+      this.playerRings.push(new Rings(this, this.scl, ringColor));
     }
     this.explodeParticles = [];
-    for(var i = 0; i < 500; i++) {
-        this.explodeParticles.push(new ExplodeParticle());
+    for (var i = 0; i < 500; i++) {
+      this.explodeParticles.push(new ExplodeParticle());
     }
   }
 
@@ -80,9 +81,9 @@ class Player {
 
   eat(food) {
     var d = dist(this.x, this.y, food.x, food.y);
-    if (d < this.currentDiameter()/2 + this.scl/2) {
+    if (d < this.currentDiameter() / 2 + this.scl / 2) {
       eatSound.play();
-      this.changeRingTotal(1, this.x, this.y);
+      this.changeRingTotal(1, this.x, this.y, food.color);
       return true;
     } else {
       return false;
@@ -107,7 +108,7 @@ class Player {
 
   collideWithSpike(spike, otherPlayer) {
     var d = dist(this.x, this.y, spike.x, spike.y);
-    if (d < (this.currentDiameter()/2) + (this.scl/2)) {
+    if (d < (this.currentDiameter() / 2) + (this.scl / 2)) {
       if (!hitSound.isPlaying()) {
         hitSound.play();
         console.log("hit sound is playing");
@@ -167,7 +168,7 @@ class Player {
     this.yspeed = 0;
   }
 
-  changeRingTotal(amount, x, y) {
+  changeRingTotal(amount, x, y, newRingColor) {
     var oldTotal = this.total;
     this.total = this.total + amount;
     //floor of old total minus floor of new total, then the absolute value of that (if pos we leave it, if neg we make it pos)
@@ -177,21 +178,41 @@ class Player {
         this.playerRings.pop();
       } else {
         // create a ring that follows 'this' and has the start x and y coordinates passed to changeRingTotal
-        this.playerRings.push(new Rings(this, this.scl, x, y)); //add a ring
+        // if we pass a new ringcolor use it, otherwise use the default
+        if (typeof(newRingColor) === "undefined") {
+          this.playerRings.push(new Rings(this, this.scl, ringColor, x, y)); //add a ring
+          console.log("undef");
+        } else {
+          this.playerRings.push(new Rings(this, this.scl, newRingColor, x, y)); //add a ring
+        }
       }
     }
   }
+
+  colorOfOuterMostRing() {
+    // console.log("outermost ring: " + this.playerRings[this.playerRings.length - 1].ringColor);
+    // return [0, 255, 255];
+    // return [0, 255, 255];
+    // look at the last element of the array and ask what colour it is.
+    // return undefined if the array is empty
+     if (this.playerRings.length == 0) {
+      return undefined;
+    } else {
+      return this.playerRings[this.playerRings.length - 1].ringColor;
+    }
+  }
+
   //update the score on players - also changes rings
   updateTotal(otherPlayer) {
     //ring movement from one player to another
     var ringTransferSpd = 0.01;
     if (this.isFollowing) {
-      //decrement! (note: we never use this.x and this.y here bc of the above logic (amount < 0))
-      this.changeRingTotal(-ringTransferSpd, this.x, this.y);
       //increment!
       //other player is an object. we pass the values below into changeringtotal.
       //create a ring that follows other player
-      otherPlayer.changeRingTotal(ringTransferSpd, this.x, this.y);
+      otherPlayer.changeRingTotal(ringTransferSpd, this.x, this.y, this.colorOfOuterMostRing());
+      //decrement! (note: we never use this.x and this.y here bc of the above logic (amount < 0))
+      this.changeRingTotal(-ringTransferSpd, this.x, this.y);
     }
   }
   //directional speed of player
@@ -207,7 +228,7 @@ class Player {
     }
 
     //loop player around screen
-    var windowLoopSpacer = this.scl/2;
+    var windowLoopSpacer = this.scl / 2;
     if (this.x <= 0 - windowLoopSpacer) {
       this.x = windowWidth + windowLoopSpacer;
       for (var i = 0; i < this.playerRings.length; i++) {
@@ -264,18 +285,18 @@ class Player {
     // player circle / face
     ellipse(this.x, this.y, this.scl, this.scl);
     noFill();
-    stroke(255, 200);
+    // stroke(255, 200);
     push(); //set original drawstate
     for (var i = 0; i < this.playerRings.length; i++) {
       if (this.isFollowed && i == this.playerRings.length - 1) {
-        strokeWeight(5);
+        // strokeWeight(5);
         // stroke(pointColor);
-        stroke(this.playerColor);
+        // stroke(this.playerColor);
 
 
       } else {
-        strokeWeight(.25);
-        stroke(this.playerColor);
+        // strokeWeight(.25);
+        // stroke(this.playerColor);
       }
       this.playerRings[i].draw(this.scl + 2 * (i + 1) * this.ringSpacer);
     }
