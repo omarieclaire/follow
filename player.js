@@ -19,7 +19,7 @@ class Player {
     this.playerFadedColor = tmp_playerFadedColor;
     this.poppedRings = [];
     this.numTicksPoppedRing = 0;
-    this.ringSpacer = this.scl / 4;
+    this.ringSpacer = this.scl;
     this.explodeParticles = [];
     this.followSoundClass = new FollowSound();
 
@@ -207,8 +207,8 @@ class Player {
     }
 
     //loop player around screen
-    var windowLoopSpacer = 20;
-    if (this.x < 0 - windowLoopSpacer) {
+    var windowLoopSpacer = this.scl/2;
+    if (this.x <= 0 - windowLoopSpacer) {
       this.x = windowWidth + windowLoopSpacer;
       for (var i = 0; i < this.playerRings.length; i++) {
         var theRing = this.playerRings[i];
@@ -216,13 +216,15 @@ class Player {
       }
       // Rings.x = windowWidth - this.scl;
       // leaderRing.x = windowWidth - this.scl;
+
+      //don't change this one to "">="" or the bug comes back!
     } else if (this.x > windowWidth + windowLoopSpacer) {
       this.x = 0 - windowLoopSpacer;
       for (var i = 0; i < this.playerRings.length; i++) {
         var theRing = this.playerRings[i];
         theRing.updateLocation(0 - windowLoopSpacer, theRing.y);
       }
-    } else if (this.y < 0 - windowLoopSpacer) {
+    } else if (this.y <= 0 - windowLoopSpacer) {
       this.y = windowHeight + windowLoopSpacer;
       for (var i = 0; i < this.playerRings.length; i++) {
         var theRing = this.playerRings[i];

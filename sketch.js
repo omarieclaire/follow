@@ -11,6 +11,7 @@
 // - TODO - have a tick for the Scene, and once the tick reaches a certain Scene, add a spike to the array
 // - TODO - ring easing for better feel (@ring 23) https://p5js.jp/examples/input-easing.html AND https://easings.net/en#easeInCirc
 // - TODO - set up sounds
+// - TODO - why isn't scene 156 working?
 // - TODO - improve ring loss animation
 // - TODO - make tail come off last ring / make tail look better
 // - TODO - food is coloured, and you get a ring of that colour?
@@ -54,6 +55,7 @@
 // - I should walk through the "move" of the rings
 // - Why is noCursor not working?
 // - what is currentDiameter @player 103 doign?
+// - why does @scene 156 not work? TEXTDISPLAYBUG
 
 // Thanks: Aaron, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny Hawk,
 
@@ -134,12 +136,14 @@ function setup() {
   // set up an array of food objects and an array of spike objects
   for (var i = 0; i < 1; i++) {
     foods[i] = new Food(scl);
-    foods[i].location();
+    foods[i].location(player1, player2);
   }
 }
 
 // Draw is where I call anything that needs to be constantly updated/needs to constantly change own state
 function draw() {
+  // console.log("p1 x is " + player1.x + " ///// p2 x is " + player2.x);
+  console.log(width);
   sceneManager.switchScene(player1, player2);
   //implememt punishment/rewards for following/leading
   player1.updateTotal(player2);

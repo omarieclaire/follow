@@ -21,8 +21,17 @@ class Food {
     return vector;
   }
   //initialize food location with a random point
-  location() {
+  location(player1, player2) {
     this.foodLocation = this.makeRandomVector();
+    var player1Distance = dist(this.foodLocation.x, this.foodLocation.y, player1.x, player1.y);
+    var player2Distance = dist(this.foodLocation.x, this.foodLocation.y, player2.x, player2.y);
+
+    while(player1Distance < player1.getCurrentDiameter()/2 || player2Distance < player2.getCurrentDiameter()/2) {
+      this.foodLocation = this.makeRandomVector();
+      player1Distance = dist(this.foodLocation.x, this.foodLocation.y, player1.x, player1.y);
+      player2Distance = dist(this.foodLocation.x, this.foodLocation.y, player2.x, player2.y);
+    }
+
     this.x = this.foodLocation.x;
     this.y = this.foodLocation.y;
   }

@@ -17,7 +17,7 @@ class Scene {
     }
   }
 
-  keyWasPressedScene(keyCode) {}
+  keyWasPressed(keyCode) {}
 
   ///////////////////////////
   //// Basic Scene Draw /////
@@ -79,11 +79,6 @@ class InstructionScene extends Scene {
 
   }
 
-  //advance to next scene bool needs to be reset when game restarts
-  resetScene() {
-    this.keyWasPressed = false;
-  }
-
   draw(player1, player2, foods) {
     background(30);
     textSize(standardTextSize);
@@ -105,6 +100,11 @@ class InstructionScene extends Scene {
     introSound.stop();
     // ambientSound.loop();
     this.keyWasPressed = true;
+  }
+
+  //advance to next scene bool needs to be reset when game restarts
+  resetScene() {
+    this.keyWasPressed = false;
   }
 }
 
@@ -152,39 +152,42 @@ class TrainingScene extends Scene {
     this.basicSceneDraw(player1, player2, foods);
 
 
-    //only print directional cues if player is still living
-    if (player1.total > 1 && player2.total > 1) {
-
+    //only print directional cues if player is still living TEXTDISPLAYBUG
+    if (player1.total > 0 && player2.total > 0) {
       //directional text
       stroke(255);
       strokeWeight(1);
 
+      stroke(player1Color);
+      text(player1.direction, windowWidth / 4, windowHeight / 1.43);
+      stroke(player2Color);
+      text(player2.direction, windowWidth - windowWidth / 4, windowHeight / 1.43);
       if (player1.isFollowing) {
         // ringMoveSound.loop();
         stroke(player1Color);
-        text(player1.direction + " - follower!", windowWidth / 2, windowHeight / 1.43);
+        text("Follower!", windowWidth / 4, windowHeight / 1.23);
         stroke(player2Color);
-        text(player2.direction + " - leader", windowWidth / 2, windowHeight / 1.23);
+        text("Leader", windowWidth - windowWidth / 4, windowHeight / 1.23);
 
       } else if (player2.isFollowing) {
         // ringMoveSound.loop();
         stroke(player1Color);
-        text(player1.direction + " - leader", windowWidth / 2, windowHeight / 1.43);
+        text("Leader", windowWidth / 4, windowHeight / 1.23);
         stroke(player2Color);
-        text(player2.direction + " - follower!", windowWidth / 2, windowHeight / 1.23);
+        text("Follower!", windowWidth - windowWidth / 4, windowHeight / 1.23);
 
       } else {
         // ringMoveSound.stop();
-        stroke(player1Color);
-        text(player1.direction, windowWidth / 2, windowHeight / 1.43);
-        stroke(player2Color);
-        text(player2.direction, windowWidth / 2, windowHeight / 1.23);
+
       }
+    }
+    else {
+      // console.log("nobughere!")
     }
   }
 
   advanceToNextScene(player1, player2) {
-    return this.numTicks >= 2000; // training scene length
+    return this.numTicks >= 1000; // training scene length
   }
   //ticks need to be reset when game restarts
   resetScene() {
@@ -215,8 +218,6 @@ class PlayScene extends Scene {
 
   draw(player1, player2, foods) {
     this.numTicks++;
-
-
     this.foodEaten(player1, player2, foods);
     this.spikeHit(player1, player2, this.spikes);
 
@@ -234,6 +235,10 @@ class PlayScene extends Scene {
     } else {
       return false;
     }
+  }
+  //advance to next scene bool needs to be reset when game restarts
+  resetScene() {
+    this.numTicks = 0;
   }
 }
 /////////////////////////
@@ -258,6 +263,8 @@ class WhateverScene extends Scene {
     } else {
       return false;
     }
+  }
+  resetScene() {
   }
 }
 /////////////////////
@@ -295,6 +302,8 @@ class FinalScene extends Scene {
     // GAME OVER TEXT
     noStroke();
     text("GAME OVER!!!", windowWidth / 2, windowHeight / 2);
+    text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
+
     this.numTicks++;
   }
   advanceToNextScene(player1, player2) {
