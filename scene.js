@@ -228,7 +228,6 @@ class PlayScene extends Scene {
 
     // every 1000 ticks, add a spike.
     if(this.numTicks % 1000 == 0) {
-      console.log("adding a spike");
       this.spikes.push(new Spike(scl));
     }
 

@@ -2,7 +2,7 @@ class Rings {
   constructor(player, scl, initX, initY) {
     this.scl = scl;
     //if we don't pass in an x or a y, just leave them as is
-    if(typeof(initX) === 'undefined' || typeof(initY) === 'undefined') {
+    if (typeof(initX) === 'undefined' || typeof(initY) === 'undefined') {
       this.x = player.x;
       this.y = player.y;
     } else {
@@ -10,12 +10,17 @@ class Rings {
       this.x = initX;
       this.y = initY;
     }
-    //the player that THIS ring follows
+    // the player that THIS ring follows
     this.player = player;
+    // how far we are along the line (lerp)
     this.spectrum = 0;
+    // how far we are in time
+    this.time = 0;
+    // function to define the curve we want
+    this.easing = createBezierCurve(0.55, 0.055, 0.675, 0.19);
   }
-//function to manage the rings when they reach the edge of the screen
-  updateLocation(newX,newY) {
+  //function to manage the rings when they reach the edge of the screen
+  updateLocation(newX, newY) {
     this.x = newX;
     this.y = newY;
   }
@@ -31,7 +36,10 @@ class Rings {
     if (this.spectrum >= 1) {
       this.spectrum = 1;
     } else {
-      this.spectrum = this.spectrum + 0.01;
+      // Incrememt t because it's how far we are along in time
+      this.time = this.time + 0.01;
+      // set spectrum equal to the easing function of time at the current time
+      this.spectrum = this.easing(this.time);
     }
   }
 

@@ -8,7 +8,6 @@
 // TODO
 // - TODO - spikes sometimes generate underneath players (or food and spikes top of eachother).
 // - TODO - players should have to move to trigger new Scene (not just numticks)
-// - TODO - have a tick for the Scene, and once the tick reaches a certain Scene, add a spike to the array
 // - TODO - ring easing for better feel (@ring 23) https://p5js.jp/examples/input-easing.html AND https://easings.net/en#easeInCirc
 // - TODO - set up sounds
 // - TODO - why isn't scene 156 working?
