@@ -19,7 +19,7 @@ class Player {
     this.playerFadedColor = tmp_playerFadedColor;
     this.poppedRings = [];
     this.numTicksPoppedRing = 0;
-    this.ringSpacer = this.scl;
+    this.ringSpacer = this.scl/4;
     this.explodeParticles = [];
     this.followSoundClass = new FollowSound();
 

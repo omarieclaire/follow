@@ -6,7 +6,7 @@
 // - work on alt controller - buy makey makey, wireless arduino, led strips, spinning chair
 
 // TODO
-// - TODO - HARD - spikes and foods sometimes generate underneath players (or on top of eachother).
+// - TODO - spikes sometimes generate underneath players (or food and spikes top of eachother).
 // - TODO - players should have to move to trigger new Scene (not just numticks)
 // - TODO - have a tick for the Scene, and once the tick reaches a certain Scene, add a spike to the array
 // - TODO - ring easing for better feel (@ring 23) https://p5js.jp/examples/input-easing.html AND https://easings.net/en#easeInCirc
@@ -17,7 +17,6 @@
 // - TODO - food is coloured, and you get a ring of that colour?
 // - TODO - smiley face when leading, frowny face when following, neutral face when neutral
 // - TODO - move player collision to player class?
-// - TODO - BUG - player collisions sometimes don't work if they are offscreen (sound doesn't play & rings aren't lost) -> reproduce by pressing "a" and ""->"" simultaneously at beginning of game
 
 
 // MAYBE???
@@ -143,7 +142,6 @@ function setup() {
 // Draw is where I call anything that needs to be constantly updated/needs to constantly change own state
 function draw() {
   // console.log("p1 x is " + player1.x + " ///// p2 x is " + player2.x);
-  console.log(width);
   sceneManager.switchScene(player1, player2);
   //implememt punishment/rewards for following/leading
   player1.updateTotal(player2);

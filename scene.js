@@ -225,9 +225,21 @@ class PlayScene extends Scene {
     for (let i = 0; i < foods.length; i++) {
       foods[i].show();
     }
+
+    // every 1000 ticks, add a spike.
+    if(this.numTicks % 1000 == 0) {
+      console.log("adding a spike");
+      this.spikes.push(new Spike(scl));
+    }
+
     for (let i = 0; i < this.spikes.length; i++) {
       this.spikes[i].show();
     }
+
+
+
+
+
   }
   advanceToNextScene(player1, player2) {
     if (player1.total > 7000000 || player2.total > 700000) {
