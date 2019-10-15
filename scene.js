@@ -48,11 +48,11 @@ class Scene {
   foodEaten(player1, player2, foods) {
     for (let i = 0; i < foods.length; i++) {
       if (player1.eat(foods[i])) {
-        foods[i].location();
+        foods[i].location(player1, player2);
         foodGenSound.play();
       }
       if (player2.eat(foods[i])) {
-        foods[i].location();
+        foods[i].location(player1, player2);
         foodGenSound.play();
       }
     }
