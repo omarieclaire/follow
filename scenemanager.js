@@ -45,7 +45,12 @@ class SceneManager {
     } else {
       var theCurrentScene = this.allTheScenes[this.currSceneIndex];
       if (theCurrentScene.advanceToNextScene(player1, player2) == true) {
+
+        var previousScene = this.allTheScenes[this.currSceneIndex];
         this.currSceneIndex++;
+        // transfer key mode
+        var theNextScene = this.allTheScenes[this.currSceneIndex];
+        theNextScene.setKeyModeIndex(previousScene.keyModeIndex);
       }
     }
   }

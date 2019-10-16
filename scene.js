@@ -11,6 +11,9 @@ class Scene {
   resetScene() {
     this.keyModeIndex = 0;
   }
+  setKeyModeIndex(index) {
+    this.keyModeIndex = index;
+  }
   //first, a function to check if the game is over
   isGameOverCheck(player1, player2) {
     if (player1.total <= 0 || player2.total <= 0) {
@@ -85,7 +88,6 @@ class Scene {
       } else {
         this.keyModeIndex++;
       }
-      console.log("Current Mode: " + this.getCurrentKeyMode());
     }
   }
 
@@ -276,7 +278,7 @@ class TrainingScene extends Scene {
   }
 
   advanceToNextScene(player1, player2) {
-    return this.numTicks >= 3000; // training scene length
+    return this.numTicks >= 700; // training scene length
   }
   //ticks need to be reset when game restarts
   resetScene() {
