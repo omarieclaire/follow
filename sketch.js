@@ -1,22 +1,17 @@
 // HIGH LEVEL
+// - the DESIRE to do the opposite of the other player is not there
+// - should I make an even more basic level which is just turning, no moving?
+
 // - right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
 // - how do I *immediately* communicate follow status to both players?
 // - Communicate direction more
 // - Player should *want* to be leading?
 // - work on alt controller - buy makey makey, wireless arduino, led strips, spinning chair
 
-// TODO
-// scenemanager.js:76 Uncaught TypeError: theCurrentScene.keyWasPressedScene is not a function
-//     at SceneManager.keyWasPressed (scenemanager.js:76)
-//     at keyPressed (sketch.js:199)
-//     at p5._onkeydown (p5.js:54624)
-
-
+// TODo
 // - TODO - spikes still generating on player
-// - TODO - player transfer color
 // - TODO - spikes sometimes generate underneath players (or food and spikes top of eachother).
 // - TODO - players should have to move to trigger new Scene (not just numticks)
-// - TODO - ring easing for better feel (@ring 23) https://p5js.jp/examples/input-easing.html AND https://easings.net/en#easeInCirc
 // - TODO - set up sounds
 // - TODO - why isn't scene 156 working?
 // - TODO - improve ring loss animation
@@ -58,9 +53,7 @@
 // WHY
 // - why does this have a var and the others don't?   var allTheSceness = [pressKeyToContinue, scenes0, scenes1, scenes2, scenes3];
 // - why do some things require "setup" and others don't? For example, "Rings" aren't set up
-// - why do I have collision bugs?
 // - I should walk through the "move" of the rings
-// - Why is noCursor not working?
 // - what is currentDiameter @player 103 doign?
 // - why does @scene 156 not work? TEXTDISPLAYBUG
 

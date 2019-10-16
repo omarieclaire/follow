@@ -8,14 +8,12 @@ class Food {
   }
 
   foodColorPicker() {
-    console.log("hello");
     var arrayOfColors = [
       [255, 0, 0 ],
       [0, 255, 0],
       [0, 0, 255]
     ];
     var randomNumber = floor(random(arrayOfColors.length));
-    console.log("random: " + randomNumber);
     return arrayOfColors[randomNumber];
   }
 

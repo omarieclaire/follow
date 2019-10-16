@@ -5,6 +5,8 @@
 class Scene {
   constructor() {
     // this.leaderRing = new LeaderRing(scl);
+    this.keyModes = ["standard", "mirror", "oppose"];
+    this.keyModeIndex = 0;
   };
   resetScene() {}
   //first, a function to check if the game is over
@@ -17,7 +19,22 @@ class Scene {
     }
   }
 
+  getCurrentKeyMode() {
+    return this.keyModes[this.keyModeIndex];
+  }
+
   keyWasPressed(keyCode, player1, player2) {}
+
+  handleKeyPressMode(keyCode, player1, player2) {
+    if(keyCode == 77) {
+      // increment the keymode index
+      if(this.keyModeIndex == this.keyModes.length - 1) {
+        this.keyModeIndex = 0;
+      } else {
+        this.keyModeIndex++;
+      }
+    }
+  }
 
   ///////////////////////////
   //// Basic Scene Draw /////
@@ -66,10 +83,7 @@ class Scene {
     }
   }
 
-  //////////////////////////
-  //// player movement /////
-  //////////////////////////
-  movePlayerOnKeyPress(keyCode, player1, player2) {
+  standardKeyPressMode(keyCode, player1, player2) {
     if (keyCode === UP_ARROW) {
       player2.changeDirectionUp(player1);
 
@@ -93,6 +107,15 @@ class Scene {
 
     } else if (keyCode === 65) {
       player1.changeDirectionLeft(player2);
+    }
+  }
+
+  movePlayerOnKeyPress(keyCode, player1, player2) {
+    var keyMode = this.getCurrentKeyMode();
+    if(keyMode == "standard") {
+      this.standardKeyPressMode(keyCode, player1, player2);
+    } else if (keyMode == "mirror") {
+    } else if (keyMode == "oppose") {
     }
   }
 }
@@ -179,6 +202,7 @@ class TrainingScene extends Scene {
   };
 
   keyWasPressed(keyCode, player1, player2) {
+    this.handleKeyPressMode(keyCode, player1, player2);
     this.movePlayerOnKeyPress(keyCode, player1, player2);
   }
   draw(player1, player2, foods) {
@@ -253,6 +277,7 @@ class PlayScene extends Scene {
   }
 
   keyWasPressed(keyCode, player1, player2) {
+    this.handleKeyPressMode(keyCode, player1, player2);
     this.movePlayerOnKeyPress(keyCode, player1, player2);
   }
 
