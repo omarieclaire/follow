@@ -17,10 +17,8 @@ class SceneManager {
     player2.resetPlayer();
     //reset the game over scene
     this.finalScene.resetScene();
-    console.log(this.initialSceneIndex);
     this.gameOverMode = false;
     this.currSceneIndex = this.initialSceneIndex;
-    console.log("scene was reset to " + this.currSceneIndex);
   }
 
   //checking if the game is over
@@ -47,7 +45,6 @@ class SceneManager {
     } else {
       var theCurrentScene = this.allTheScenes[this.currSceneIndex];
       if (theCurrentScene.advanceToNextScene(player1, player2) == true) {
-        // console.log("advancing to the next scene");
         this.currSceneIndex++;
       }
     }
@@ -55,7 +52,7 @@ class SceneManager {
 
   //drawing the scene
   drawScene(player1, player2, foods) {
-    //at the beinning of every draw we call isgameovermanager
+    //at the bginning of every draw we call isgameovermanager
     this.isGameOverManager(player1, player2);
 
     if (this.gameOverMode == true) {

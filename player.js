@@ -115,13 +115,12 @@ class Player {
     if (d < (this.currentDiameter() / 2) + (this.scl / 2)) {
       if (!hitSound.isPlaying()) {
         hitSound.play();
-        console.log("hit sound is playing");
       }
       this.changeRingTotal(-1, this.x, this.y);
       // otherPlayer handles flip direction because we need to
       // update isFollowed and isFollowing whenever a player's direction
       // is changed.
-      console.log("collid then flip");
+      console.log("collide then flip");
       this.flipDirection(otherPlayer);
       return true;
     } else {
@@ -197,7 +196,6 @@ class Player {
         // if we pass a new ringcolor use it, otherwise use the default
         if (typeof(newRingColor) === "undefined") {
           this.playerRings.push(new Rings(this, this.scl, ringColor, x, y)); //add a ring
-          console.log("undef");
         } else {
           this.playerRings.push(new Rings(this, this.scl, newRingColor, x, y)); //add a ring
         }
@@ -206,9 +204,6 @@ class Player {
   }
 
   colorOfOuterMostRing() {
-    // console.log("outermost ring: " + this.playerRings[this.playerRings.length - 1].ringColor);
-    // return [0, 255, 255];
-    // return [0, 255, 255];
     // look at the last element of the array and ask what colour it is.
     // return undefined if the array is empty
      if (this.playerRings.length == 0) {

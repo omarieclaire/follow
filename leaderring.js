@@ -11,7 +11,6 @@ class LeaderRing {
   drawRingOnLeadingPlayer(thePlayer) {
     var r = 90;
     // var r = thePlayer.playerRings[3[3]];
-        // console.log(this.scl);
     // stroke(pointColor);
     strokeWeight(2);
 

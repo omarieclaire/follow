@@ -1,35 +1,30 @@
 // HIGH LEVEL
 // - the DESIRE to do the opposite of the other player is not there
 // - should I make an even more basic level which is just turning, no moving?
-
 // - right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
 // - how do I *immediately* communicate follow status to both players?
-// - Communicate direction more
 // - Player should *want* to be leading?
 // - work on alt controller - buy makey makey, wireless arduino, led strips, spinning chair
 
 // TODo
-// - TODO - spikes still generating on player
-// - TODO - make a debug screen
-// - bug - food generating "offscreen"
+// - BUG - keymode not working
 // - BUG - keystroke mode "resetting" to index zero when level changes
-// - TODO - spikes sometimes generate underneath players (or food and spikes top of eachother).
+// - TODO - spikes and food fall from sky?
+// - TODO - make a debug screen
+// - bug - food generating "offscreen"?
+// - TODO - spikes sometimes generate underneath food
 // - TODO - players should have to move to trigger new Scene (not just numticks)
 // - TODO - set up sounds
-// - TODO - why isn't scene 156 working?
 // - TODO - improve ring loss animation
 // - TODO - make tail come off last ring / make tail look better
-// - TODO - food is coloured, and you get a ring of that colour?
 // - TODO - smiley face when leading, frowny face when following, neutral face when neutral
 // - TODO - move player collision to player class?
 // - TODO - refactor everything :(
 
-
-
 // MAYBE???
 // - shared score
 // - draw triangle on front of player????
-// - draw a black rect around the screen to help with looping instead of my weird math?
+// - fix looping player?
 // - turtles
 // - make health rings little circles that "follow" instead of wrap rings
 // - give flavour text boxes to coins - i'm just looking for a leader? ("i'll do what ever you tell me to do"? or should I give flavour text to players?)
@@ -40,7 +35,6 @@
 // - draw line between players?
 // - playerX wins? (you are both dead so...)
 // you are both dead. playerX had more rings at time of death so congratulations.
-// - alt controller and wireless keyboard both work
 // - BUG - requires major refactor to actually fix: unexpected "follow state" after player collision -> @player 176
 
 
@@ -57,10 +51,6 @@
 
 // WHY
 // - why does this have a var and the others don't?   var allTheSceness = [pressKeyToContinue, scenes0, scenes1, scenes2, scenes3];
-// - why do some things require "setup" and others don't? For example, "Rings" aren't set up
-// - I should walk through the "move" of the rings
-// - what is currentDiameter @player 103 doign?
-// - why does @scene 156 not work? TEXTDISPLAYBUG
 
 // Thanks: Aaron, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny Hawk,
 
@@ -148,7 +138,6 @@ function setup() {
 
 // Draw is where I call anything that needs to be constantly updated/needs to constantly change own state
 function draw() {
-  // console.log("p1 x is " + player1.x + " ///// p2 x is " + player2.x);
   sceneManager.switchScene(player1, player2);
 
   // update location of player1 and player2
@@ -169,13 +158,11 @@ function playerCollision() {
   let d = dist(player1.x, player1.y, player2.x, player2.y);
 
   if (d <= player1.currentDiameter() / 2 + player2.currentDiameter() / 2) {
-    console.log("collide!");
     hitSound.play();
 
     player1.changeRingTotal(-1, player1.x, player1.y);
     player2.changeRingTotal(-1, player2.x, player2.y);
 
-    // console.log("popping rings");
     player1.flipDirection(player2);
     player2.flipDirection(player1);
     //add xspeed or yspeed after collision to fix collision bug

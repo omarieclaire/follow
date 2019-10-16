@@ -136,13 +136,9 @@ class Scene {
       // player2.halt();
     } else {
       console.log("resume");
-    }
-
-    // else {
     //   // player1.resumeMovement();
     //   // player2.resumeMovement();
-    //   console.log("resume");
-    // }
+    }
   }
 
   movePlayerOnKeyPress(keyCode, player1, player2) {
@@ -165,8 +161,6 @@ class InstructionScene extends Scene {
     super();
     this.wasKeyPressed = false;
     introSound.loop();
-    console.log("intro music playing");
-
   }
 
   draw(player1, player2, foods) {
@@ -282,7 +276,7 @@ class TrainingScene extends Scene {
   }
 
   advanceToNextScene(player1, player2) {
-    return this.numTicks >= 100; // training scene length
+    return this.numTicks >= 3000; // training scene length
   }
   //ticks need to be reset when game restarts
   resetScene() {
@@ -367,7 +361,6 @@ class WhateverScene extends Scene {
   }
   advanceToNextScene(player1, player2) {
     if (player1.total > 1000 || player2.total > 1000) {
-      console.log("you win");
       // return true;
     } else {
       return false;

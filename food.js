@@ -67,7 +67,6 @@ class Food {
 
   show() {
     stroke(this.color);
-    console.log("food! " + this.color);
     strokeWeight(.5);
     noFill();
     ellipse(this.foodLocation.x, this.foodLocation.y, this.scl, this.scl);
