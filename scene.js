@@ -5,10 +5,12 @@
 class Scene {
   constructor() {
     // this.leaderRing = new LeaderRing(scl);
-    this.keyModes = ["standard", "mirror", "oppose"];
+    this.keyModes = ["standard", "split", "simultaneous"];
     this.keyModeIndex = 0;
   };
-  resetScene() {}
+  resetScene() {
+    this.keyModeIndex = 0;
+  }
   //first, a function to check if the game is over
   isGameOverCheck(player1, player2) {
     if (player1.total <= 0 || player2.total <= 0) {
@@ -16,23 +18,6 @@ class Scene {
       return true;
     } else {
       return false;
-    }
-  }
-
-  getCurrentKeyMode() {
-    return this.keyModes[this.keyModeIndex];
-  }
-
-  keyWasPressed(keyCode, player1, player2) {}
-
-  handleKeyPressMode(keyCode, player1, player2) {
-    if(keyCode == 77) {
-      // increment the keymode index
-      if(this.keyModeIndex == this.keyModes.length - 1) {
-        this.keyModeIndex = 0;
-      } else {
-        this.keyModeIndex++;
-      }
     }
   }
 
@@ -83,39 +68,91 @@ class Scene {
     }
   }
 
+  //~~~~~~~~~~~~~~~~~~~~~~//
+  //~~~ KEYMODE STUFF ~~~//
+  //~~~~~~~~~~~~~~~~~~~~~//
+  getCurrentKeyMode() {
+    return this.keyModes[this.keyModeIndex];
+  }
+
+  keyWasPressed(keyCode, player1, player2) {}
+
+  handleKeyPressMode(keyCode, player1, player2) {
+    if (keyCode == 77) {
+      // increment the keymode index
+      if (this.keyModeIndex == this.keyModes.length - 1) {
+        this.keyModeIndex = 0;
+      } else {
+        this.keyModeIndex++;
+      }
+      console.log("Current Mode: " + this.getCurrentKeyMode());
+    }
+  }
+
   standardKeyPressMode(keyCode, player1, player2) {
     if (keyCode === UP_ARROW) {
       player2.changeDirectionUp(player1);
-
     } else if (keyCode === DOWN_ARROW) {
       player2.changeDirectionDown(player1);
-
     } else if (keyCode === RIGHT_ARROW) {
       player2.changeDirectionRight(player1);
-
     } else if (keyCode === LEFT_ARROW) {
       player2.changeDirectionLeft(player1);
-
     } else if (keyCode === 87) {
       player1.changeDirectionUp(player2);
-
     } else if (keyCode === 83) {
       player1.changeDirectionDown(player2);
-
     } else if (keyCode === 68) {
       player1.changeDirectionRight(player2);
-
     } else if (keyCode === 65) {
       player1.changeDirectionLeft(player2);
     }
   }
 
+  splitKeyPressMode(keyCode, player1, player2) {
+    // hacky split key mode - if keeping should deal with "following" better
+    if (keyCode === UP_ARROW) {
+      player2.changeDirectionUp(player1);
+      player1.changeDirectionUp(player2);
+
+    } else if (keyCode === RIGHT_ARROW) {
+      player1.changeDirectionRight(player2);
+      player2.changeDirectionRight(player1);
+
+    } else if (keyCode === 65) {
+      player2.changeDirectionLeft(player1);
+      player1.changeDirectionLeft(player2);
+
+    } else if (keyCode === 83) {
+      player1.changeDirectionDown(player2);
+      player2.changeDirectionDown(player1);
+    }
+  }
+
+  simultaneousKeyPressMode(keyCode, player1, player2) {
+    if (keyIsDown(65) && keyCode === RIGHT_ARROW) {
+      console.log("halt");
+      // player1.halt();
+      // player2.halt();
+    } else {
+      console.log("resume");
+    }
+
+    // else {
+    //   // player1.resumeMovement();
+    //   // player2.resumeMovement();
+    //   console.log("resume");
+    // }
+  }
+
   movePlayerOnKeyPress(keyCode, player1, player2) {
     var keyMode = this.getCurrentKeyMode();
-    if(keyMode == "standard") {
+    if (keyMode == "standard") {
       this.standardKeyPressMode(keyCode, player1, player2);
-    } else if (keyMode == "mirror") {
-    } else if (keyMode == "oppose") {
+    } else if (keyMode == "split") {
+      this.splitKeyPressMode(keyCode, player1, player2);
+    } else if (keyMode == "simultaneous") {
+      this.simultaneousKeyPressMode(keyCode, player1, player2);
     }
   }
 }
@@ -157,6 +194,7 @@ class InstructionScene extends Scene {
 
   //advance to next scene bool needs to be reset when game restarts
   resetScene() {
+    super.resetScene();
     this.wasKeyPressed = false;
   }
 }
@@ -188,6 +226,7 @@ class WelcomeScene extends Scene {
 
   //ticks need to be reset when game restarts
   resetScene() {
+    super.resetScene();
     this.numTicks = 0;
   }
 }
@@ -211,7 +250,7 @@ class TrainingScene extends Scene {
 
 
     //only print directional cues if player is still living TEXTDISPLAYBUG
-    if (player1.total > 0 && player2.total > 0) {
+    if (this.numTicks <= 1000) {
       //directional text
 
       push();
@@ -235,22 +274,19 @@ class TrainingScene extends Scene {
         text("Leader", windowWidth / 4, windowHeight / 1.23);
         stroke(player2Color);
         text("Follower", windowWidth - windowWidth / 4, windowHeight / 1.23);
-
       } else {
         // ringMoveSound.stop();
-
       }
       pop();
-    }
-    else {
-    }
+    } else {}
   }
 
   advanceToNextScene(player1, player2) {
-    return this.numTicks >= 1000; // training scene length
+    return this.numTicks >= 100; // training scene length
   }
   //ticks need to be reset when game restarts
   resetScene() {
+    super.resetScene();
     this.numTicks = 0;
   }
 
@@ -266,7 +302,7 @@ class PlayScene extends Scene {
     //create spikes
     for (var i = 0; i < 2; i++) {
       this.spikes[i] = new Spike(scl);
-      this.spikes[i].location();
+      this.spikes[i].location(player1, player2);
     }
   };
   spikeHit(player1, player2, spikes) {
@@ -292,7 +328,7 @@ class PlayScene extends Scene {
     }
 
     // every 1000 ticks, add a spike.
-    if(this.numTicks % 5000 == 0) {
+    if (this.numTicks % 5000 == 0) {
       this.spikes.push(new Spike(scl));
     }
 
@@ -310,6 +346,7 @@ class PlayScene extends Scene {
   }
   //advance to next scene bool needs to be reset when game restarts
   resetScene() {
+    super.resetScene();
     this.numTicks = 0;
   }
 }
@@ -337,6 +374,7 @@ class WhateverScene extends Scene {
     }
   }
   resetScene() {
+    super.resetScene();
   }
 }
 /////////////////////
@@ -375,13 +413,13 @@ class FinalScene extends Scene {
     noStroke();
     text("GAME OVER!!!", windowWidth / 2, windowHeight / 2);
     // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
-
     this.numTicks++;
   }
   advanceToNextScene(player1, player2) {
     return this.numTicks >= 300;
   }
   resetScene() {
+    super.resetScene();
     this.numTicks = 0;
     noStroke();
   }

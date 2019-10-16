@@ -9,9 +9,26 @@ class Food {
 
   foodColorPicker() {
     var arrayOfColors = [
-      [255, 0, 0 ],
-      [0, 255, 0],
-      [0, 0, 255]
+      [119, 37, 164],
+      [167, 105, 201],
+      [138, 66, 178],
+      [96, 14, 142],
+      [74, 6, 111],
+      [214, 39, 104],
+      [234, 116, 160],
+      [225, 75, 130],
+      [185, 9, 74],
+      [145, 0, 54],
+      [135, 222, 41],
+      [182, 240, 119],
+      [158, 233, 78],
+      [104, 192, 9],
+      [79, 151, 0],
+      [246, 246, 45],
+      [255, 255, 126],
+      [255, 255, 85],
+      [212, 212, 10],
+      [167, 167, 0],
     ];
     var randomNumber = floor(random(arrayOfColors.length));
     return arrayOfColors[randomNumber];
@@ -50,6 +67,7 @@ class Food {
 
   show() {
     stroke(this.color);
+    console.log("food! " + this.color);
     strokeWeight(.5);
     noFill();
     ellipse(this.foodLocation.x, this.foodLocation.y, this.scl, this.scl);

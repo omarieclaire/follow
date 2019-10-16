@@ -10,6 +10,9 @@
 
 // TODo
 // - TODO - spikes still generating on player
+// - TODO - make a debug screen
+// - bug - food generating "offscreen"
+// - BUG - keystroke mode "resetting" to index zero when level changes
 // - TODO - spikes sometimes generate underneath players (or food and spikes top of eachother).
 // - TODO - players should have to move to trigger new Scene (not just numticks)
 // - TODO - set up sounds
@@ -19,6 +22,8 @@
 // - TODO - food is coloured, and you get a ring of that colour?
 // - TODO - smiley face when leading, frowny face when following, neutral face when neutral
 // - TODO - move player collision to player class?
+// - TODO - refactor everything :(
+
 
 
 // MAYBE???
@@ -63,7 +68,7 @@
 var player1;
 var player2;
 var foodColor = [255, 255, 1]; // white
-var ringColor = [255, 0, 0]; // red
+var ringColor = [230, 230, 230];
 var pointColor = [255, 215, 0, 250]; // gold
 var player1Color = [255, 51, 153, 240]; // magenta
 var player2Color = [51, 153, 255, 240]; // blue

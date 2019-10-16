@@ -33,7 +33,7 @@ class SceneManager {
       if (theCurrentScene.isGameOverCheck(player1, player2) == true) {
         this.gameOverMode = true;
       }
-      return theCurrentScene.isGameOverCheck(player1, player2);
+      return this.gameOverMode;
     }
   }
 

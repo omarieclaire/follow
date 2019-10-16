@@ -7,11 +7,13 @@ class Player {
     this.initialDirection = temp_playerDir; //store inittial diection for reset
     this.xspeed = temp_xspeed;
     this.initialxspeed = temp_xspeed;
+    this.lastXSpeed = this.xspeed;
     this.x = windowWidth / 2 + xOffSet;
     this.initialXOffset = xOffSet;
     this.y = windowHeight / 2;
     this.r = scl;
     this.yspeed = 0;
+    this.lastYSpeed = this.yspeed;
     this.total = 5;
     this.isFollowing = false;
     this.isFollowed = false;
@@ -38,10 +40,12 @@ class Player {
 
   resetPlayer() {
     this.xspeed = this.initialxspeed;
+    this.lastXSpeed = this.xspeed;
     this.x = windowWidth / 2 + this.initialXOffset;
     this.y = windowHeight / 2;
     this.r = scl;
     this.yspeed = 0;
+    this.lastYSpeed = this.yspeed;
     this.total = 5;
     this.isFollowing = false;
     this.isFollowed = false;
@@ -164,8 +168,20 @@ class Player {
   }
 
   halt() {
+    this.lastXSpeed = this.xspeed;
+    this.lastYSpeed = this.yspeed;
     this.xspeed = 0;
     this.yspeed = 0;
+  }
+
+  resumeMovement() {
+    // this.xspeed = 0.01;
+    // this.xspeed = 0.01;
+
+    console.log("resuming " + this.lastXSpeed);
+
+    this.xspeed = this.lastXSpeed;
+    this.yspeed = this.lastYSpeed;
   }
 
   changeRingTotal(amount, x, y, newRingColor) {

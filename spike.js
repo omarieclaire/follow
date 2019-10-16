@@ -18,8 +18,17 @@ class Spike {
     return vector;
   }
   //initialize spike location with a random point
-  location() {
+  location(player1, player2) {
     this.spikeLocation = this.makeRandomVector();
+    var player1Distance = dist(this.spikeLocation.x, this.spikeLocation.y, player1.x, player1.y);
+    var player2Distance = dist(this.spikeLocation.x, this.spikeLocation.y, player2.x, player2.y);
+
+    while(player1Distance < player1.currentDiameter()/2 || player2Distance < player2.currentDiameter()/2) {
+      this.spikeLocation = this.makeRandomVector();
+      player1Distance = dist(this.spikeLocation.x, this.spikeLocation.y, player1.x, player1.y);
+      player2Distance = dist(this.spikeLocation.x, this.spikeLocation.y, player2.x, player2.y);
+    }
+
     this.x = this.spikeLocation.x;
     this.y = this.spikeLocation.y;
 
