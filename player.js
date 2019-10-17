@@ -4,7 +4,7 @@ class Player {
     this.scl = scl; //note: I don't reset this in the reset, maybe I should
     this.name = temp_name;
     this.direction = temp_playerDir;
-    this.initialDirection = temp_playerDir; //store inittial diection for reset
+    this.initialDirection = temp_playerDir; //store initial diection for reset
     this.xspeed = temp_xspeed;
     this.initialxspeed = temp_xspeed;
     this.lastXSpeed = this.xspeed;
@@ -43,7 +43,7 @@ class Player {
   resetPlayer() {
     this.xspeed = this.initialxspeed;
     this.lastXSpeed = this.xspeed;
-    this.x = windowWidth / 4 + this.initialXOffset;
+    this.x = this.initialXOffset;
     this.y = windowHeight / 2;
     this.r = scl;
     this.yspeed = 0;
