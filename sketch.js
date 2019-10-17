@@ -123,8 +123,8 @@ function setup() {
   // p5 specific function for working with degrees
   angleMode(DEGREES);
   //special functions to construct an object from a class
-  player1 = new Player("1", " ", -0, -200, scl, player1Color, player1FadeColor);
-  player2 = new Player("2", " ", 0, 200, scl, player2Color, player2FadeColor);
+  player1 = new Player("1", " ", -0, windowWidth - windowWidth/4, scl, player1Color, player1FadeColor);
+  player2 = new Player("2", " ", 0, windowWidth/4, scl, player2Color, player2FadeColor);
   welcomeScene = new WelcomeScene();
   trainingScene = new TrainingScene();
   playScene = new PlayScene();

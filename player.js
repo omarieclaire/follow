@@ -8,7 +8,7 @@ class Player {
     this.xspeed = temp_xspeed;
     this.initialxspeed = temp_xspeed;
     this.lastXSpeed = this.xspeed;
-    this.x = windowWidth / 2 + xOffSet;
+    this.x = xOffSet;
     this.initialXOffset = xOffSet;
     this.y = windowHeight / 2;
     this.r = scl;
@@ -41,7 +41,7 @@ class Player {
   resetPlayer() {
     this.xspeed = this.initialxspeed;
     this.lastXSpeed = this.xspeed;
-    this.x = windowWidth / 2 + this.initialXOffset;
+    this.x = windowWidth / 4 + this.initialXOffset;
     this.y = windowHeight / 2;
     this.r = scl;
     this.yspeed = 0;
@@ -173,6 +173,7 @@ class Player {
     this.yspeed = 0;
   }
 
+//not being used - kinda broken
   resumeMovement() {
     // this.xspeed = 0.01;
     // this.xspeed = 0.01;
