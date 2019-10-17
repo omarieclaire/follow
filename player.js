@@ -221,7 +221,7 @@ class Player {
     var diff = Math.abs(Math.floor(this.total) - Math.floor(oldTotal));
     if (diff >= 1) {
       if (amount < 0) {
-        this.playerRings.pop();
+        this.poppedRings.push(this.playerRings.pop());
       } else {
         // create a ring that follows 'this' and has the start x and y coordinates passed to changeRingTotal
         // if we pass a new ringcolor use it, otherwise use the default
@@ -377,7 +377,7 @@ class Player {
       for (var i = 0; i < this.poppedRings.length; i++) {
         var thePoppedRing = this.poppedRings[i];
         if (typeof(thePoppedRing) !== 'undefined') {
-          thePoppedRing.drawDeadRing(this.scl + this.playerRings.length * this.ringSpacer);
+          thePoppedRing.drawDeadRing((this.scl * 2) + (this.playerRings.length + 1)* this.ringSpacer);
         } else {
           // the popped ring should never be undefined. but somehow it is occasionally.
           // if a ring was undefined then we would not have been able to draw it.

@@ -52,8 +52,9 @@ class Rings {
   }
 
   drawDeadRing(initialRadius) {
+    console.log("drawDeadRing");
     push();
-    // stroke(255, 0, 0);
+    stroke(255, 0, 0);
     strokeWeight(.5);
     ellipse(this.x, this.y, initialRadius);
     pop();
