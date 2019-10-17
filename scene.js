@@ -43,6 +43,10 @@ class Scene {
     player1.show();
     player2.show();
 
+    if (keyIsDown(79)) {
+      this.debugScreen();
+    } else {}
+
     // this.leaderRing.drawLeaderRing(player1, player2);
   }
 
@@ -69,6 +73,23 @@ class Scene {
       player1.collideWithSpike(spikes[i], player2);
       player2.collideWithSpike(spikes[i], player1);
     }
+  }
+  //~~~~~~~~~~~~~~~~~~~~~~//
+  //~~~ debug STUFF ~~~//
+  //~~~~~~~~~~~~~~~~~~~~~//
+
+  debugScreen(){
+    push();
+    var rowHeight = windowHeight / this.scl;
+    background(255, 0, 0);
+    textSize(20);
+    stroke(0, 255, 255);
+    text("o - Debug and Keys", windowWidth / 2, rowHeight);
+    text("m - KeyMode (different play)", windowWidth / 2, rowHeight * 2);
+    text("n - Fullscreen", windowWidth / 2, rowHeight * 3);
+    text("awsd - Player 1 possible controls", windowWidth / 2, rowHeight * 4);
+    text("arrow keys - Player 2 possible controls", windowWidth / 2, rowHeight * 5);
+    pop();
   }
 
   //~~~~~~~~~~~~~~~~~~~~~~//
@@ -375,30 +396,13 @@ class PlayScene extends Scene {
   }
 }
 /////////////////////////
-//// whatever scene ////
+//// bonus scene ////
 /////////////////////////
-class WhateverScene extends Scene {
+class BonusScene extends Scene {
   constructor() {
     super();
   };
-  draw(player1, player2, foods) {
-    this.foodEaten(player1, player2, foods);
 
-    this.basicSceneDraw(player1, player2, foods);
-    for (let i = 0; i < foods.length; i++) {
-      foods[i].show();
-    }
-  }
-  advanceToNextScene(player1, player2) {
-    if (player1.total > 1000 || player2.total > 1000) {
-      // return true;
-    } else {
-      return false;
-    }
-  }
-  resetScene() {
-    super.resetScene();
-  }
 }
 /////////////////////
 //// final scene ////

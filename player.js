@@ -295,6 +295,7 @@ class Player {
 
     // player circle / face
     ellipse(this.x, this.y, this.scl, this.scl);
+    
     noFill();
     // stroke(255, 200);
     push(); //set original drawstate

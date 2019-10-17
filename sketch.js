@@ -9,8 +9,8 @@
 // two controller boxes connected by a rope
 
 // TODo
+// - draw player to center of screen
 // - BUG - keymode not working
-// - BUG - keystroke mode "resetting" to index zero when level changes
 // - TODO - spikes and food fall from sky?
 // - TODO - make a debug screen
 // - bug - food generating "offscreen"?
@@ -73,7 +73,7 @@ var foods = [];
 var welcomeScene;
 var trainingScene;
 var playScene;
-var whateverScene;
+var bonusScene;
 var finalScene;
 var sceneManager;
 var instructionScene;
@@ -126,10 +126,10 @@ function setup() {
   welcomeScene = new WelcomeScene();
   trainingScene = new TrainingScene();
   playScene = new PlayScene();
-  whateverScene = new WhateverScene();
+  bonusScene = new BonusScene();
   finalScene = new FinalScene();
   instructionScene = new InstructionScene();
-  var allTheScenes = [instructionScene, welcomeScene, trainingScene, playScene, whateverScene];
+  var allTheScenes = [instructionScene, welcomeScene, trainingScene, playScene, bonusScene];
   sceneManager = new SceneManager(0, allTheScenes, finalScene);
   // set up an array of food objects and an array of spike objects
   for (var i = 0; i < 1; i++) {
