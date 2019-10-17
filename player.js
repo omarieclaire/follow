@@ -321,7 +321,6 @@ class Player {
   }
 //findme
   drawDirectionalArcs(playerDirection){
-    console.log(this.direction);
     push();
     strokeWeight(2);
     stroke(255,255,0);
