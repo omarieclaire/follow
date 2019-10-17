@@ -35,7 +35,7 @@ class Scene {
   //// Basic Scene Draw /////
   ///////////////////////////
   basicSceneDraw(player1, player2, foods) {
-    background(30);
+    background(0, 0, 20);
     noStroke();
     textSize(standardTextSize);
     // fill(player1Color);
@@ -88,7 +88,7 @@ class Scene {
   debugScreen() {
     push();
     var rowHeight = windowHeight / this.scl;
-    background(0);
+    background(0, 0, 20);
     textSize(20);
     stroke(0, 255, 255);
     text("o - Debug and Keys", windowWidth / 2, rowHeight);
@@ -260,7 +260,7 @@ class InstructionScene extends Scene {
   }
 
   draw(player1, player2, foods) {
-    background(30);
+    background(0, 0, 20);
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
     fill(player1Color);
@@ -303,7 +303,7 @@ class WelcomeScene extends Scene {
   draw(player1, player2, foods) {
     this.numTicks++;
     // this.basicSceneDraw(player1, player2, foods);
-    background(30);
+    background(0, 0, 20);
     fill(10, 255, 50);
     textSize(standardTextSize);
     textAlign(CENTER, TOP);

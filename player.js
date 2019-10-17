@@ -14,7 +14,7 @@ class Player {
     this.r = scl;
     this.yspeed = 0;
     this.lastYSpeed = this.yspeed;
-    this.total = 15;
+    this.total = 5;
     this.isFollowing = false;
     this.isFollowed = false;
     this.playerColor = tmp_playerColor;
@@ -30,8 +30,16 @@ class Player {
 
 
     this.playerRings = []; // store the rings within a local array
+    let randomColors = [
+    [119, 37, 164],
+    [167, 105, 201],
+    [138, 66, 178],
+    [96, 14, 142],
+  
+  ];
     for (var i = 0; i < this.total; i++) { //for each point in score
-      this.playerRings.push(new Rings(this, this.scl, ringColor)); //push a new ring to array
+      console.log(random(randomColors));
+      this.playerRings.push(new Rings(this, this.scl, random(randomColors))); //push a new ring to array
     }
 
     this.explodeParticles = [];
@@ -58,9 +66,18 @@ class Player {
 
 
     this.playerRings = []; // store the rings within a local array
-    for (var i = 0; i < this.total; i++) {
-      this.playerRings.push(new Rings(this, this.scl, ringColor));
+    let randomColors = [
+    [119, 37, 164],
+    [167, 105, 201],
+    [138, 66, 178],
+    [96, 14, 142],
+
+  ];
+    for (var i = 0; i < this.total; i++) { //for each point in score
+      console.log(random(randomColors));
+      this.playerRings.push(new Rings(this, this.scl, random(randomColors))); //push a new ring to array
     }
+
     this.explodeParticles = [];
     for (var i = 0; i < 500; i++) {
       this.explodeParticles.push(new ExplodeParticle());

@@ -54,7 +54,7 @@
 
 // QUESTIONS
 
-// Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie, 
+// Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie,
 
 
 var player1;
@@ -66,7 +66,7 @@ var player1Color = [255, 51, 153, 240]; // magenta
 var player2Color = [51, 153, 255, 240]; // blue
 var player1FadeColor = [184, 125, 155, 200]; // faded pink
 var player2FadeColor = [145, 200, 255, 200]; // faded blue
-var scl = 20; // scale of almost everything in the game
+var scl = 40; // scale of almost everything in the game
 var vol = 0.01; // music volume standard
 var foods = [];
 
