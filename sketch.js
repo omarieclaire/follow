@@ -6,6 +6,8 @@
 // - Player should *want* to be leading?
 // - work on alt controller - buy makey makey, wireless arduino, led strips, spinning chair
 
+// two controller boxes connected by a rope
+
 // TODo
 // - BUG - keymode not working
 // - BUG - keystroke mode "resetting" to index zero when level changes
@@ -182,11 +184,16 @@ function windowResized() {
 }
 
 function keyPressed() {
-  if (keyCode === 70) {
+  if (keyCode === 78) {
     let fs = fullscreen();
     fullscreen(!fs);
     sceneManager.resetSceneManager();
   }
 
   sceneManager.keyWasPressed(keyCode, player1, player2);
+}
+
+function keyReleased() {
+  sceneManager.keyWasReleased(keyCode, player1, player2);
+  return false;
 }

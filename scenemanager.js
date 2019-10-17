@@ -69,6 +69,15 @@ class SceneManager {
     }
   }
 
+  keyWasReleased(keyCode, player1, player2) {
+    if (this.gameOverMode) {
+      this.finalScene.keyWasReleased(keyCode, player1, player2);
+    } else {
+      var theCurrentScene = this.allTheScenes[this.currSceneIndex];
+      theCurrentScene.keyWasReleased(keyCode, player1, player2);
+    }
+  }
+
   keyWasPressed(keyCode, player1, player2) {
     if (this.gameOverMode) {
       this.finalScene.keyWasPressed(keyCode, player1, player2);

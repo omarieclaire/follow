@@ -5,7 +5,7 @@
 class Scene {
   constructor() {
     // this.leaderRing = new LeaderRing(scl);
-    this.keyModes = ["standard", "split", "simultaneous"];
+    this.keyModes = ["standard", "split", "sharedhorizon", "simultaneous"];
     this.keyModeIndex = 0;
   };
   resetScene() {
@@ -79,6 +79,7 @@ class Scene {
   }
 
   keyWasPressed(keyCode, player1, player2) {}
+  keyWasReleased(keyCode, player1, player2) {}
 
   handleKeyPressMode(keyCode, player1, player2) {
     if (keyCode == 77) {
@@ -88,6 +89,7 @@ class Scene {
       } else {
         this.keyModeIndex++;
       }
+      console.log("Changing current mode to: " + this.getCurrentKeyMode());
     }
   }
 
@@ -131,15 +133,39 @@ class Scene {
     }
   }
 
+  sharedHorizonKeyPressMode(keyCode, player1, player2) {
+    // hacky split key mode - if keeping should deal with "following" better
+    if (keyCode === UP_ARROW) {
+      player2.changeDirectionUp(player1);
+
+    } else if (keyCode === DOWN_ARROW) {
+      player2.changeDirectionDown(player1);
+
+    } else if (keyCode === RIGHT_ARROW) {
+      player1.changeDirectionRight(player2);
+      player2.changeDirectionRight(player1);
+
+    } else if (keyCode === 65) {
+      player2.changeDirectionLeft(player1);
+      player1.changeDirectionLeft(player2);
+
+    } else if (keyCode === 87) {
+      player1.changeDirectionUp(player2);
+
+    } else if (keyCode === 83) {
+      player1.changeDirectionDown(player2);
+    }
+  }
+
   simultaneousKeyPressMode(keyCode, player1, player2) {
-    if (keyIsDown(65) && keyCode === RIGHT_ARROW) {
+    if (keyIsDown(65) && keyIsDown(RIGHT_ARROW)) {
       console.log("halt");
-      // player1.halt();
-      // player2.halt();
+      //player1.halt();
+      //player2.halt();
     } else {
       console.log("resume");
-    //   // player1.resumeMovement();
-    //   // player2.resumeMovement();
+      //   // player1.resumeMovement();
+      //   // player2.resumeMovement();
     }
   }
 
@@ -149,6 +175,8 @@ class Scene {
       this.standardKeyPressMode(keyCode, player1, player2);
     } else if (keyMode == "split") {
       this.splitKeyPressMode(keyCode, player1, player2);
+    } else if (keyMode == "sharedhorizon") {
+      this.sharedHorizonKeyPressMode(keyCode, player1, player2);
     } else if (keyMode == "simultaneous") {
       this.simultaneousKeyPressMode(keyCode, player1, player2);
     }
@@ -261,13 +289,13 @@ class TrainingScene extends Scene {
         // ringMoveSound.loop();
         stroke(player1Color);
         text("Follower", windowWidth / 4, windowHeight / 1.23);
-        stroke(player2Color);
-        text("Leader", windowWidth - windowWidth / 4, windowHeight / 1.23);
+        // stroke(player2Color);
+        // text("Leader", windowWidth - windowWidth / 4, windowHeight / 1.23);
 
       } else if (player2.isFollowing) {
         // ringMoveSound.loop();
-        stroke(player1Color);
-        text("Leader", windowWidth / 4, windowHeight / 1.23);
+        // stroke(player1Color);
+        // text("Leader", windowWidth / 4, windowHeight / 1.23);
         stroke(player2Color);
         text("Follower", windowWidth - windowWidth / 4, windowHeight / 1.23);
       } else {
