@@ -336,14 +336,16 @@ class TrainingScene extends Scene {
     this.movePlayerOnKeyPress(keyCode, player1, player2);
   }
   draw(player1, player2, foods) {
-    this.numTicks++;
+    if (player1.xspeed != 0 || player2.xspeed != 0 || player1.yspeed != 0 || player2.yspeed != 0) {
+      this.numTicks++;
+      console.log(this.numTicks);
+    } else {}
     this.basicSceneDraw(player1, player2, foods);
 
 
     //only print directional cues if player is still living TEXTDISPLAYBUG
     if (this.numTicks <= 1000) {
       //directional text
-
       push();
       stroke(255);
       strokeWeight(1);
@@ -352,17 +354,14 @@ class TrainingScene extends Scene {
         // ringMoveSound.loop();
         stroke(player1Color);
         text(player1.direction + " (following)", windowWidth / 4, windowHeight / 1.43);
-
         // text("Follower", windowWidth / 4, windowHeight / 1.23);
         // stroke(player2Color);
         // text("Leader", windowWidth - windowWidth / 4, windowHeight / 1.23);
-
       } else if (player2.isFollowing) {
         // ringMoveSound.loop();
         // stroke(player1Color);
         // text("Leader", windowWidth / 4, windowHeight / 1.23);
         stroke(player2Color);
-
         text(player2.direction + " (following)", windowWidth - windowWidth / 4, windowHeight / 1.43);
         // text("Follower", windowWidth - windowWidth / 4, windowHeight / 1.23);
       } else {
