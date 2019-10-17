@@ -112,6 +112,20 @@ class Player {
     }
   }
 
+  drawFollowLine(otherPlayer){
+    if (this.isFollowing == true) {
+      push();
+      stroke(255, 255, 0, 40);
+      strokeWeight(10);
+
+
+
+      // var lineUndulate = (0.3 * Math.sin(this.numTicks * .025));
+      // line(this.x, this.y, otherPlayer.x, otherPlayer.y * lineUndulate);
+      pop();
+    }
+  }
+
   deathDraw() {
     fill(this.playerColor);
     noStroke();
@@ -305,6 +319,24 @@ class Player {
       this.ringSpacer = (this.scl / 3.5) + (.6 * Math.sin(this.numTicks * .025));
     } else {}
   }
+//findme
+  drawDirectionalArcs(playerDirection){
+    console.log(this.direction);
+    push();
+    strokeWeight(2);
+    stroke(255,255,0);
+    noFill();
+    if (this.direction == "up") {
+      arc(this.x, this.y, this.scl, this.scl, 180, 0);
+    } else if (this.direction == "left") {
+      arc(this.x, this.y, this.scl, this.scl, 90, 270);
+    } else if (this.direction == "down") {
+      arc(this.x, this.y, this.scl, this.scl, 0, 180);
+    } else if (this.direction == "right") {
+      arc(this.x, this.y, this.scl, this.scl, 270, 90);
+    } else {}
+    pop();
+  }
 
   //FOLLOW ME
 
@@ -324,7 +356,7 @@ class Player {
 
     // player circle / face
     ellipse(this.x, this.y, this.scl, this.scl);
-
+    this.drawDirectionalArcs(this.direction);
 
     noFill();
     // stroke(255, 200);

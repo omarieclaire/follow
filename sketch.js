@@ -14,6 +14,7 @@
 
 // TODOS
 // TODO spikes and food fall from sky?
+// TODO fix follow line wrapping
 // TODO foods slowly appear
 // TODO line between following player and followed
 // BUG food generating "offscreenish"?
@@ -33,7 +34,6 @@
 // CONSIDER should the one who is pressing the button should be "leading?" or is it even better to have the leader losing rings as a price
 // CONSIDER shared score
 // CONSIDER draw triangle on front of player????
-// CONSIDER fix looping player?
 // CONSIDER turtles
 // CONSIDER make health rings little circles that "follow" instead of wrap rings
 // CONSIDER give flavour text boxes to coins CONSIDER i'm just looking for a leader? ("i'll do what ever you tell me to do"? or should I give flavour text to players?)
@@ -54,7 +54,7 @@
 
 // QUESTIONS
 
-// Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie,
+// Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie, Brent, 
 
 
 var player1;

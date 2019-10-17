@@ -340,7 +340,10 @@ class TrainingScene extends Scene {
       this.numTicks++;
       console.log(this.numTicks);
     } else {}
-    this.basicSceneDraw(player1, player2, foods);
+
+   this.basicSceneDraw(player1, player2, foods);
+   player1.drawFollowLine(player2);
+   player2.drawFollowLine(player1);
 
 
     //only print directional cues if player is still living TEXTDISPLAYBUG
@@ -429,6 +432,9 @@ class PlayScene extends Scene {
     for (let i = 0; i < this.spikes.length; i++) {
       this.spikes[i].show();
     }
+
+    player1.drawFollowLine(player2);
+    player2.drawFollowLine(player1);
 
   }
   advanceToNextScene(player1, player2) {
