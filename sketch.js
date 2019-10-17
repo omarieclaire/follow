@@ -4,6 +4,12 @@
 // Like "mirroring" we mimick the other, especially the unloved other
 // What is following anyway?
 
+// should there be a game over? consider a timer
+// strip of projector
+// different end states - name them equal
+// ida applebroog // brancussi , things facing, overlapping circles and spheres
+// make poassible ring a ring (less translations)
+
 // DESIGN HIGH LEVEL
 // - what does player want to do?
 // - what does player feel?
@@ -17,7 +23,6 @@
 // TODO fix follow line wrapping
 // TODO foods slowly appear
 // TODO line between following player and followed
-// BUG food generating "offscreenish"?
 // TODO improve ring loss animation
 // TODO if I die, then you die too? how to draw?
 // TODO Sort out following logic in each mode
@@ -47,6 +52,7 @@
 // CONSIDER - major refactor to actually fix: unexpected "follow state" after player collision -> @player 176
 
 // CONTROLLER
+// strip of projected play
 // two controller boxes connected by a rope
 // Want visually interesting draw people in, durable, accessible, visible (kinesthetically feel the other player)
 // Floor pads?
@@ -54,7 +60,7 @@
 
 // QUESTIONS
 
-// Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie, Brent, 
+// Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie, Brent,
 
 
 var player1;
@@ -63,11 +69,11 @@ var foodColor = [255, 255, 1]; // white
 var ringColor = [230, 230, 230];
 var pointColor = [255, 215, 0, 250]; // gold
 var player1Color = [255, 51, 153, 240]; // magenta
-var player2Color = [51, 153, 255, 240]; // blue
+var player2Color = [51, 153, 255, 240]; //   blue
 var player1FadeColor = [184, 125, 155, 200]; // faded pink
 var player2FadeColor = [145, 200, 255, 200]; // faded blue
-var scl = 40; // scale of almost everything in the game
-var vol = 0.01; // music volume standard
+var scl = 30 ; // scale of almost everything in the game
+var vol = 0.1; // music volume standard
 var foods = [];
 
 var welcomeScene;

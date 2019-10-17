@@ -42,10 +42,9 @@ class Food {
 
   //picking place for food
   makeRandomVector() {
-    var cols = floor(windowWidth / this.scl);
-    var rows = floor(windowHeight / this.scl);
+    var cols = floor(windowWidth - this.scl);
+    var rows = floor(windowHeight - this.scl);
     var vector = createVector(floor(random(cols)), floor(random(rows)));
-    vector.mult(this.scl);
     return vector;
   }
   //initialize food location with a random point

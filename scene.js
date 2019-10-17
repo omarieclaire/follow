@@ -338,7 +338,6 @@ class TrainingScene extends Scene {
   draw(player1, player2, foods) {
     if (player1.xspeed != 0 || player2.xspeed != 0 || player1.yspeed != 0 || player2.yspeed != 0) {
       this.numTicks++;
-      console.log(this.numTicks);
     } else {}
 
    this.basicSceneDraw(player1, player2, foods);

@@ -316,7 +316,7 @@ class Player {
       //Change spacing of ring according to time
       //.6 is the limit of how large it can be
       //.025 slows it keyPressDown
-      this.ringSpacer = (this.scl / 3.5) + (.6 * Math.sin(this.numTicks * .025));
+      this.ringSpacer = (this.scl / 3.5) + (.6 * Math.sin(this.numTicks * .04 ));
     } else {}
   }
 //findme
