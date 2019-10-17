@@ -88,7 +88,7 @@ class Scene {
   debugScreen() {
     push();
     var rowHeight = windowHeight / this.scl;
-    background(255, 0, 0);
+    background(0);
     textSize(20);
     stroke(0, 255, 255);
     text("o - Debug and Keys", windowWidth / 2, rowHeight);

@@ -1,10 +1,12 @@
 // WHY AM I HERE?
-// We are locked in a dance with the other, a dance we can step out of at any time?
-// Each being controlled by the things we don't want to be/do.
-// Like "mirroring" we mimick the other/enemy
-// There are many kinds of following
+// We are locked in a dance with the other. What is this dance?
+// Each compelled/controlled by the things we don't want to be/do.
+// Like "mirroring" we mimick the other, especially the unloved other
+// What is following anyway?
 
 // DESIGN HIGH LEVEL
+// - what does player want to do?
+// - what does player feel?
 // - the DESIRE to do the opposite of the other player is not there yet
 // - how do I *immediately* communicate follow status to both players?
 // - should player *want* to be leading?
@@ -12,15 +14,17 @@
 
 // TODOS
 // TODO give player some energy and movement (while halted and at beginning)
+// TODO Sort out following logic in each mode
 // TODO spikes and food fall from sky?
 // TODO fix debug screen
-// BUG - food generating "offscreenish"?
+// BUG food generating "offscreenish"?
 // TODO players should have to move to trigger new Scene (not just numticks)
 // TODO improve ring loss animation
 // TODO make tail come off last ring / make tail look better
 // TODO move player collision to player class?
 // TODO set up sounds
 // TODO choose text
+// TODO make prettier
 // TODO refactor everything :(
 
 // DESIGN
@@ -50,7 +54,7 @@
 
 // QUESTIONS
 
-// Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow,
+// Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie, 
 
 
 var player1;
@@ -117,8 +121,8 @@ function setup() {
   // p5 specific function for working with degrees
   angleMode(DEGREES);
   //special functions to construct an object from a class
-  player1 = new Player("1", " ", -0, windowWidth - windowWidth/4, scl, player1Color, player1FadeColor);
-  player2 = new Player("2", " ", 0, windowWidth/4, scl, player2Color, player2FadeColor);
+  player1 = new Player("1", " ", -0, windowWidth/4, scl, player1Color, player1FadeColor);
+  player2 = new Player("2", " ", 0, windowWidth - windowWidth/4, scl, player2Color, player2FadeColor);
   welcomeScene = new WelcomeScene();
   trainingScene = new TrainingScene();
   playScene = new PlayScene();

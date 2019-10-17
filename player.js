@@ -14,7 +14,7 @@ class Player {
     this.r = scl;
     this.yspeed = 0;
     this.lastYSpeed = this.yspeed;
-    this.total = 5;
+    this.total = 15;
     this.isFollowing = false;
     this.isFollowed = false;
     this.playerColor = tmp_playerColor;
@@ -24,6 +24,8 @@ class Player {
     this.ringSpacer = this.scl / 4;
     this.explodeParticles = [];
     this.followSoundClass = new FollowSound();
+
+    this.numTicks = 0;
     // this.newColor = [0, 255, 255];
 
 
@@ -173,7 +175,7 @@ class Player {
     this.yspeed = 0;
   }
 
-//not being used - kinda broken
+  //not being used - kinda broken
   resumeMovement() {
     // this.xspeed = 0.01;
     // this.xspeed = 0.01;
@@ -205,7 +207,7 @@ class Player {
   colorOfOuterMostRing() {
     // look at the last element of the array and ask what colour it is.
     // return undefined if the array is empty
-     if (this.playerRings.length == 0) {
+    if (this.playerRings.length == 0) {
       return undefined;
     } else {
       return this.playerRings[this.playerRings.length - 1].ringColor;
@@ -279,9 +281,21 @@ class Player {
     }
   }
 
+  ringBreatheWhenHalted() {
+    if (this.xspeed == 0 && this.yspeed == 0) {
+      //Change spacing of ring according to time
+      //.6 is the limit of how large it can be
+      //.025 slows it keyPressDown
+      this.ringSpacer = (this.scl / 3.5) + (.6 * Math.sin(this.numTicks * .025));
+    } else {}
+  }
+
   //FOLLOW ME
 
   show() {
+    this.numTicks++;
+    this.ringBreatheWhenHalted();
+
     noStroke();
     //colored player circle
     if (this.isFollowing) {
@@ -295,6 +309,7 @@ class Player {
     // player circle / face
     ellipse(this.x, this.y, this.scl, this.scl);
 
+
     noFill();
     // stroke(255, 200);
     push(); //set original drawstate
@@ -303,8 +318,6 @@ class Player {
         // strokeWeight(5);
         // stroke(pointColor);
         // stroke(this.playerColor);
-
-
       } else {
         // strokeWeight(.25);
         // stroke(this.playerColor);
