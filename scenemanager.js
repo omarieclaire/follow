@@ -50,7 +50,10 @@ class SceneManager {
         this.currSceneIndex++;
         // transfer key mode
         var theNextScene = this.allTheScenes[this.currSceneIndex];
-        theNextScene.setKeyModeIndex(previousScene.keyModeIndex);
+
+        // setup the next scene by transfering some state like
+        // keyModeIndex and keyPressDown flags from the previous scene.
+        theNextScene.setupFromPreviousScene(previousScene);
       }
     }
   }

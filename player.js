@@ -176,11 +176,9 @@ class Player {
   resumeMovement() {
     // this.xspeed = 0.01;
     // this.xspeed = 0.01;
-
-    console.log("resuming " + this.lastXSpeed);
-
-    this.xspeed = this.lastXSpeed;
-    this.yspeed = this.lastYSpeed;
+    // console.log("resuming " + this.lastXSpeed);
+    // this.xspeed = this.lastXSpeed;
+    // this.yspeed = this.lastYSpeed;
   }
 
   changeRingTotal(amount, x, y, newRingColor) {
@@ -295,7 +293,7 @@ class Player {
 
     // player circle / face
     ellipse(this.x, this.y, this.scl, this.scl);
-    
+
     noFill();
     // stroke(255, 200);
     push(); //set original drawstate

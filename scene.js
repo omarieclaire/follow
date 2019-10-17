@@ -7,12 +7,19 @@ class Scene {
     // this.leaderRing = new LeaderRing(scl);
     this.keyModes = ["standard", "split", "sharedhorizon", "simultaneous"];
     this.keyModeIndex = 0;
+    this.player1LeftKeyDown = false;
+    this.player2RightKeyDown = false;
   };
   resetScene() {
     this.keyModeIndex = 0;
+    this.player1LeftKeyDown = false;
+    this.player2RightKeyDown = false;
   }
-  setKeyModeIndex(index) {
-    this.keyModeIndex = index;
+
+  setupFromPreviousScene(previousScene) {
+    this.keyModeIndex = previousScene.keyModeIndex;
+    this.player1LeftKeyDown = previousScene.player1LeftKeyDown;
+    this.player2RightKeyDown = previousScene.player2RightKeyDown;
   }
   //first, a function to check if the game is over
   isGameOverCheck(player1, player2) {
@@ -78,7 +85,7 @@ class Scene {
   //~~~ debug STUFF ~~~//
   //~~~~~~~~~~~~~~~~~~~~~//
 
-  debugScreen(){
+  debugScreen() {
     push();
     var rowHeight = windowHeight / this.scl;
     background(255, 0, 0);
@@ -99,8 +106,36 @@ class Scene {
     return this.keyModes[this.keyModeIndex];
   }
 
+  areWeInAHaltState() {
+    //(this.player1LeftDown && this.player2RightKeyDown) || (this.player1UpDown && this.player12RIghtUpDown)
+    return this.player1LeftKeyDown && this.player2RightKeyDown;
+  }
+
   keyWasPressed(keyCode, player1, player2) {}
-  keyWasReleased(keyCode, player1, player2) {}
+  keyWasReleased(keyCode, player1, player2) {
+    // were we previously in a halt state?
+    var previouslyHalted = this.areWeInAHaltState();
+
+    if (keyCode == 65) {
+      this.player1LeftKeyDown = false;
+    } else if (keyCode == RIGHT_ARROW) {
+      this.player2RightKeyDown = false;
+    }
+
+    // are we currently in a halt state?
+    var currentlyHalted = this.areWeInAHaltState();
+
+    // if in a previous halt state and now NOT in a halt state, then resume.
+    if (previouslyHalted && !currentlyHalted) {
+      if (this.player1LeftKeyDown) {
+        player1.changeDirectionLeft(player2);
+        player2.changeDirectionLeft(player1);
+      } else if (this.player2RightKeyDown) {
+        player1.changeDirectionRight(player2);
+        player2.changeDirectionRight(player1);
+      }
+    }
+  }
 
   handleKeyPressMode(keyCode, player1, player2) {
     if (keyCode == 77) {
@@ -179,16 +214,26 @@ class Scene {
   }
 
   simultaneousKeyPressMode(keyCode, player1, player2) {
-    if (keyIsDown(65) && keyIsDown(RIGHT_ARROW)) {
-      console.log("halt");
-      //player1.halt();
-      //player2.halt();
+    if (keyCode == 65) {
+      this.player1LeftKeyDown = true;
+    } else if (keyCode == RIGHT_ARROW) {
+      this.player2RightKeyDown = true;
+    }
+
+    if (this.areWeInAHaltState()) {
+      player1.halt();
+      player2.halt();
     } else {
-      console.log("resume");
-      //   // player1.resumeMovement();
-      //   // player2.resumeMovement();
+      if (keyCode === 65) {
+        player2.changeDirectionLeft(player1);
+        player1.changeDirectionLeft(player2);
+      } else if (keyCode === RIGHT_ARROW) {
+        player1.changeDirectionRight(player2);
+        player2.changeDirectionRight(player1);
+      }
     }
   }
+
 
   movePlayerOnKeyPress(keyCode, player1, player2) {
     var keyMode = this.getCurrentKeyMode();
@@ -301,15 +346,13 @@ class TrainingScene extends Scene {
       push();
       stroke(255);
       strokeWeight(1);
-
       stroke(player1Color);
-      text(player1.direction, windowWidth / 4, windowHeight / 1.43);
-      stroke(player2Color);
-      text(player2.direction, windowWidth - windowWidth / 4, windowHeight / 1.43);
       if (player1.isFollowing) {
         // ringMoveSound.loop();
         stroke(player1Color);
-        text("Follower", windowWidth / 4, windowHeight / 1.23);
+        text(player1.direction + " (following)", windowWidth / 4, windowHeight / 1.43);
+
+        // text("Follower", windowWidth / 4, windowHeight / 1.23);
         // stroke(player2Color);
         // text("Leader", windowWidth - windowWidth / 4, windowHeight / 1.23);
 
@@ -318,8 +361,14 @@ class TrainingScene extends Scene {
         // stroke(player1Color);
         // text("Leader", windowWidth / 4, windowHeight / 1.23);
         stroke(player2Color);
-        text("Follower", windowWidth - windowWidth / 4, windowHeight / 1.23);
+
+        text(player2.direction + " (following)", windowWidth - windowWidth / 4, windowHeight / 1.43);
+        // text("Follower", windowWidth - windowWidth / 4, windowHeight / 1.23);
       } else {
+        stroke(player1Color);
+        text(player1.direction, windowWidth / 4, windowHeight / 1.43);
+        stroke(player2Color);
+        text(player2.direction, windowWidth - windowWidth / 4, windowHeight / 1.43);
         // ringMoveSound.stop();
       }
       pop();
