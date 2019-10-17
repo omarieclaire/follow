@@ -4,6 +4,7 @@ class Food {
     this.total = 3;
     this.x;
     this.y;
+    this.speed = 3;
     this.color = this.foodColorPicker();
   }
 
@@ -43,8 +44,7 @@ class Food {
   //picking place for food
   makeRandomVector() {
     var cols = floor(windowWidth - this.scl);
-    var rows = floor(windowHeight - this.scl);
-    var vector = createVector(floor(random(cols)), floor(random(rows)));
+    var vector = createVector(floor(random(cols)), 0);
     return vector;
   }
   //initialize food location with a random point
@@ -65,6 +65,11 @@ class Food {
   }
 
   show() {
+    this.foodLocation.y = this.foodLocation.y + this.speed;
+    if(this.foodLocation.y > windowHeight) {
+      this.foodLocation.y = 0;
+    }
+    this.y = this.foodLocation.y;
     stroke(this.color);
     strokeWeight(.75);
     noFill();

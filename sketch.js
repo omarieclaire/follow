@@ -22,7 +22,7 @@
 // TODO spikes and food fall from sky?
 // TODO fix follow line wrapping
 // TODO foods slowly appear
-// TODO line between following player and followed
+// TODO undulating line between following player and followed
 // TODO improve ring loss animation
 // TODO if I die, then you die too? how to draw?
 // TODO Sort out following logic in each mode

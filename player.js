@@ -117,11 +117,7 @@ class Player {
       push();
       stroke(255, 255, 0, 40);
       strokeWeight(10);
-
-
-
-      // var lineUndulate = (0.3 * Math.sin(this.numTicks * .025));
-      // line(this.x, this.y, otherPlayer.x, otherPlayer.y * lineUndulate);
+      // line(this.x, this.y, otherPlayer.x, otherPlayer.y);
       pop();
     }
   }
@@ -154,6 +150,7 @@ class Player {
       // is changed.
       console.log("collide then flip");
       this.flipDirection(otherPlayer);
+      spike.location(this, otherPlayer);
       return true;
     } else {
       return false;

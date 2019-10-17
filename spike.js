@@ -4,6 +4,7 @@ class Spike {
     this.scl = temp_scl;
     this.total = 3;
     this.angle = 0;
+    this.speed = 3;
     this.spikeLocation = this.makeRandomVector();
     this.x = this.spikeLocation.x;
     this.y = this.spikeLocation.y;
@@ -11,10 +12,8 @@ class Spike {
 
   //picking place for spikes
   makeRandomVector() {
-    var cols = floor(windowWidth / this.scl);
-    var rows = floor(windowHeight / this.scl);
-    var vector = createVector(floor(random(cols)), floor(random(rows)));
-    vector.mult(this.scl);
+    var cols = floor(windowWidth - 2 * this.scl);
+    var vector = createVector(floor(random(cols)), 0);
     return vector;
   }
   //initialize spike location with a random point
@@ -34,7 +33,17 @@ class Spike {
 
   }
 
+  moveSpike() {
+    this.spikeLocation.y = this.spikeLocation.y + this.speed;
+    if(this.spikeLocation.y > windowHeight) {
+      this.spikeLocation = this.makeRandomVector();
+      this.x = this.spikeLocation.x;
+    }
+    this.y = this.spikeLocation.y;
+  }
+
   show() {
+    this.moveSpike();
     push();
     stroke(this.spikeColor);
     ellipse(this.x, this.y, 3, 3);
