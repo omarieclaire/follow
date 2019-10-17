@@ -13,13 +13,14 @@
 // - right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
 
 // TODOS
-// TODO give player some energy and movement (while halted and at beginning)
-// TODO Sort out following logic in each mode
-// TODO spikes and food fall from sky?
 // TODO fix debug screen
+// TODO spikes and food fall from sky?
+// TODO foods slowly appear
+// TODO line between following player and followed
 // BUG food generating "offscreenish"?
 // TODO players should have to move to trigger new Scene (not just numticks)
 // TODO improve ring loss animation
+// TODO Sort out following logic in each mode
 // TODO make tail come off last ring / make tail look better
 // TODO move player collision to player class?
 // TODO set up sounds

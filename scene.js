@@ -87,15 +87,16 @@ class Scene {
 
   debugScreen() {
     push();
-    var rowHeight = windowHeight / this.scl;
+    var rowHeight = scl / 2 ;
     background(0, 0, 20);
-    textSize(20);
-    stroke(0, 255, 255);
+    textSize(standardTextSize/2);
+    fill(0, 255, 255);
+    strokeWeight(1);
     text("o - Debug and Keys", windowWidth / 2, rowHeight);
-    text("m - KeyMode (different play)", windowWidth / 2, rowHeight * 2);
-    text("n - Fullscreen", windowWidth / 2, rowHeight * 3);
-    text("awsd - Player 1 possible controls", windowWidth / 2, rowHeight * 4);
-    text("arrow keys - Player 2 possible controls", windowWidth / 2, rowHeight * 5);
+    text("m - KeyMode (different play)", windowWidth / 2, rowHeight * 4);
+    text("n - Fullscreen", windowWidth / 2, rowHeight * 6);
+    text("awsd - Player 1 possible controls", windowWidth / 2, rowHeight * 8);
+    text("arrow keys - Player 2 possible controls", windowWidth / 2, rowHeight * 10);
     pop();
   }
 

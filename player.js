@@ -35,10 +35,9 @@ class Player {
     [167, 105, 201],
     [138, 66, 178],
     [96, 14, 142],
-  
+
   ];
     for (var i = 0; i < this.total; i++) { //for each point in score
-      console.log(random(randomColors));
       this.playerRings.push(new Rings(this, this.scl, random(randomColors))); //push a new ring to array
     }
 
