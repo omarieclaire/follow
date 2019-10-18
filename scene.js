@@ -5,8 +5,9 @@
 class Scene {
   constructor() {
     // this.leaderRing = new LeaderRing(scl);
-    this.keyModes = ["standard", "split", "sharedhorizon", "simultaneous"];
+    this.keyModes = ["solo", "toggle", "split", "sharedhorizon", "simultaneous"];
     this.keyModeIndex = 0;
+    this.toggleFlag = true;
     this.player1LeftKeyDown = false;
     this.player2RightKeyDown = false;
   };
@@ -58,6 +59,7 @@ class Scene {
       this.debugScreen();
     } else {}
 
+    this.toggleFlagCheck();
     // this.leaderRing.drawLeaderRing(player1, player2);
     this.printDebugToScreen();
   }
@@ -92,9 +94,9 @@ class Scene {
 
   debugScreen() {
     push();
-    var rowHeight = scl / 2 ;
+    var rowHeight = scl / 2;
     background(0, 0, 20);
-    textSize(standardTextSize/2);
+    textSize(standardTextSize / 2);
     fill(0, 255, 255);
     strokeWeight(1);
     text("o - Debug and Keys", windowWidth / 2, rowHeight);
@@ -105,12 +107,12 @@ class Scene {
     pop();
   }
 
-  printDebugToScreen(){
+  printDebugToScreen() {
     if (keyIsDown(80)) {
       push();
       fill(200);
       // stroke(200);
-      textSize(standardTextSize/3);
+      textSize(standardTextSize / 3);
       textAlign(LEFT, TOP);
       text(this.getCurrentKeyMode(), 30, 30, 100, 100);
       pop();
@@ -167,7 +169,16 @@ class Scene {
     }
   }
 
-  standardKeyPressMode(keyCode, player1, player2) {
+  toggleFlagCheck() {
+    if ((keyCode == 32) && this.toggleFlag == true) {
+      this.toggleFlag = false;
+    } else if ((keyCode == 32) && this.toggleFlag == false) {
+      this.toggleFlag = true;
+    }
+  }
+  //Each Player has complete control of own direction at all times
+  //It costs rings to follow (going in the same direction a player is already moving)
+  soloKeyPressMode(keyCode, player1, player2) {
     if (keyCode === UP_ARROW) {
       player2.changeDirectionUp(player1);
     } else if (keyCode === DOWN_ARROW) {
@@ -186,348 +197,379 @@ class Scene {
       player1.changeDirectionLeft(player2);
     }
   }
+  //Only one player can use controls at a time, but each Player has complete control of own direction
+  //It costs rings to follow (going in the same direction a player is already moving)
+  toggleKeyPressMode(keyCode, player1, player2) {
 
-  splitKeyPressMode(keyCode, player1, player2) {
-    // hacky split key mode - if keeping should deal with "following" better
-    if (keyCode === UP_ARROW) {
-      player2.changeDirectionUp(player1);
-      player1.changeDirectionUp(player2);
-
-    } else if (keyCode === RIGHT_ARROW) {
-      player1.changeDirectionRight(player2);
-      player2.changeDirectionRight(player1);
-
-    } else if (keyCode === 65) {
-      player2.changeDirectionLeft(player1);
-      player1.changeDirectionLeft(player2);
-
-    } else if (keyCode === 83) {
-      player1.changeDirectionDown(player2);
-      player2.changeDirectionDown(player1);
-    }
-  }
-
-  sharedHorizonKeyPressMode(keyCode, player1, player2) {
-    // hacky split key mode - if keeping should deal with "following" better
-    if (keyCode === UP_ARROW) {
-      player2.changeDirectionUp(player1);
-
-    } else if (keyCode === DOWN_ARROW) {
-      player2.changeDirectionDown(player1);
-
-    } else if (keyCode === RIGHT_ARROW) {
-      player1.changeDirectionRight(player2);
-      player2.changeDirectionRight(player1);
-
-    } else if (keyCode === 65) {
-      player2.changeDirectionLeft(player1);
-      player1.changeDirectionLeft(player2);
-
-    } else if (keyCode === 87) {
-      player1.changeDirectionUp(player2);
-
-    } else if (keyCode === 83) {
-      player1.changeDirectionDown(player2);
-    }
-  }
-
-  simultaneousKeyPressMode(keyCode, player1, player2) {
-    if (keyCode == 65) {
-      this.player1LeftKeyDown = true;
-    } else if (keyCode == RIGHT_ARROW) {
-      this.player2RightKeyDown = true;
-    }
-
-    if (this.areWeInAHaltState()) {
-      player1.halt();
-      player2.halt();
-    } else {
-      if (keyCode === 65) {
+    if (this.toggleFlag == true) {
+      if (keyCode === UP_ARROW) {
+        player2.changeDirectionUp(player1);
+      } else if (keyCode === DOWN_ARROW) {
+        player2.changeDirectionDown(player1);
+      } else if (keyCode === RIGHT_ARROW) {
+        player2.changeDirectionRight(player1);
+      } else if (keyCode === LEFT_ARROW) {
         player2.changeDirectionLeft(player1);
-        player1.changeDirectionLeft(player2);
+      } else if (this.toggleFlag == false) {
+        if (keyCode === 87) {
+          player1.changeDirectionUp(player2);
+        } else if (keyCode === 83) {
+          player1.changeDirectionDown(player2);
+        } else if (keyCode === 68) {
+          player1.changeDirectionRight(player2);
+        } else if (keyCode === 65) {
+          player1.changeDirectionLeft(player2);
+        }
+      }
+    }
+  }
+    //Player1 controls up and left, player2 controls right and down
+    //It costs rings to lead
+    splitKeyPressMode(keyCode, player1, player2) {
+      // hacky split key mode - if keeping should deal with "following" better
+      if (keyCode === UP_ARROW) {
+        player2.changeDirectionUp(player1);
+        player1.changeDirectionUp(player2);
+
       } else if (keyCode === RIGHT_ARROW) {
         player1.changeDirectionRight(player2);
         player2.changeDirectionRight(player1);
+
+      } else if (keyCode === 65) {
+        player2.changeDirectionLeft(player1);
+        player1.changeDirectionLeft(player2);
+
+      } else if (keyCode === 83) {
+        player1.changeDirectionDown(player2);
+        player2.changeDirectionDown(player1);
       }
     }
-  }
+    //Player1 controls left, player2 controls right. Each player controlls own up and down
+    //It costs rings to lead?
+    sharedHorizonKeyPressMode(keyCode, player1, player2) {
+      // hacky split key mode - if keeping should deal with "following" better
+      if (keyCode === UP_ARROW) {
+        player2.changeDirectionUp(player1);
 
+      } else if (keyCode === DOWN_ARROW) {
+        player2.changeDirectionDown(player1);
 
-  movePlayerOnKeyPress(keyCode, player1, player2) {
-    var keyMode = this.getCurrentKeyMode();
-    if (keyMode == "standard") {
-      this.standardKeyPressMode(keyCode, player1, player2);
-    } else if (keyMode == "split") {
-      this.splitKeyPressMode(keyCode, player1, player2);
-    } else if (keyMode == "sharedhorizon") {
-      this.sharedHorizonKeyPressMode(keyCode, player1, player2);
-    } else if (keyMode == "simultaneous") {
-      this.simultaneousKeyPressMode(keyCode, player1, player2);
+      } else if (keyCode === RIGHT_ARROW) {
+        player1.changeDirectionRight(player2);
+        player2.changeDirectionRight(player1);
+
+      } else if (keyCode === 65) {
+        player2.changeDirectionLeft(player1);
+        player1.changeDirectionLeft(player2);
+
+      } else if (keyCode === 87) {
+        player1.changeDirectionUp(player2);
+
+      } else if (keyCode === 83) {
+        player1.changeDirectionDown(player2);
+      }
     }
-  }
-}
+    //Player1 controls left, player2 controls right. Everything stops if both players hold their buttons together
+    //It costs rings to lead?
+    simultaneousKeyPressMode(keyCode, player1, player2) {
+      if (keyCode == 65) {
+        this.player1LeftKeyDown = true;
+      } else if (keyCode == RIGHT_ARROW) {
+        this.player2RightKeyDown = true;
+      }
 
-/////////////////////////////
-//// Instruction Scene  ////
-////////////////////////////
-class InstructionScene extends Scene {
-  constructor() {
-    super();
-    this.wasKeyPressed = false;
-    introSound.loop();
-  }
-
-  draw(player1, player2, foods) {
-    background(0, 0, 20);
-    textSize(standardTextSize);
-    textAlign(CENTER, TOP);
-    fill(player1Color);
-    text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
-    fill(player2Color);
-    text("player 2 use arrow keys to move", windowWidth / 2, windowHeight / 3);
-    fill(200);
-    textSize(standardTextSize / 2);
-    text("press spacebar to begin", windowWidth / 2, windowHeight / 1.5);
-  }
-
-  advanceToNextScene(player1, player2) {
-    return this.wasKeyPressed == true;
-  }
-
-  keyWasPressed(keyCode, player1, player2) {
-    // introSound.stop();
-    // ambientSound.loop();
-    this.wasKeyPressed = true;
-  }
-
-  //advance to next scene bool needs to be reset when game restarts
-  resetScene() {
-    super.resetScene();
-    this.wasKeyPressed = false;
-  }
-}
-
-//////////////////////////
-////  welcome scene  ////
-/////////////////////////
-
-class WelcomeScene extends Scene {
-  constructor() {
-    // 'super' calls the 'constructor' of Scene (the class we inherit from)
-    super();
-    this.numTicks = 0;
-  };
-  //can create a draw inside any scene to customize it
-  draw(player1, player2, foods) {
-    this.numTicks++;
-    // this.basicSceneDraw(player1, player2, foods);
-    background(0, 0, 20);
-    fill(10, 255, 50);
-    textSize(standardTextSize);
-    textAlign(CENTER, TOP);
-    text("Welcome", windowWidth / 2, windowHeight / 2);
-  }
-
-  advanceToNextScene(player1, player2) {
-    return this.numTicks >= 100;
-  }
-
-  //ticks need to be reset when game restarts
-  resetScene() {
-    super.resetScene();
-    this.numTicks = 0;
-  }
-}
-////////////////////////
-//// training scene ////
-////////////////////////
-class TrainingScene extends Scene {
-  constructor() {
-    super();
-    this.numTicks = 0;
-
-  };
-
-  keyWasPressed(keyCode, player1, player2) {
-    this.handleKeyPressMode(keyCode, player1, player2);
-    this.movePlayerOnKeyPress(keyCode, player1, player2);
-  }
-
-  playStartSound() {
-    newSceneSound.play();
-  }
-  draw(player1, player2, foods) {
-    if (player1.xspeed != 0 || player2.xspeed != 0 || player1.yspeed != 0 || player2.yspeed != 0) {
-      this.numTicks++;
-    } else {}
-
-   this.basicSceneDraw(player1, player2, foods);
-   player1.drawFollowLine(player2);
-   player2.drawFollowLine(player1);
-
-
-    //only print directional cues if player is still living TEXTDISPLAYBUG
-    if (this.numTicks <= 1000) {
-      //directional text
-      push();
-      stroke(255);
-      strokeWeight(1);
-      stroke(player1Color);
-      if (player1.isFollowing) {
-        // ringMoveSound.loop();
-        stroke(player1Color);
-        text(player1.direction + " (following)", windowWidth / 4, windowHeight / 1.43);
-        // text("Follower", windowWidth / 4, windowHeight / 1.23);
-        // stroke(player2Color);
-        // text("Leader", windowWidth - windowWidth / 4, windowHeight / 1.23);
-      } else if (player2.isFollowing) {
-        // ringMoveSound.loop();
-        // stroke(player1Color);
-        // text("Leader", windowWidth / 4, windowHeight / 1.23);
-        stroke(player2Color);
-        text(player2.direction + " (following)", windowWidth - windowWidth / 4, windowHeight / 1.43);
-        // text("Follower", windowWidth - windowWidth / 4, windowHeight / 1.23);
+      if (this.areWeInAHaltState()) {
+        player1.halt();
+        player2.halt();
       } else {
-        stroke(player1Color);
-        text(player1.direction, windowWidth / 4, windowHeight / 1.43);
-        stroke(player2Color);
-        text(player2.direction, windowWidth - windowWidth / 4, windowHeight / 1.43);
-        // ringMoveSound.stop();
+        if (keyCode === 65) {
+          player2.changeDirectionLeft(player1);
+          player1.changeDirectionLeft(player2);
+        } else if (keyCode === RIGHT_ARROW) {
+          player1.changeDirectionRight(player2);
+          player2.changeDirectionRight(player1);
+        }
       }
-      pop();
-    } else {}
-  }
-
-  advanceToNextScene(player1, player2) {
-    return this.numTicks >= 700; // training scene length
-  }
-  //ticks need to be reset when game restarts
-  resetScene() {
-    super.resetScene();
-    this.numTicks = 0;
-  }
-
-}
-///////////////////////
-////  play scene  ////
-//////////////////////
-class PlayScene extends Scene {
-  constructor() {
-    super();
-    this.spikes = [];
-    this.numTicks = 0;
-    //create spikes
-    for (var i = 0; i < 2; i++) {
-      this.spikes[i] = new Spike(scl);
-      this.spikes[i].location(player1, player2);
     }
-  };
 
 
-   playStartSound() {
-     newSceneSound.play();
-  }
-  spikeHit(player1, player2, spikes) {
-    for (let i = 0; i < spikes.length; i++) {
-      player1.collideWithSpike(spikes[i], player2);
-      player2.collideWithSpike(spikes[i], player1);
+    movePlayerOnKeyPress(keyCode, player1, player2) {
+      var keyMode = this.getCurrentKeyMode();
+      if (keyMode == "solo") {
+        this.soloKeyPressMode(keyCode, player1, player2);
+      } else if (keyMode == "toggle") {
+        this.toggleKeyPressMode(keyCode, player1, player2);
+      } else if (keyMode == "split") {
+        this.splitKeyPressMode(keyCode, player1, player2);
+      } else if (keyMode == "sharedhorizon") {
+        this.sharedHorizonKeyPressMode(keyCode, player1, player2);
+      } else if (keyMode == "simultaneous") {
+        this.simultaneousKeyPressMode(keyCode, player1, player2);
+      }
     }
   }
 
-  keyWasPressed(keyCode, player1, player2) {
-    this.handleKeyPressMode(keyCode, player1, player2);
-    this.movePlayerOnKeyPress(keyCode, player1, player2);
-  }
-
-  draw(player1, player2, foods) {
-    this.numTicks++;
-    this.foodEaten(player1, player2, foods);
-    this.spikeHit(player1, player2, this.spikes);
-
-    this.basicSceneDraw(player1, player2, foods);
-    for (let i = 0; i < foods.length; i++) {
-      foods[i].show();
+  /////////////////////////////
+  //// Instruction Scene  ////
+  ////////////////////////////
+  class InstructionScene extends Scene {
+    constructor() {
+      super();
+      this.wasKeyPressed = false;
+      introSound.loop();
     }
 
-    // every 1000 ticks, add a spike.
-    if (this.numTicks % 5000 == 0) {
-      this.spikes.push(new Spike(scl));
+    draw(player1, player2, foods) {
+      background(0, 0, 20);
+      textSize(standardTextSize);
+      textAlign(CENTER, TOP);
+      fill(player1Color);
+      text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
+      fill(player2Color);
+      text("player 2 use arrow keys to move", windowWidth / 2, windowHeight / 3);
+      fill(200);
+      textSize(standardTextSize / 2);
+      text("press spacebar to begin", windowWidth / 2, windowHeight / 1.5);
     }
 
-    for (let i = 0; i < this.spikes.length; i++) {
-      this.spikes[i].show();
+    advanceToNextScene(player1, player2) {
+      return this.wasKeyPressed == true;
     }
 
-    player1.drawFollowLine(player2);
-    player2.drawFollowLine(player1);
+    keyWasPressed(keyCode, player1, player2) {
+      // introSound.stop();
+      // ambientSound.loop();
+      this.wasKeyPressed = true;
+    }
 
-  }
-  advanceToNextScene(player1, player2) {
-    if (player1.total > 7000000 || player2.total > 700000) {
-      return true;
-    } else {
-      return false;
+    //advance to next scene bool needs to be reset when game restarts
+    resetScene() {
+      super.resetScene();
+      this.wasKeyPressed = false;
     }
   }
-  //advance to next scene bool needs to be reset when game restarts
-  resetScene() {
-    super.resetScene();
-    this.numTicks = 0;
-  }
-}
-/////////////////////////
-//// bonus scene ////
-/////////////////////////
-class BonusScene extends Scene {
-  constructor() {
-    super();
-  };
 
-}
-/////////////////////
-//// final scene ////
-/////////////////////
-class FinalScene extends Scene {
-  constructor() {
-    super();
-    this.numTicks = 0;
-  }
-  draw(player1, player2, foods) {
-    stroke(255);
-    player1.halt();
-    player2.halt();
-    if (player2.total <= 0 && player1.total <= 0) {
-      fill(1);
-      stroke(1);
-      ellipse(player1.x, player1.y, player1.r);
-      ellipse(player2.x, player2.y, player1.r);
-      player1.deathDraw();
-      player2.deathDraw();
-    } else if (player2.total <= 0 && player1.total > 0) {
-      fill(1);
-      stroke(1);
-      ellipse(player2.x, player2.y, player1.r);
-      player2.deathDraw();
+  //////////////////////////
+  ////  welcome scene  ////
+  /////////////////////////
 
-    } else if (player1.total <= 0 && player2.total > 0) {
-      fill(1);
-      stroke(1);
-      ellipse(player1.x, player1.y, player1.r);
-      player1.deathDraw();
+  class WelcomeScene extends Scene {
+    constructor() {
+      // 'super' calls the 'constructor' of Scene (the class we inherit from)
+      super();
+      this.numTicks = 0;
+    };
+    //can create a draw inside any scene to customize it
+    draw(player1, player2, foods) {
+      this.numTicks++;
+      // this.basicSceneDraw(player1, player2, foods);
+      background(0, 0, 20);
+      fill(10, 255, 50);
+      textSize(standardTextSize);
+      textAlign(CENTER, TOP);
+      text("Welcome", windowWidth / 2, windowHeight / 2);
+    }
 
-    } else {}
-    // GAME OVER TEXT
-    noStroke();
-    text("begin again?", windowWidth / 2, windowHeight / 2);
-    // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
-    this.numTicks++;
+    advanceToNextScene(player1, player2) {
+      return this.numTicks >= 100;
+    }
+
+    //ticks need to be reset when game restarts
+    resetScene() {
+      super.resetScene();
+      this.numTicks = 0;
+    }
   }
-  advanceToNextScene(player1, player2) {
-    return this.numTicks >= 300;
+  ////////////////////////
+  //// training scene ////
+  ////////////////////////
+  class TrainingScene extends Scene {
+    constructor() {
+      super();
+      this.numTicks = 0;
+
+    };
+
+    keyWasPressed(keyCode, player1, player2) {
+      this.handleKeyPressMode(keyCode, player1, player2);
+      this.movePlayerOnKeyPress(keyCode, player1, player2);
+    }
+
+    playStartSound() {
+      newSceneSound.play();
+    }
+    draw(player1, player2, foods) {
+      if (player1.xspeed != 0 || player2.xspeed != 0 || player1.yspeed != 0 || player2.yspeed != 0) {
+        this.numTicks++;
+      } else {}
+
+      this.basicSceneDraw(player1, player2, foods);
+      player1.drawFollowLine(player2);
+      player2.drawFollowLine(player1);
+
+
+      //only print directional cues if player is still living TEXTDISPLAYBUG
+      if (this.numTicks <= 1000) {
+        //directional text
+        push();
+        stroke(255);
+        strokeWeight(1);
+        stroke(player1Color);
+        if (player1.isFollowing) {
+          // ringMoveSound.loop();
+          stroke(player1Color);
+          text(player1.direction + " (following)", windowWidth / 4, windowHeight / 1.43);
+          // text("Follower", windowWidth / 4, windowHeight / 1.23);
+          // stroke(player2Color);
+          // text("Leader", windowWidth - windowWidth / 4, windowHeight / 1.23);
+        } else if (player2.isFollowing) {
+          // ringMoveSound.loop();
+          // stroke(player1Color);
+          // text("Leader", windowWidth / 4, windowHeight / 1.23);
+          stroke(player2Color);
+          text(player2.direction + " (following)", windowWidth - windowWidth / 4, windowHeight / 1.43);
+          // text("Follower", windowWidth - windowWidth / 4, windowHeight / 1.23);
+        } else {
+          stroke(player1Color);
+          text(player1.direction, windowWidth / 4, windowHeight / 1.43);
+          stroke(player2Color);
+          text(player2.direction, windowWidth - windowWidth / 4, windowHeight / 1.43);
+          // ringMoveSound.stop();
+        }
+        pop();
+      } else {}
+    }
+
+    advanceToNextScene(player1, player2) {
+      return this.numTicks >= 700; // training scene length
+    }
+    //ticks need to be reset when game restarts
+    resetScene() {
+      super.resetScene();
+      this.numTicks = 0;
+    }
+
   }
-  resetScene() {
-    super.resetScene();
-    this.numTicks = 0;
-    noStroke();
+  ///////////////////////
+  ////  play scene  ////
+  //////////////////////
+  class PlayScene extends Scene {
+    constructor() {
+      super();
+      this.spikes = [];
+      this.numTicks = 0;
+      //create spikes
+      for (var i = 0; i < 2; i++) {
+        this.spikes[i] = new Spike(scl);
+        this.spikes[i].location(player1, player2);
+      }
+    };
+
+
+    playStartSound() {
+      newSceneSound.play();
+    }
+    spikeHit(player1, player2, spikes) {
+      for (let i = 0; i < spikes.length; i++) {
+        player1.collideWithSpike(spikes[i], player2);
+        player2.collideWithSpike(spikes[i], player1);
+      }
+    }
+
+    keyWasPressed(keyCode, player1, player2) {
+      this.handleKeyPressMode(keyCode, player1, player2);
+      this.movePlayerOnKeyPress(keyCode, player1, player2);
+    }
+
+    draw(player1, player2, foods) {
+      this.numTicks++;
+      this.foodEaten(player1, player2, foods);
+      this.spikeHit(player1, player2, this.spikes);
+
+      this.basicSceneDraw(player1, player2, foods);
+      for (let i = 0; i < foods.length; i++) {
+        foods[i].show();
+      }
+
+      // every 1000 ticks, add a spike.
+      if (this.numTicks % 5000 == 0) {
+        this.spikes.push(new Spike(scl));
+      }
+
+      for (let i = 0; i < this.spikes.length; i++) {
+        this.spikes[i].show();
+      }
+
+      player1.drawFollowLine(player2);
+      player2.drawFollowLine(player1);
+
+    }
+    advanceToNextScene(player1, player2) {
+      if (player1.total > 7000000 || player2.total > 700000) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    //advance to next scene bool needs to be reset when game restarts
+    resetScene() {
+      super.resetScene();
+      this.numTicks = 0;
+    }
   }
-}
+  /////////////////////////
+  //// bonus scene ////
+  /////////////////////////
+  class BonusScene extends Scene {
+    constructor() {
+      super();
+    };
+
+  }
+  /////////////////////
+  //// final scene ////
+  /////////////////////
+  class FinalScene extends Scene {
+    constructor() {
+      super();
+      this.numTicks = 0;
+    }
+    draw(player1, player2, foods) {
+      stroke(255);
+      player1.halt();
+      player2.halt();
+      if (player2.total <= 0 && player1.total <= 0) {
+        fill(1);
+        stroke(1);
+        ellipse(player1.x, player1.y, player1.r);
+        ellipse(player2.x, player2.y, player1.r);
+        player1.deathDraw();
+        player2.deathDraw();
+      } else if (player2.total <= 0 && player1.total > 0) {
+        fill(1);
+        stroke(1);
+        ellipse(player2.x, player2.y, player1.r);
+        player2.deathDraw();
+
+      } else if (player1.total <= 0 && player2.total > 0) {
+        fill(1);
+        stroke(1);
+        ellipse(player1.x, player1.y, player1.r);
+        player1.deathDraw();
+
+      } else {}
+      // GAME OVER TEXT
+      noStroke();
+      text("begin again?", windowWidth / 2, windowHeight / 2);
+      // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
+      this.numTicks++;
+    }
+    advanceToNextScene(player1, player2) {
+      return this.numTicks >= 300;
+    }
+    resetScene() {
+      super.resetScene();
+      this.numTicks = 0;
+      noStroke();
+    }
+  }

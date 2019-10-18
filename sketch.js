@@ -19,18 +19,18 @@
 // - right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
 
 // TODOS
-// TODO integrate player waves colors and player waves frequencies
-// p for playmode printed to the top right corner
-// TODO alternating death explosions (implosion, a fade-out over time, appear to collide and become one.
-// TODO spikes and food fall from sky better
-// TODO ease follow line wrapping (it's a bit jerky right at the "wrap" moment)
+// TODO Sort out following logic in each mode
 // TODO Trim screen to small rectangle for last keypress version
 // TODO Set up toggle switch for version 1
 // TODO Set up unique instruction scenes for each keypress version
+
+// TODO integrate player waves colors and player waves frequencies
+// TODO alternating death explosions (implosion, a fade-out over time, appear to collide and become one.
+// TODO spikes and food fall from sky better
+// TODO ease follow line wrapping (it's a bit jerky right at the "wrap" moment)
 // TODO buy rope? boxes? Embed magnet in the rope, magnet sensor
 // TODO improve ring loss animation
 // TODO if I die, then you die too? how to draw?
-// TODO Sort out following logic in each mode
 // TODO make tail come off last ring / make tail look better
 // TODO move player collision to player class?
 // TODO design sounds
