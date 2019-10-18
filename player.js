@@ -111,12 +111,56 @@ class Player {
     }
   }
 
+  pointsForWaveyLine(x1, y1, x2, y2, numSamples, phase, amplitude, frequency) {
+    var xStart = x1;
+    var yStart = y1;
+    var xEnd = x2;
+    var yEnd = y2;
+    var data = [];
+    var xDelta = xEnd - xStart;
+    var yDelta = yStart - yEnd;
+    var vecLength = Math.sqrt(xDelta * xDelta + yDelta * yDelta);
+    // Avoid divide by zero
+    vecLength = Math.max(vecLength, 0.0001);
+
+    // normalize it
+    xDelta = xDelta / vecLength;
+    yDelta = yDelta / vecLength;
+
+    var angle = Math.atan2(yDelta, xDelta);
+    var currentTime = Date.now();
+
+    for (var i = 0; i < numSamples; i++) {
+      var progress = (i.toFixed(10) / numSamples);
+      var xpos = lerp(xStart, xEnd, progress);
+      var ypos = lerp(yStart, yEnd, progress);
+      var amp = amplitude * (Math.cos(progress * Math.PI * 2. + 3.14) * 0.5 + 0.5);
+      var wave = Math.sin(phase + currentTime * 0.01 + progress * Math.PI * 2.0 * frequency) * amp;
+
+      xpos += Math.sin(angle) * wave * 0.5;
+      ypos += Math.cos(angle) * wave * 0.5;
+
+      var entry = {
+        x: xpos,
+        y: ypos
+      };
+      data.push(entry);
+    }
+    return data;
+  }
+
   drawFollowLine(otherPlayer) {
     if (this.isFollowing == true) {
       push();
       stroke(255, 255, 0, 40);
       strokeWeight(10);
-      // line(this.x, this.y, otherPlayer.x, otherPlayer.y);
+
+      var waveyLinePoints = this.pointsForWaveyLine(this.x, this.y, otherPlayer.x, otherPlayer.y, 50, 0.2, 10, 20);
+      beginShape();
+      for (var i = 0; i < waveyLinePoints.length; i++) {
+        vertex(waveyLinePoints[i].x, waveyLinePoints[i].y);
+      }
+      endShape();
       pop();
     }
   }
