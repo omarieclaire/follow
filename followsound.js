@@ -7,12 +7,16 @@ class FollowSound {
     if (isFollowing == true) {
       this.numTicks = this.numTicks + 1;
       if (this.numTicks >= 2) {
-        if (!ambientSound.isPlaying()) {
-          ambientSound.play();
+        ambientSound.stop();
+        if (!followingSound.isPlaying()) {
+          followingSound.play();
         }
       }
     } else if (isFollowed != true) {
-      ambientSound.stop();
+      followingSound.stop();
+      if (!ambientSound.isPlaying()) {
+        ambientSound.play();
+      }
       this.numTicks = 0;
     }
   }

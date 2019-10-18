@@ -54,6 +54,8 @@ class SceneManager {
         // setup the next scene by transfering some state like
         // keyModeIndex and keyPressDown flags from the previous scene.
         theNextScene.setupFromPreviousScene(previousScene);
+
+        theNextScene.playStartSound();
       }
     }
   }

@@ -21,6 +21,10 @@ class Scene {
     this.player1LeftKeyDown = previousScene.player1LeftKeyDown;
     this.player2RightKeyDown = previousScene.player2RightKeyDown;
   }
+
+  // function to
+  playStartSound() {}
+
   //first, a function to check if the game is over
   isGameOverCheck(player1, player2) {
     if (player1.total <= 0 || player2.total <= 0) {
@@ -278,7 +282,7 @@ class InstructionScene extends Scene {
   }
 
   keyWasPressed(keyCode, player1, player2) {
-    introSound.stop();
+    // introSound.stop();
     // ambientSound.loop();
     this.wasKeyPressed = true;
   }
@@ -334,6 +338,10 @@ class TrainingScene extends Scene {
   keyWasPressed(keyCode, player1, player2) {
     this.handleKeyPressMode(keyCode, player1, player2);
     this.movePlayerOnKeyPress(keyCode, player1, player2);
+  }
+
+  playStartSound() {
+    newSceneSound.play();
   }
   draw(player1, player2, foods) {
     if (player1.xspeed != 0 || player2.xspeed != 0 || player1.yspeed != 0 || player2.yspeed != 0) {
@@ -401,6 +409,11 @@ class PlayScene extends Scene {
       this.spikes[i].location(player1, player2);
     }
   };
+
+
+   playStartSound() {
+     newSceneSound.play();
+  }
   spikeHit(player1, player2, spikes) {
     for (let i = 0; i < spikes.length; i++) {
       player1.collideWithSpike(spikes[i], player2);

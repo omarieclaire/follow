@@ -19,10 +19,12 @@
 // - right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
 
 // TODOS
-// TODO spikes and food fall from sky?
+// Set up sounds!!
+// undulating line between them from Common
+// alternating death explosions (implosion, a fade-out over time, appear to collide and become one.
+// TODO spikes and food fall from sky better
 // TODO fix follow line wrapping
 // TODO foods slowly appear
-// TODO undulating line between following player and followed
 // TODO improve ring loss animation
 // TODO if I die, then you die too? how to draw?
 // TODO Sort out following logic in each mode
@@ -88,10 +90,10 @@ var standardTextSize = 40; // text size standard
 let speed;
 var introSound;
 var foodGenSound;
-var eatSound;
-var hitSound;
-var newSceneSound;
-var followingSound;
+var eatSound; //working
+var hitSound; //working
+var newSceneSound; //working
+var followingSound; //working
 var deathSound;
 var ringMoveSound;
 var ambientSound;

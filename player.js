@@ -31,12 +31,12 @@ class Player {
 
     this.playerRings = []; // store the rings within a local array
     let randomColors = [
-    [119, 37, 164],
-    [167, 105, 201],
-    [138, 66, 178],
-    [96, 14, 142],
+      [119, 37, 164],
+      [167, 105, 201],
+      [138, 66, 178],
+      [96, 14, 142],
 
-  ];
+    ];
     for (var i = 0; i < this.total; i++) { //for each point in score
       this.playerRings.push(new Rings(this, this.scl, random(randomColors))); //push a new ring to array
     }
@@ -66,14 +66,13 @@ class Player {
 
     this.playerRings = []; // store the rings within a local array
     let randomColors = [
-    [119, 37, 164],
-    [167, 105, 201],
-    [138, 66, 178],
-    [96, 14, 142],
+      [119, 37, 164],
+      [167, 105, 201],
+      [138, 66, 178],
+      [96, 14, 142],
 
-  ];
+    ];
     for (var i = 0; i < this.total; i++) { //for each point in score
-      console.log(random(randomColors));
       this.playerRings.push(new Rings(this, this.scl, random(randomColors))); //push a new ring to array
     }
 
@@ -112,7 +111,7 @@ class Player {
     }
   }
 
-  drawFollowLine(otherPlayer){
+  drawFollowLine(otherPlayer) {
     if (this.isFollowing == true) {
       push();
       stroke(255, 255, 0, 40);
@@ -218,7 +217,7 @@ class Player {
     var diff = Math.abs(Math.floor(this.total) - Math.floor(oldTotal));
     if (diff >= 1) {
       if (amount < 0) {
-        if(amount === -1) {
+        if (amount === -1) {
           this.poppedRings.push(this.playerRings.pop());
         } else {
           this.playerRings.pop();
@@ -317,14 +316,14 @@ class Player {
       //Change spacing of ring according to time
       //.6 is the limit of how large it can be
       //.025 slows it keyPressDown
-      this.ringSpacer = (this.scl / 3.5) + (.6 * Math.sin(this.numTicks * .04 ));
+      this.ringSpacer = (this.scl / 3.5) + (.6 * Math.sin(this.numTicks * .04));
     } else {}
   }
-//findme
-  drawDirectionalArcs(playerDirection){
+  //findme
+  drawDirectionalArcs(playerDirection) {
     push();
     strokeWeight(2);
-    stroke(255,255,0);
+    stroke(255, 255, 0);
     noFill();
     if (this.direction == "up") {
       arc(this.x, this.y, this.scl, this.scl, 180, 0);
@@ -378,7 +377,7 @@ class Player {
       for (var i = 0; i < this.poppedRings.length; i++) {
         var thePoppedRing = this.poppedRings[i];
         if (typeof(thePoppedRing) !== 'undefined') {
-          thePoppedRing.drawDeadRing((this.scl * 2) + (this.playerRings.length + 1)* this.ringSpacer);
+          thePoppedRing.drawDeadRing((this.scl * 2) + (this.playerRings.length + 1) * this.ringSpacer);
         } else {
           // the popped ring should never be undefined. but somehow it is occasionally.
           // if a ring was undefined then we would not have been able to draw it.
