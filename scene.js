@@ -64,6 +64,16 @@ class Scene {
     this.printDebugToScreen();
   }
 
+  wideSceneDraw(){
+    if (this.getCurrentKeyMode() == "simultaneous") {
+      push();
+      fill(1);
+      rect(0, 0, windowWidth, windowHeight/4);
+      rect(0, windowHeight - windowHeight/4, windowWidth, windowHeight);
+      pop();
+    }
+  }
+
   draw(player1, player2, foods) {
     this.basicSceneDraw(player1, player2, foods);
   }
@@ -368,6 +378,7 @@ class WelcomeScene extends Scene {
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
     text("Welcome", windowWidth / 2, windowHeight / 2);
+    this.wideSceneDraw();
   }
 
   advanceToNextScene(player1, player2) {
@@ -438,6 +449,7 @@ class TrainingScene extends Scene {
       }
       pop();
     } else {}
+    this.wideSceneDraw();
   }
 
   advanceToNextScene(player1, player2) {
@@ -503,7 +515,9 @@ class PlayScene extends Scene {
     player1.drawFollowLine(player2);
     player2.drawFollowLine(player1);
 
+    this.wideSceneDraw();
   }
+
   advanceToNextScene(player1, player2) {
     if (player1.total > 7000000 || player2.total > 700000) {
       return true;
@@ -563,6 +577,7 @@ class FinalScene extends Scene {
     text("begin again?", windowWidth / 2, windowHeight / 2);
     // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
     this.numTicks++;
+    this.wideSceneDraw();
   }
   advanceToNextScene(player1, player2) {
     return this.numTicks >= 300;

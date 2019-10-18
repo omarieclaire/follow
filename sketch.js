@@ -19,9 +19,10 @@
 // - right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
 
 // TODOS
-// TODO Sort out following logic in each mode
+
 // TODO Trim screen to small rectangle for last keypress version
-// TODO Set up toggle switch for version 1
+
+// TODO Sort out following logic in each mode
 // TODO Set up unique instruction scenes for each keypress version
 
 // TODO integrate player waves colors and player waves frequencies
