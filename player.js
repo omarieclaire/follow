@@ -509,19 +509,24 @@ class Player {
     for (var i = 1; i < numberOfTrails; i++) {
       //having 1 + ensures that the divisor is always above 1 so the trail will never be bigger than the player
       let newRadius = (this.scl / 4) / (1 + i * radiusShrinkFactor);
+      var length = this.currentDiameter()/2;
+      push();
+      stroke(100);
+      strokeWeight(2);
       if (this.direction == "up") {
-        let newYCoordinate = this.y + (i * spaceBetweenCircles);
+        let newYCoordinate = this.y + (i * spaceBetweenCircles) + length;
         ellipse(this.x, newYCoordinate, newRadius);
       } else if (this.direction == "down") {
-        let newYCoordinate = this.y - (i * spaceBetweenCircles);
+        let newYCoordinate = this.y - (i * spaceBetweenCircles) - length;
         ellipse(this.x, newYCoordinate, newRadius);
       } else if (this.direction == "left") {
-        let newXCoordinate = this.x + (i * spaceBetweenCircles);
+        let newXCoordinate = this.x + (i * spaceBetweenCircles) + length;
         ellipse(newXCoordinate, this.y, newRadius);
       } else if (this.direction == "right") {
-        let newXCoordinate = this.x - (i * spaceBetweenCircles);
+        let newXCoordinate = this.x - (i * spaceBetweenCircles) - length;
         ellipse(newXCoordinate, this.y, newRadius);
       }
+      pop();
     }
   }
 }
