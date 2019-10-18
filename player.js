@@ -218,7 +218,11 @@ class Player {
     var diff = Math.abs(Math.floor(this.total) - Math.floor(oldTotal));
     if (diff >= 1) {
       if (amount < 0) {
-        this.poppedRings.push(this.playerRings.pop());
+        if(amount === -1) {
+          this.poppedRings.push(this.playerRings.pop());
+        } else {
+          this.playerRings.pop();
+        }
       } else {
         // create a ring that follows 'this' and has the start x and y coordinates passed to changeRingTotal
         // if we pass a new ringcolor use it, otherwise use the default

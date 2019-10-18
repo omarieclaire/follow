@@ -52,7 +52,6 @@ class Rings {
   }
 
   drawDeadRing(initialRadius) {
-    console.log("drawDeadRing");
     push();
     stroke(255, 0, 0);
     strokeWeight(.5);
