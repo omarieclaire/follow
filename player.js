@@ -29,8 +29,8 @@ class Player {
     // this.newColor = [0, 255, 255];
     this.windowLoopSpacer = this.scl / 2;
 
-    this.hasLooped = false;
-    this.loopDirection;
+    // the number of times i've loope while in following state
+    this.numLoops = 0;
 
     this.playerRings = []; // store the rings within a local array
     let randomColors = [
@@ -325,41 +325,40 @@ class Player {
 
   updateTargetForFollowingLine(otherPlayer) {
     // if I HAVE looped and the other player has NOT looped
-    if (this.hasLooped && !otherPlayer.hasLooped) {
+    if (this.numLoops - otherPlayer.numLoops == 1) {
       if (this.direction == 'left') {
-        this.targetX = otherPlayer.x + (width + this.windowLoopSpacer);
+        this.targetX = otherPlayer.x + width + this.windowLoopSpacer;
         this.targetY = otherPlayer.y
       } else if (this.direction == 'right') {
-        this.targetX = otherPlayer.x - (width + this.windowLoopSpacer);
+        this.targetX = otherPlayer.x - width - this.windowLoopSpacer;
         this.targetY = otherPlayer.y
       } else if (this.direction == 'up') {
         this.targetX = otherPlayer.x;
-        this.targetY = otherPlayer.y + (width + this.windowLoopSpacer);
+        this.targetY = otherPlayer.y + width + this.windowLoopSpacer;
       } else if (this.direction == 'down') {
         this.targetX = otherPlayer.x;
-        this.targetY = otherPlayer.y - (width + this.windowLoopSpacer);
+        this.targetY = otherPlayer.y - width - this.windowLoopSpacer;
       }
      // if I have NOT looped and the other player HAS looped
-    } else if (otherPlayer.hasLooped && !this.hasLooped) {
+   } else if (otherPlayer.numLoops - this.numLoops == 1) {
       if (this.direction == 'left') {
-        this.targetX = otherPlayer.x + (width + this.windowLoopSpacer);
+        this.targetX = otherPlayer.x - width - this.windowLoopSpacer;
         this.targetY = otherPlayer.y
       } else if (this.direction == 'right') {
-        this.targetX = otherPlayer.x - (width + this.windowLoopSpacer);
+        this.targetX = otherPlayer.x + width + this.windowLoopSpacer;
         this.targetY = otherPlayer.y
       } else if (this.direction == 'up') {
         this.targetX = otherPlayer.x;
-        this.targetY = otherPlayer.y - (width + this.windowLoopSpacer);
+        this.targetY = otherPlayer.y - width - this.windowLoopSpacer;
       } else if (this.direction == 'down') {
         this.targetX = otherPlayer.x;
-        this.targetY = otherPlayer.y + (width + this.windowLoopSpacer);
+        this.targetY = otherPlayer.y + width + this.windowLoopSpacer;
       }
     } else {
       this.targetX = otherPlayer.x;
       this.targetY = otherPlayer.y;
     }
   }
-
 
   //directional speed of player
   update(otherPlayer, amount) {
@@ -408,6 +407,13 @@ class Player {
       }
       iHaveLooped = true;
     }
+
+    if(iHaveLooped && (this.isFollowing || this.isFollowed)) {
+      this.numLoops++;
+    } else if (!this.isFollowing && !this.isFollowed){
+      this.numLoops = 0;
+    }
+
     // following player jitter (x speed is for the death case)
     if (this.isFollowing && this.xspeed != 0) {
       this.x = this.x + random(-2, 2);
@@ -415,19 +421,6 @@ class Player {
     }
     for (var i = 0; i < this.playerRings.length; i++) {
       this.playerRings[i].move();
-    }
-    // I HAVE looped && the other player has NOT looped
-    if (iHaveLooped == true && !otherPlayer.hasLooped) {
-      this.hasLooped = true;
-      this.loopDirection = this.direction;
-    // I HAVE looped && the other player HAS ALSO looped
-    } else if (iHaveLooped == true && otherPlayer.hasLooped) {
-      this.hasLooped = false;
-      otherPlayer.hasLooped = false;
-    // The direction is wrong
-    } else if (this.direction != this.loopDirection) {
-      this.hasLooped = false;
-      otherPlayer.hasLooped = false;
     }
   }
 

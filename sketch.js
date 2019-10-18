@@ -80,7 +80,7 @@ var player2Color = [51, 153, 255, 240]; //   blue
 var player1FadeColor = [184, 125, 155, 200]; // faded pink
 var player2FadeColor = [145, 200, 255, 200]; // faded blue
 var scl = 30 ; // scale of almost everything in the game
-var vol = 0.1; // music volume standard
+var vol = 0; // music volume standard
 var foods = [];
 
 var welcomeScene;
