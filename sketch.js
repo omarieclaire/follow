@@ -199,7 +199,7 @@ function windowResized() {
 }
 
 function keyPressed() {
-  if (keyCode === 78) {
+  if (keyCode === 73) { // i
     let fs = fullscreen();
     fullscreen(!fs);
     sceneManager.resetSceneManager();
