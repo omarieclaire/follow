@@ -161,18 +161,21 @@ class Player {
   drawFollowLine(otherPlayer) {
     if (this.isFollowing || this.isFollowed) {
       push();
-      stroke(255, 255, 0, 40);
-      strokeWeight(10);
+      strokeWeight(5);
 
       var playerWavesColours = [[255, 51, 153, 50], [51, 153, 255, 50], [0, 255, 255, 50]];
       var playerWavesFrequencies = [0, 0.5*Math.PI, Math.PI];
-      //(x1, y1, x2, y2, numSamples, phase, amplitude, frequency) {
-      var waveyLinePoints = this.pointsForWaveyLine(this.x, this.y, this.targetX, this.targetY, 30, 0.2, 20, 25);
-      beginShape();
-      for (var i = 0; i < waveyLinePoints.length; i++) {
-        vertex(waveyLinePoints[i].x, waveyLinePoints[i].y);
+      for(var i = 0; i < playerWavesColours.length; i++) {
+        var waveColour = playerWavesColours[i];
+        var waveFrequency = playerWavesFrequencies[i];
+        var waveyLinePoints = this.pointsForWaveyLine(this.x, this.y, this.targetX, this.targetY, 30, waveFrequency, 20, 25);
+        stroke(waveColour);
+        beginShape();
+        for (var i = 0; i < waveyLinePoints.length; i++) {
+          vertex(waveyLinePoints[i].x, waveyLinePoints[i].y);
+        }
+        endShape();
       }
-      endShape();
       pop();
     }
   }
