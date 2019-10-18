@@ -19,24 +19,29 @@
 // - right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
 
 // TODOS
-// Set up sounds!!
-// undulating line between them from Common
-// alternating death explosions (implosion, a fade-out over time, appear to collide and become one.
+// p for playmode printed to the top right corner
+// TODO alternating death explosions (implosion, a fade-out over time, appear to collide and become one.
 // TODO spikes and food fall from sky better
 // TODO fix follow line wrapping
-// TODO foods slowly appear
+// TODO get rid of game over - instead “begin again”
+// TODO buy wood boxes?
+// TODO Trim screen to small rectangle for last keypress version
+// TODO Set up toggle switch for version 1
+// TODO Set up unique instruction scenes for each keypress version
+// TODO buy rope? Embed magnet in the rope, magnet sensor
 // TODO improve ring loss animation
 // TODO if I die, then you die too? how to draw?
 // TODO Sort out following logic in each mode
 // TODO make tail come off last ring / make tail look better
 // TODO move player collision to player class?
-// TODO set up sounds
+// TODO design sounds
 // TODO choose text
 // TODO make prettier
 // TODO refactor everything :(
 
 // DESIGN
 // CONSIDER I make an even more basic level which is just turning, no moving?
+// CONSIDER kinect as controller
 // CONSIDER smiley face when leading, frowny face when following, neutral face when neutral
 // CONSIDER should the one who is pressing the button should be "leading?" or is it even better to have the leader losing rings as a price
 // CONSIDER shared score
@@ -62,7 +67,7 @@
 
 // QUESTIONS
 
-// Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie, Brent,
+// Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie, Brent, Peiling,
 
 
 var player1;
@@ -151,8 +156,11 @@ function draw() {
   sceneManager.switchScene(player1, player2);
 
   // update location of player1 and player2
-  player1.update();
-  player2.update();
+  player1.update(player2);
+  player2.update(player1);
+
+  player1.updateTargetForFollowingLine(player2);
+  player2.updateTargetForFollowingLine(player1);
 
   //implememt punishment/rewards for following/leading
   player1.updateTotal(player2);
@@ -176,8 +184,8 @@ function playerCollision() {
     player1.flipDirection(player2);
     player2.flipDirection(player1);
     //add xspeed or yspeed after collision to fix collision bug
-    player1.update(100);
-    player2.update(100);
+    player1.update(player2, 100);
+    player2.update(player1, 100);
     // players never follow each other after coliding
     player1.isFollowing = false;
     player2.isFollowing = false;

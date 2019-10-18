@@ -1,6 +1,6 @@
 class Player {
   //constructor is a method which is run only once to set up the object
-  constructor(temp_name, temp_playerDir, temp_xspeed, xOffSet, scl, tmp_playerColor, tmp_playerFadedColor) {
+  constructor(temp_name, temp_playerDir, temp_xspeed, xOffSet, scl, tmp_playerColor, tmp_playerFadedColor, num) {
     this.scl = scl; //note: I don't reset this in the reset, maybe I should
     this.name = temp_name;
     this.direction = temp_playerDir;
@@ -27,7 +27,10 @@ class Player {
 
     this.numTicks = 0;
     // this.newColor = [0, 255, 255];
+    this.windowLoopSpacer = this.scl / 2;
 
+    this.hasLooped = false;
+    this.loopDirection;
 
     this.playerRings = []; // store the rings within a local array
     let randomColors = [
@@ -62,6 +65,12 @@ class Player {
     this.poppedRings = [];
     this.numTicksPoppedRing = 0;
     this.followSound = new FollowSound();
+
+    this.numTicks = 0;
+    // this.newColor = [0, 255, 255];
+    this.windowLoopSpacer = this.scl / 2;
+    this.hasLooped = false;
+    this.loopDirection;
 
 
     this.playerRings = []; // store the rings within a local array
@@ -150,12 +159,24 @@ class Player {
   }
 
   drawFollowLine(otherPlayer) {
-    if (this.isFollowing == true) {
+    if (this.isFollowing || this.isFollowed) {
       push();
       stroke(255, 255, 0, 40);
       strokeWeight(10);
 
-      var waveyLinePoints = this.pointsForWaveyLine(this.x, this.y, otherPlayer.x, otherPlayer.y, 50, 0.2, 10, 20);
+
+      //       var playerWavesColours = ["#FFADAE", DARK_PINK_HEX, "#ffcf2e"];
+      // var playerWavesFrequencies = [0, 0.5*Math.PI, Math.PI];
+      // var playerWaves = [];
+      // // if you want to add a third wave, put [0,1,2] in the array
+      // [0,1].forEach(function(i) {
+      //   var elem =
+      //     g.append("g").attr("id", "player-wave-" + i).selectAll(".playewave" + i);
+      //
+      //   playerWaves.push(elem);
+      // });
+
+      var waveyLinePoints = this.pointsForWaveyLine(this.x, this.y, this.targetX, this.targetY, 50, 0.2, 10, 20);
       beginShape();
       for (var i = 0; i < waveyLinePoints.length; i++) {
         vertex(waveyLinePoints[i].x, waveyLinePoints[i].y);
@@ -301,8 +322,47 @@ class Player {
       this.changeRingTotal(-ringTransferSpd, this.x, this.y);
     }
   }
+
+  updateTargetForFollowingLine(otherPlayer) {
+    // if I HAVE looped and the other player has NOT looped
+    if (this.hasLooped && !otherPlayer.hasLooped) {
+      if (this.direction == 'left') {
+        this.targetX = otherPlayer.x + (width + this.windowLoopSpacer);
+        this.targetY = otherPlayer.y
+      } else if (this.direction == 'right') {
+        this.targetX = otherPlayer.x - (width + this.windowLoopSpacer);
+        this.targetY = otherPlayer.y
+      } else if (this.direction == 'up') {
+        this.targetX = otherPlayer.x;
+        this.targetY = otherPlayer.y + (width + this.windowLoopSpacer);
+      } else if (this.direction == 'down') {
+        this.targetX = otherPlayer.x;
+        this.targetY = otherPlayer.y - (width + this.windowLoopSpacer);
+      }
+     // if I have NOT looped and the other player HAS looped
+    } else if (otherPlayer.hasLooped && !this.hasLooped) {
+      if (this.direction == 'left') {
+        this.targetX = otherPlayer.x + (width + this.windowLoopSpacer);
+        this.targetY = otherPlayer.y
+      } else if (this.direction == 'right') {
+        this.targetX = otherPlayer.x - (width + this.windowLoopSpacer);
+        this.targetY = otherPlayer.y
+      } else if (this.direction == 'up') {
+        this.targetX = otherPlayer.x;
+        this.targetY = otherPlayer.y - (width + this.windowLoopSpacer);
+      } else if (this.direction == 'down') {
+        this.targetX = otherPlayer.x;
+        this.targetY = otherPlayer.y + (width + this.windowLoopSpacer);
+      }
+    } else {
+      this.targetX = otherPlayer.x;
+      this.targetY = otherPlayer.y;
+    }
+  }
+
+
   //directional speed of player
-  update(amount) {
+  update(otherPlayer, amount) {
     //for most circumstances we don't pass a value
     if (typeof(amount) === 'undefined') {
       this.x = this.x + this.xspeed * this.scl;
@@ -313,37 +373,40 @@ class Player {
       this.y = this.y + this.yspeed * amount;
     }
 
+
+    // set up a var for tracking loopstate
+    var iHaveLooped = false;
     //loop player around screen
-    var windowLoopSpacer = this.scl / 2;
-    if (this.x <= 0 - windowLoopSpacer) {
-      this.x = windowWidth + windowLoopSpacer;
+    if (this.x <= 0 - this.windowLoopSpacer) {
+      this.x = windowWidth + this.windowLoopSpacer;
       for (var i = 0; i < this.playerRings.length; i++) {
         var theRing = this.playerRings[i];
-        theRing.updateLocation(windowWidth - windowLoopSpacer, theRing.y);
+        theRing.updateLocation(windowWidth - this.windowLoopSpacer, theRing.y);
       }
-      // Rings.x = windowWidth - this.scl;
+      iHaveLooped = true;
       // leaderRing.x = windowWidth - this.scl;
-
       //don't change this one to "">="" or the bug comes back!
-    } else if (this.x > windowWidth + windowLoopSpacer) {
-      this.x = 0 - windowLoopSpacer;
+    } else if (this.x > windowWidth + this.windowLoopSpacer) {
+      this.x = 0 - this.windowLoopSpacer;
       for (var i = 0; i < this.playerRings.length; i++) {
         var theRing = this.playerRings[i];
-        theRing.updateLocation(0 - windowLoopSpacer, theRing.y);
+        theRing.updateLocation(0 - this.windowLoopSpacer, theRing.y);
       }
-    } else if (this.y <= 0 - windowLoopSpacer) {
-      this.y = windowHeight + windowLoopSpacer;
+      iHaveLooped = true;
+    } else if (this.y <= 0 - this.windowLoopSpacer) {
+      this.y = windowHeight + this.windowLoopSpacer;
       for (var i = 0; i < this.playerRings.length; i++) {
         var theRing = this.playerRings[i];
-        theRing.updateLocation(theRing.x, windowHeight - windowLoopSpacer);
+        theRing.updateLocation(theRing.x, windowHeight - this.windowLoopSpacer);
       }
-    } else if (this.y > windowHeight + windowLoopSpacer) {
-      this.y = 0 - windowLoopSpacer;
+      iHaveLooped = true;
+    } else if (this.y > windowHeight + this.windowLoopSpacer) {
+      this.y = 0 - this.windowLoopSpacer;
       for (var i = 0; i < this.playerRings.length; i++) {
         var theRing = this.playerRings[i];
-        theRing.updateLocation(theRing.x, 0 - windowLoopSpacer);
+        theRing.updateLocation(theRing.x, 0 - this.windowLoopSpacer);
       }
-
+      iHaveLooped = true;
     }
     // following player jitter (x speed is for the death case)
     if (this.isFollowing && this.xspeed != 0) {
@@ -352,6 +415,19 @@ class Player {
     }
     for (var i = 0; i < this.playerRings.length; i++) {
       this.playerRings[i].move();
+    }
+    // I HAVE looped && the other player has NOT looped
+    if (iHaveLooped == true && !otherPlayer.hasLooped) {
+      this.hasLooped = true;
+      this.loopDirection = this.direction;
+    // I HAVE looped && the other player HAS ALSO looped
+    } else if (iHaveLooped == true && otherPlayer.hasLooped) {
+      this.hasLooped = false;
+      otherPlayer.hasLooped = false;
+    // The direction is wrong
+    } else if (this.direction != this.loopDirection) {
+      this.hasLooped = false;
+      otherPlayer.hasLooped = false;
     }
   }
 
