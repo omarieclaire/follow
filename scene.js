@@ -59,6 +59,7 @@ class Scene {
     } else {}
 
     // this.leaderRing.drawLeaderRing(player1, player2);
+    this.printDebugToScreen();
   }
 
   draw(player1, player2, foods) {
@@ -102,6 +103,18 @@ class Scene {
     text("awsd - Player 1 possible controls", windowWidth / 2, rowHeight * 8);
     text("arrow keys - Player 2 possible controls", windowWidth / 2, rowHeight * 10);
     pop();
+  }
+
+  printDebugToScreen(){
+    if (keyIsDown(80)) {
+      push();
+      fill(200);
+      // stroke(200);
+      textSize(standardTextSize/3);
+      textAlign(LEFT, TOP);
+      text(this.getCurrentKeyMode(), 30, 30, 100, 100);
+      pop();
+    } else {}
   }
 
   //~~~~~~~~~~~~~~~~~~~~~~//
@@ -505,7 +518,7 @@ class FinalScene extends Scene {
     } else {}
     // GAME OVER TEXT
     noStroke();
-    text("GAME OVER!!!", windowWidth / 2, windowHeight / 2);
+    text("begin again?", windowWidth / 2, windowHeight / 2);
     // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
     this.numTicks++;
   }

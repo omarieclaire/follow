@@ -164,19 +164,10 @@ class Player {
       stroke(255, 255, 0, 40);
       strokeWeight(10);
 
-
-      //       var playerWavesColours = ["#FFADAE", DARK_PINK_HEX, "#ffcf2e"];
-      // var playerWavesFrequencies = [0, 0.5*Math.PI, Math.PI];
-      // var playerWaves = [];
-      // // if you want to add a third wave, put [0,1,2] in the array
-      // [0,1].forEach(function(i) {
-      //   var elem =
-      //     g.append("g").attr("id", "player-wave-" + i).selectAll(".playewave" + i);
-      //
-      //   playerWaves.push(elem);
-      // });
-
-      var waveyLinePoints = this.pointsForWaveyLine(this.x, this.y, this.targetX, this.targetY, 50, 0.2, 10, 20);
+      var playerWavesColours = [[255, 51, 153, 50], [51, 153, 255, 50], [0, 255, 255, 50]];
+      var playerWavesFrequencies = [0, 0.5*Math.PI, Math.PI];
+      //(x1, y1, x2, y2, numSamples, phase, amplitude, frequency) {
+      var waveyLinePoints = this.pointsForWaveyLine(this.x, this.y, this.targetX, this.targetY, 30, 0.2, 20, 25);
       beginShape();
       for (var i = 0; i < waveyLinePoints.length; i++) {
         vertex(waveyLinePoints[i].x, waveyLinePoints[i].y);
