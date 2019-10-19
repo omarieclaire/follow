@@ -1,14 +1,7 @@
 // WHY AM I HERE?
-// We are locked in a dance with the other. What is this dance?
-// Each compelled/controlled by the things we don't want to be/do.
-// Like "mirroring" we mimick the other, especially the unloved other
+// We are locked in a dance with the other one
+// Each compelled/controlled by aversion/anti-mirroring.
 // What is following anyway?
-
-// should there be a game over? consider a timer
-// strip of projector
-// different end states - name them equal
-// ida applebroog // brancussi , things facing, overlapping circles and spheres
-// make poassible ring a ring (less translations)
 
 // DESIGN HIGH LEVEL
 // - what does player want to do?
@@ -20,6 +13,7 @@
 
 // TODOS
 
+// TODO Test visuals on actual projector
 
 // TODO Sort out following logic in each mode
 // TODO Set up unique instruction scenes for each keypress version
@@ -44,6 +38,9 @@
 
 
 // DESIGN
+// CONSIDER - should there be a game over? consider a timer
+// CONSIDER - different end states with names
+// CONSIDER - making food more "ring-like" (less translations)
 // CONSIDER I make an even more basic level which is just turning, no moving?
 // CONSIDER kinect as controller
 // CONSIDER leaderboard

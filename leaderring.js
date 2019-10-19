@@ -9,20 +9,22 @@ class LeaderRing {
   }
 
   drawRingOnLeadingPlayer(thePlayer) {
-    var r = 90;
+    push();
+    var r = 10;
     // var r = thePlayer.playerRings[3[3]];
-    // stroke(pointColor);
-    strokeWeight(2);
+    stroke(255, 215, 0, 250);
+    strokeWeight(5);
 
-  //   if (thePlayer.direction == "right") {
-  //     ellipse(this.x, this.y, r, r);
-  //   } else if (thePlayer.direction == "left") {
-  //     ellipse(this.x, this.y, r, r);
-  //   } else if (thePlayer.direction == "up") {
-  //     ellipse(this.x, this.y, r, r);
-  //   } else if (thePlayer.direction == "down") {
-  //     ellipse(this.x, this.y, r, r);
-  //   } else {}
+    if (thePlayer.direction == "right") {
+      ellipse(this.x, this.y, r, r);
+    } else if (thePlayer.direction == "left") {
+      ellipse(this.x, this.y, r, r);
+    } else if (thePlayer.direction == "up") {
+      ellipse(this.x, this.y, r, r);
+    } else if (thePlayer.direction == "down") {
+      ellipse(this.x, this.y, r, r);
+    } else {}
+    pop();
    }
 
   playerLocDiff(player) {

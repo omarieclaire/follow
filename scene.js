@@ -4,7 +4,7 @@
 // scenes need to: draw themselves & know when to end (success and failure)
 class Scene {
   constructor() {
-    // this.leaderRing = new LeaderRing(scl);
+    this.leaderRing = new LeaderRing(scl);
     this.keyModes = ["solo", "toggle", "split", "sharedhorizon", "simultaneous"];
     this.keyModeIndex = 0;
     this.toggleFlag = true;
@@ -60,7 +60,7 @@ class Scene {
       this.debugScreen();
     } else {}
 
-    // this.leaderRing.drawLeaderRing(player1, player2);
+    this.leaderRing.drawLeaderRing(player1, player2);
     this.printDebugToScreen();
   }
 
@@ -203,12 +203,9 @@ class Scene {
   //Only one player can use controls at a time (use n & b), but each Player has complete control of own direction
   //It costs rings to follow (going in the same direction a player is already moving)
   toggleKeyPressMode(keyCode, player1, player2) {
-    console.log("toggle toggle toggle");
-
     if(keyCode == 32) {
       this.toggleFlag = !this.toggleFlag;
     } else {
-      console.log("toggle flag: " + this.toggleFlag);
       if (this.toggleFlag == true) {
         if (keyCode === UP_ARROW) {
           player2.changeDirectionUp(player1);
@@ -220,13 +217,13 @@ class Scene {
           player2.changeDirectionLeft(player1);
         }
       } else if (this.toggleFlag == false) {
-        if (keyCode === 87) {
+        if (keyCode === UP_ARROW) {
           player1.changeDirectionUp(player2);
-        } else if (keyCode === 83) {
+        } else if (keyCode === DOWN_ARROW) {
           player1.changeDirectionDown(player2);
-        } else if (keyCode === 68) {
+        } else if (keyCode === RIGHT_ARROW) {
           player1.changeDirectionRight(player2);
-        } else if (keyCode === 65) {
+        } else if (keyCode === LEFT_ARROW) {
           player1.changeDirectionLeft(player2);
         }
       }
@@ -238,8 +235,8 @@ class Scene {
   splitKeyPressMode(keyCode, player1, player2) {
     // hacky split key mode - if keeping should deal with "following" better
     if (keyCode === UP_ARROW) {
-      player2.changeDirectionUp(player1);
       player1.changeDirectionUp(player2);
+      player2.changeDirectionUp(player1);
 
     } else if (keyCode === RIGHT_ARROW) {
       player1.changeDirectionRight(player2);
@@ -250,8 +247,8 @@ class Scene {
       player1.changeDirectionLeft(player2);
 
     } else if (keyCode === 83) {
-      player1.changeDirectionDown(player2);
       player2.changeDirectionDown(player1);
+      player1.changeDirectionDown(player2);
     }
   }
   //Player1 controls left, player2 controls right. Each player controlls own up and down
@@ -420,7 +417,7 @@ class TrainingScene extends Scene {
 
 
     //only print directional cues if player is still living TEXTDISPLAYBUG
-    if (this.numTicks <= 1000) {
+    if (this.numTicks <= 10000) {
       //directional text
       push();
       stroke(255);
@@ -453,7 +450,7 @@ class TrainingScene extends Scene {
   }
 
   advanceToNextScene(player1, player2) {
-    return this.numTicks >= 700; // training scene length
+    return this.numTicks >= 10000; // training scene length
   }
   //ticks need to be reset when game restarts
   resetScene() {

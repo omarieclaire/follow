@@ -170,8 +170,8 @@ class Player {
         var waveFrequency = playerWavesFrequencies[i];
         var waveyLinePoints = this.pointsForWaveyLine(this.x, this.y, this.targetX, this.targetY, 30, waveFrequency, 20, 25);
         stroke(waveColour);
-        console.log(waveColour);
-        console.log("hello");
+        // console.log(waveColour);
+        // console.log("hello");
         beginShape();
         for (var i = 0; i < waveyLinePoints.length; i++) {
           vertex(waveyLinePoints[i].x, waveyLinePoints[i].y);
@@ -379,7 +379,6 @@ class Player {
         theRing.updateLocation(windowWidth - this.windowLoopSpacer, theRing.y);
       }
       iHaveLooped = true;
-      // leaderRing.x = windowWidth - this.scl;
       //don't change this one to "">="" or the bug comes back!
     } else if (this.x > windowWidth + this.windowLoopSpacer) {
       this.x = 0 - this.windowLoopSpacer;
