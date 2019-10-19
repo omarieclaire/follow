@@ -20,10 +20,11 @@
 
 // TODOS
 
-// TODO Trim screen to small rectangle for last keypress version
 
 // TODO Sort out following logic in each mode
 // TODO Set up unique instruction scenes for each keypress version
+
+// TODO fix follow line wraps: wrappiong when it shouldn't be wrapping
 
 // TODO integrate player waves colors and player waves frequencies
 // TODO alternating death explosions (implosion, a fade-out over time, appear to collide and become one.
@@ -32,16 +33,20 @@
 // TODO buy rope? boxes? Embed magnet in the rope, magnet sensor
 // TODO improve ring loss animation
 // TODO if I die, then you die too? how to draw?
-// TODO make tail come off last ring / make tail look better
+// TODO make tail look better
 // TODO move player collision to player class?
 // TODO design sounds
 // TODO choose text
 // TODO make prettier
 // TODO refactor everything :(
+// TODO Fix trim screen to small rectangle bugs
+// TODO: work on keypress ordering logic in serial
+
 
 // DESIGN
 // CONSIDER I make an even more basic level which is just turning, no moving?
 // CONSIDER kinect as controller
+// CONSIDER leaderboard
 // CONSIDER smiley face when leading, frowny face when following, neutral face when neutral
 // CONSIDER should the one who is pressing the button should be "leading?" or is it even better to have the leader losing rings as a price
 // CONSIDER shared score
@@ -79,7 +84,7 @@ var player1Color = [255, 51, 153, 240]; // magenta
 var player2Color = [51, 153, 255, 240]; //   blue
 var player1FadeColor = [184, 125, 155, 200]; // faded pink
 var player2FadeColor = [145, 200, 255, 200]; // faded blue
-var scl = 30 ; // scale of almost everything in the game
+var scl = 30; // scale of almost everything in the game
 var vol = 0; // music volume standard
 var foods = [];
 
@@ -102,6 +107,8 @@ var followingSound; //working
 var deathSound;
 var ringMoveSound;
 var ambientSound;
+
+var serial;
 
 // foodgen_sound, newScene (currently dupe sound), start game sound
 
@@ -134,8 +141,8 @@ function setup() {
   // p5 specific function for working with degrees
   angleMode(DEGREES);
   //special functions to construct an object from a class
-  player1 = new Player("1", " ", -0, windowWidth/4, scl, player1Color, player1FadeColor);
-  player2 = new Player("2", " ", 0, windowWidth - windowWidth/4, scl, player2Color, player2FadeColor);
+  player1 = new Player("1", " ", -0, windowWidth / 4, scl, player1Color, player1FadeColor);
+  player2 = new Player("2", " ", 0, windowWidth - windowWidth / 4, scl, player2Color, player2FadeColor);
   welcomeScene = new WelcomeScene();
   trainingScene = new TrainingScene();
   playScene = new PlayScene();
@@ -149,6 +156,13 @@ function setup() {
     foods[i] = new Food(scl, foodColor);
     foods[i].location(player1, player2);
   }
+
+  // Instantiate our SerialPort object
+  serial = new p5.SerialPort();
+  //copy this from serial control app
+  serial.open("/dev/tty.usbmodem14201");
+  // call my function gotData when you receive data on the serial port
+  serial.on('data', gotData);
 }
 
 // Draw is where I call anything that needs to be constantly updated/needs to constantly change own state
@@ -212,4 +226,45 @@ function keyPressed() {
 function keyReleased() {
   sceneManager.keyWasReleased(keyCode, player1, player2);
   return false;
+}
+
+// function to process incoming data from the arduino (serial)
+// serial will call this each time data is available.
+function gotData() {
+  // get the button state.
+  var currentString = serial.readLine();
+  // read the incoming string
+  //same as readStringUntil(‘\r\n’)
+  trim(currentString);
+  // remove any trailing whitespace
+  if (!currentString) return;
+  // if the string is empty, do no more
+  // split: the string "1,0,1,1" -> ["1","0","1","1"]
+  let buttonStates = split(currentString, ",");
+  if (buttonStates.length > 1) {
+    if (buttonStates.includes("0")) {
+      console.log("serial: " + buttonStates);
+    }
+
+    var upButtonState = buttonStates[0];
+    var rightButtonState = buttonStates[1];
+    var downButtonState = buttonStates[2];
+    var leftButtonState = buttonStates[3];
+
+    // TODO: work on logic here right now, the last button in the list of
+    // ifs will override any other button. so if you press left and then 'up'
+    // the character will move left.
+    if (upButtonState === "0") {
+      sceneManager.keyWasPressed(UP_ARROW, player1, player2);
+    }
+    if (rightButtonState === "0") {
+      sceneManager.keyWasPressed(RIGHT_ARROW, player1, player2);
+    }
+    if (downButtonState === "0") {
+      sceneManager.keyWasPressed(DOWN_ARROW, player1, player2);
+    }
+    if (leftButtonState === "0") {
+      sceneManager.keyWasPressed(LEFT_ARROW, player1, player2);
+    }
+  }
 }

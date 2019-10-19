@@ -14,7 +14,7 @@ class Player {
     this.r = scl;
     this.yspeed = 0;
     this.lastYSpeed = this.yspeed;
-    this.total = 5;
+    this.total = 8;
     this.isFollowing = false;
     this.isFollowed = false;
     this.playerColor = tmp_playerColor;
@@ -170,6 +170,8 @@ class Player {
         var waveFrequency = playerWavesFrequencies[i];
         var waveyLinePoints = this.pointsForWaveyLine(this.x, this.y, this.targetX, this.targetY, 30, waveFrequency, 20, 25);
         stroke(waveColour);
+        console.log(waveColour);
+        console.log("hello");
         beginShape();
         for (var i = 0; i < waveyLinePoints.length; i++) {
           vertex(waveyLinePoints[i].x, waveyLinePoints[i].y);
@@ -423,7 +425,7 @@ class Player {
       //Change spacing of ring according to time
       //.6 is the limit of how large it can be
       //.025 slows it keyPressDown
-      this.ringSpacer = (this.scl / 3.5) + (.6 * Math.sin(this.numTicks * .04));
+      this.ringSpacer = (this.scl / 3.5) + (.6 * Math.sin(this.numTicks * .05));
     } else {}
   }
   //findme

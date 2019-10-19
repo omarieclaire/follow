@@ -468,14 +468,19 @@ class TrainingScene extends Scene {
 class PlayScene extends Scene {
   constructor() {
     super();
-    this.spikes = [];
+    this.initializeSpikes();
     this.numTicks = 0;
+
+  };
+
+  initializeSpikes() {
     //create spikes
+    this.spikes = [];
     for (var i = 0; i < 2; i++) {
       this.spikes[i] = new Spike(scl);
       this.spikes[i].location(player1, player2);
     }
-  };
+  }
 
 
   playStartSound() {
@@ -529,6 +534,7 @@ class PlayScene extends Scene {
   resetScene() {
     super.resetScene();
     this.numTicks = 0;
+    this.initializeSpikes();
   }
 }
 /////////////////////////
