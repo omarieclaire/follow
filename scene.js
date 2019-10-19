@@ -43,6 +43,7 @@ class Scene {
   //// Basic Scene Draw /////
   ///////////////////////////
   basicSceneDraw(player1, player2, foods) {
+    push();
     background(0, 0, 20);
     noStroke();
     textSize(standardTextSize);
@@ -64,6 +65,7 @@ class Scene {
 
     this.leaderRing.drawLeaderRing(player1, player2);
     this.printDebugToScreen();
+    pop();
   }
 
   wideSceneDraw() {
@@ -176,11 +178,11 @@ class Scene {
     } else if (keyMode == "toggle") {
       this.instructionText = "Only one player can move at a time. \n Use arrow keys to play, and hit spacebar to take control from the other player.";
     } else if (keyMode == "split") {
-      this.instructionText = "Player 1 can move both players left & up using 'a' and 'w'. \n Player 2 can move both players down & right using arrow keys";
+      this.instructionText = "Player 1 can move both players left & up using 'a' and 's'. \n Player 2 can move both players down & right using '→' and '↓'.";
     } else if (keyMode == "sharedhorizon") {
       this.instructionText = "Player 1 steers both players left using the 'a' key. \n Player 2 steers both players right using the '→' key. \n Both players can move up and down independently";
     } else if (keyMode == "simultaneous") {
-      this.instructionText = "Player 1 steers both players left using the 'a' key. \n Player 2 steers both players right using the '→' key. \n If both players hold their keys both players stop moving";
+      this.instructionText = "Player 1 steers both players left using the 'a' key. \n Player 2 steers both players right using the '→' key. \n If both players hold their keys down both players stop moving";
     }
   }
 

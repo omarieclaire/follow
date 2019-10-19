@@ -27,7 +27,7 @@
 // TODO choose text
 // TODO rings breathe all the time but more when halted?
 // TODO make prettier
-// TODO fix shared horizon gameplay - what if I just "hold"? What if you just refuse to press? 
+// TODO fix shared horizon gameplay - what if I just "hold"? What if you just refuse to press?
 // TODO refactor everything :(
 // TODO Fix trim screen to small rectangle bugs
 // TODO: work on keypress ordering logic in serial
@@ -41,10 +41,7 @@
 // CONSIDER - should there be a game over? consider a timer
 // CONSIDER - different end states with names
 // CONSIDER - making food more "ring-like" (less translations)
-// CONSIDER I make an even more basic level which is just turning, no moving?
 // CONSIDER kinect as controller
-// CONSIDER leaderboard
-// CONSIDER smiley face when leading, frowny face when following, neutral face when neutral
 // CONSIDER should the one who is pressing the button should be "leading?" or is it even better to have the leader losing rings as a price
 // CONSIDER shared score
 // CONSIDER draw triangle on front of player????
@@ -162,7 +159,7 @@ function setup() {
   // Instantiate our SerialPort object
   serial = new p5.SerialPort();
   //copy this from serial control app
-  serial.open("/dev/tty.usbmodem14201");
+  serial.open("/dev/tty.usbmodem14331");
   // call my function gotData when you receive data on the serial port
   serial.on('data', gotData);
 }
@@ -235,17 +232,19 @@ function keyReleased() {
 function gotData() {
   // get the button state.
   var currentString = serial.readLine();
+  console.log("got the line");
   // read the incoming string
   //same as readStringUntil(‘\r\n’)
   trim(currentString);
   // remove any trailing whitespace
   if (!currentString) return;
+  // console.log("no string");
   // if the string is empty, do no more
   // split: the string "1,0,1,1" -> ["1","0","1","1"]
   let buttonStates = split(currentString, ",");
   if (buttonStates.length > 1) {
     if (buttonStates.includes("0")) {
-      console.log("serial: " + buttonStates);
+      // console.log("serial: " + buttonStates);
     }
 
     var upButtonState = buttonStates[0];

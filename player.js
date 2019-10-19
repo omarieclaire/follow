@@ -162,16 +162,17 @@ class Player {
     if (this.isFollowing || this.isFollowed) {
       push();
       strokeWeight(5);
-
-      var playerWavesColours = [[255, 51, 153, 50], [51, 153, 255, 50], [0, 255, 255, 50]];
-      var playerWavesFrequencies = [0, 0.5*Math.PI, Math.PI];
+      var playerWavesColours = [[255, 51, 153, 50], [51, 153, 255, 50]];
+      // var playerWavesColours = [[255, 51, 153, 50], [51, 153, 255, 50], [0, 255, 255, 50]];
+      // var playerWavesFrequencies = [0, 0.5*Math.PI, Math.PI];
+      var playerWavesFrequencies = [0.5*Math.PI, Math.PI];
       for(var i = 0; i < playerWavesColours.length; i++) {
         var waveColour = playerWavesColours[i];
         var waveFrequency = playerWavesFrequencies[i];
         var waveyLinePoints = this.pointsForWaveyLine(this.x, this.y, this.targetX, this.targetY, 30, waveFrequency, 20, 25);
-        stroke(waveColour);
-        // console.log(waveColour);
-        // console.log("hello");
+fill(waveColour);
+stroke(waveColour);
+strokeWeight(1);
         beginShape();
         for (var i = 0; i < waveyLinePoints.length; i++) {
           vertex(waveyLinePoints[i].x, waveyLinePoints[i].y);
