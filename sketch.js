@@ -14,18 +14,15 @@
 // TODOS
 
 // TODO BUG fix follow line wraps: wrappiong when it shouldn't be wrapping
-// TODO BUG player waves colors not working
+// TODO ease follow line wrapping (it's a bit jerky right at the "wrap" moment)
 // TODO alternating death explosions (implosion, a fade-out over time, appear to collide and become one.
 // TODO spikes and food fall from sky better
-// TODO ease follow line wrapping (it's a bit jerky right at the "wrap" moment)
 // TODO buy rope? boxes? Embed magnet in the rope, magnet sensor
 // TODO improve ring loss animation
-// TODO if I die, then you die too? how to draw?
 // TODO make tail look better
 // TODO move player collision to player class?
 // TODO design sounds
 // TODO choose text
-// TODO rings breathe all the time but more when halted?
 // TODO make prettier
 // TODO fix shared horizon gameplay - what if I just "hold"? What if you just refuse to press?
 // TODO refactor everything :(
@@ -232,7 +229,7 @@ function keyReleased() {
 function gotData() {
   // get the button state.
   var currentString = serial.readLine();
-  console.log("got the line");
+  // console.log("got the line");
   // read the incoming string
   //same as readStringUntil(‘\r\n’)
   trim(currentString);

@@ -19,6 +19,8 @@ class Rings {
     this.time = 0;
     // function to define the curve we want
     this.easing = createBezierCurve(0.55, 0.055, 0.675, 0.19);
+    //
+    this.numDeadTicks = 0;
   }
   //function to manage the rings when they reach the edge of the screen
   updateLocation(newX, newY) {
@@ -52,9 +54,10 @@ class Rings {
   }
 
   drawDeadRing(initialRadius) {
+    this.numDeadTicks++;
     push();
-    stroke(255, 0, 0);
-    strokeWeight(.5);
+    stroke(this.ringColor);
+    strokeWeight(Math.max(0, 5 - this.numDeadTicks / 10));
     ellipse(this.x, this.y, initialRadius);
     pop();
   }
