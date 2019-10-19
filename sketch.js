@@ -13,12 +13,8 @@
 
 // TODOS
 
-
-// TODO Set up unique instruction scenes for each keypress version
-
-// TODO fix follow line wraps: wrappiong when it shouldn't be wrapping
-
-// TODO integrate player waves colors and player waves frequencies
+// TODO BUG fix follow line wraps: wrappiong when it shouldn't be wrapping
+// TODO BUG player waves colors not working
 // TODO alternating death explosions (implosion, a fade-out over time, appear to collide and become one.
 // TODO spikes and food fall from sky better
 // TODO ease follow line wrapping (it's a bit jerky right at the "wrap" moment)
@@ -31,10 +27,13 @@
 // TODO choose text
 // TODO rings breathe all the time but more when halted?
 // TODO make prettier
+// TODO fix shared horizon gameplay - what if I just "hold"? What if you just refuse to press? 
 // TODO refactor everything :(
 // TODO Fix trim screen to small rectangle bugs
 // TODO: work on keypress ordering logic in serial
 // TODO Test visuals on actual projector
+// TODO Improve unique instruction scenes for each keypress version
+
 
 
 

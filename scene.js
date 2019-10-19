@@ -442,7 +442,7 @@ class TrainingScene extends Scene {
 
 
     //only print directional cues if player is still living TEXTDISPLAYBUG
-    if (this.numTicks <= 10000) {
+    if (this.numTicks <= 1000) {
       //directional text
       push();
       stroke(255);
@@ -475,7 +475,7 @@ class TrainingScene extends Scene {
   }
 
   advanceToNextScene(player1, player2) {
-    return this.numTicks >= 10000; // training scene length
+    return this.numTicks >= 1000; // training scene length
   }
   //ticks need to be reset when game restarts
   resetScene() {

@@ -419,13 +419,18 @@ class Player {
     }
   }
 
-  ringBreatheWhenHalted() {
+  ringBreathe() {
+    var breatheRate;
+
     if (this.xspeed == 0 && this.yspeed == 0) {
-      //Change spacing of ring according to time
-      //.6 is the limit of how large it can be
-      //.025 slows it keyPressDown
-      this.ringSpacer = (this.scl / 3.5) + (.6 * Math.sin(this.numTicks * .05));
-    } else {}
+      breatheRate = 0.05;
+    } else {
+      breatheRate = 0.02;
+    }
+    //Change spacing of ring according to time
+    //.6 is the limit of how large it can be
+    //.025 slows it keyPressDown
+    this.ringSpacer = (this.scl / 3.5) + (.6 * Math.sin(this.numTicks * breatheRate));
   }
   //findme
   drawDirectionalArcs(playerDirection) {
@@ -449,7 +454,7 @@ class Player {
 
   show() {
     this.numTicks++;
-    this.ringBreatheWhenHalted();
+    this.ringBreathe();
 
     noStroke();
     //colored player circle
