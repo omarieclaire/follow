@@ -235,20 +235,20 @@ class Scene {
   splitKeyPressMode(keyCode, player1, player2) {
     // hacky split key mode - if keeping should deal with "following" better
     if (keyCode === UP_ARROW) {
-      player1.changeDirectionUp(player2);
       player2.changeDirectionUp(player1);
+      player1.changeDirectionUp(player2);
 
     } else if (keyCode === RIGHT_ARROW) {
-      player1.changeDirectionRight(player2);
       player2.changeDirectionRight(player1);
+      player1.changeDirectionRight(player2);
 
     } else if (keyCode === 65) {
-      player2.changeDirectionLeft(player1);
       player1.changeDirectionLeft(player2);
+      player2.changeDirectionLeft(player1);
 
     } else if (keyCode === 83) {
-      player2.changeDirectionDown(player1);
       player1.changeDirectionDown(player2);
+      player2.changeDirectionDown(player1);
     }
   }
   //Player1 controls left, player2 controls right. Each player controlls own up and down
@@ -262,12 +262,12 @@ class Scene {
       player2.changeDirectionDown(player1);
 
     } else if (keyCode === RIGHT_ARROW) {
-      player1.changeDirectionRight(player2);
       player2.changeDirectionRight(player1);
+      player1.changeDirectionRight(player2);
 
     } else if (keyCode === 65) {
-      player2.changeDirectionLeft(player1);
       player1.changeDirectionLeft(player2);
+      player2.changeDirectionLeft(player1);
 
     } else if (keyCode === 87) {
       player1.changeDirectionUp(player2);

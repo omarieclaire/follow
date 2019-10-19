@@ -13,7 +13,6 @@
 
 // TODOS
 
-// TODO Test visuals on actual projector
 
 // TODO Sort out following logic in each mode
 // TODO Set up unique instruction scenes for each keypress version
@@ -31,10 +30,13 @@
 // TODO move player collision to player class?
 // TODO design sounds
 // TODO choose text
+// TODO rings breathe all the time but more when halted?
 // TODO make prettier
 // TODO refactor everything :(
 // TODO Fix trim screen to small rectangle bugs
 // TODO: work on keypress ordering logic in serial
+// TODO Test visuals on actual projector
+
 
 
 // DESIGN
@@ -84,8 +86,8 @@ var ringColor = [230, 230, 230];
 var pointColor = [255, 215, 0, 250]; // gold
 var player1Color = [255, 51, 153, 240]; // magenta
 var player2Color = [51, 153, 255, 240]; //   blue
-var player1FadeColor = [184, 125, 155, 200]; // faded pink
-var player2FadeColor = [145, 200, 255, 200]; // faded blue
+var player1FadeColor = [184, 125, 155, 100]; // faded pink
+var player2FadeColor = [145, 200, 255, 100]; // faded blue
 var scl = 30; // scale of almost everything in the game
 var vol = 0; // music volume standard
 var foods = [];
