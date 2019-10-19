@@ -10,12 +10,14 @@ class Scene {
     this.toggleFlag = true;
     this.player1LeftKeyDown = false;
     this.player2RightKeyDown = false;
+    this.setInstructionText();
   };
   resetScene() {
     this.keyModeIndex = 0;
     this.player1LeftKeyDown = false;
     this.player2RightKeyDown = false;
     this.toggleFlag = true;
+    this.setInstructionText();
   }
   setupFromPreviousScene(previousScene) {
     this.keyModeIndex = previousScene.keyModeIndex;
@@ -64,12 +66,12 @@ class Scene {
     this.printDebugToScreen();
   }
 
-  wideSceneDraw(){
+  wideSceneDraw() {
     if (this.getCurrentKeyMode() == "simultaneous") {
       push();
       fill(1);
-      rect(0, 0, windowWidth, windowHeight/4);
-      rect(0, windowHeight - windowHeight/4, windowWidth, windowHeight);
+      rect(0, 0, windowWidth, windowHeight / 4);
+      rect(0, windowHeight - windowHeight / 4, windowWidth, windowHeight);
       pop();
     }
   }
@@ -167,6 +169,21 @@ class Scene {
     }
   }
 
+  setInstructionText() {
+    var keyMode = this.getCurrentKeyMode();
+    if (keyMode == "solo") {
+      this.instructionText = "Player 1 use wasd keys. \n Player 2 use arrow keys. \n If you go in the same direction as the other player, you lose rings."
+    } else if (keyMode == "toggle") {
+      this.instructionText = "Only one player can move at a time. \n Use arrow keys to play, and hit spacebar to take control from the other player.";
+    } else if (keyMode == "split") {
+      this.instructionText = "Player 1 can move both players left & up using 'a' and 'w'. \n Player 2 can move both players down & right using arrow keys";
+    } else if (keyMode == "sharedhorizon") {
+      this.instructionText = "Player 1 steers both players left using the 'a' key. \n Player 2 steers both players right using the '→' key. \n Both players can move up and down independently";
+    } else if (keyMode == "simultaneous") {
+      this.instructionText = "Player 1 steers both players left using the 'a' key. \n Player 2 steers both players right using the '→' key. \n If both players hold their keys both players stop moving";
+    }
+  }
+
   handleKeyPressMode(keyCode, player1, player2) {
     if (keyCode == 77) {
       // increment the keymode index
@@ -175,6 +192,7 @@ class Scene {
       } else {
         this.keyModeIndex++;
       }
+      this.setInstructionText();
       console.log("Changing current mode to: " + this.getCurrentKeyMode());
     }
   }
@@ -203,7 +221,7 @@ class Scene {
   //Only one player can use controls at a time (use n & b), but each Player has complete control of own direction
   //It costs rings to follow (going in the same direction a player is already moving)
   toggleKeyPressMode(keyCode, player1, player2) {
-    if(keyCode == 32) {
+    if (keyCode == 32) {
       this.toggleFlag = !this.toggleFlag;
     } else {
       if (this.toggleFlag == true) {
@@ -299,7 +317,6 @@ class Scene {
     }
   }
 
-
   movePlayerOnKeyPress(keyCode, player1, player2) {
     var keyMode = this.getCurrentKeyMode();
     if (keyMode == "solo") {
@@ -331,9 +348,13 @@ class InstructionScene extends Scene {
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
     fill(player1Color);
+    text(this.instructionText, scl, windowHeight/4, windowWidth -scl, windowHeight -scl);
+    /*
+    fill(player1Color);
     text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
     fill(player2Color);
     text("player 2 use arrow keys to move", windowWidth / 2, windowHeight / 3);
+    */
     fill(200);
     textSize(standardTextSize / 2);
     text("press spacebar to begin", windowWidth / 2, windowHeight / 1.5);
@@ -346,7 +367,11 @@ class InstructionScene extends Scene {
   keyWasPressed(keyCode, player1, player2) {
     // introSound.stop();
     // ambientSound.loop();
-    this.wasKeyPressed = true;
+    if (keyCode === 32) {
+      this.wasKeyPressed = true;
+    } else {
+      this.handleKeyPressMode(keyCode, player1, player2);
+    }
   }
 
   //advance to next scene bool needs to be reset when game restarts

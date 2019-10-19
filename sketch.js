@@ -14,7 +14,6 @@
 // TODOS
 
 
-// TODO Sort out following logic in each mode
 // TODO Set up unique instruction scenes for each keypress version
 
 // TODO fix follow line wraps: wrappiong when it shouldn't be wrapping
