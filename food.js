@@ -4,8 +4,11 @@ class Food {
     this.total = 3;
     this.x;
     this.y;
-    this.speed = 3;
+    this.speed = 2;
     this.color = this.foodColorPicker();
+    this.numTicks = 0;
+    // every this-many-ticks, increasing the speed.
+    this.speedIncreaseCondition = 1000;
   }
 
   foodColorPicker() {
@@ -65,6 +68,10 @@ class Food {
   }
 
   show() {
+    this.numTicks++;
+    if(this.numTicks % this.speedIncreaseCondition === 0) {
+      this.speed++;
+    }
     push();
     this.foodLocation.y = this.foodLocation.y + this.speed;
     if(this.foodLocation.y > windowHeight) {

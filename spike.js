@@ -8,6 +8,9 @@ class Spike {
     this.spikeLocation = this.makeRandomVector();
     this.x = this.spikeLocation.x;
     this.y = this.spikeLocation.y;
+    this.numTicks = 0;
+    // every this-many-ticks increase the speed.
+    this.speedIncreaseCondition = 1000;
   }
 
   //choose random location
@@ -43,6 +46,10 @@ class Spike {
   }
 
   show() {
+    this.numTicks++;
+    if(this.numTicks % this.speedIncreaseCondition === 0) {
+      this.speed++;
+    }
     this.moveSpike();
     push();
     stroke(this.spikeColor);
