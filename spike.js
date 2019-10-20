@@ -10,7 +10,7 @@ class Spike {
     this.y = this.spikeLocation.y;
   }
 
-  //picking place for spikes
+  //choose random location
   makeRandomVector() {
     var cols = floor(windowWidth - 2 * this.scl);
     var vector = createVector(floor(random(cols)), 0);
@@ -60,6 +60,5 @@ class Spike {
     }
     this.angle = this.angle + 3;
     pop();
-
   }
 }

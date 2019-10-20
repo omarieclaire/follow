@@ -12,36 +12,50 @@
 // - right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
 
 // TODOS
+// later - follow line
+// TODO original player ring colors should be CHOSEN not random.
+// TODO draw slowly fading arcs instead of ellipse for player trail.
 
-// TODO BUG fix follow line wraps: wrappiong when it shouldn't be wrapping
-// TODO ease follow line wrapping (it's a bit jerky right at the "wrap" moment)
 // TODO alternating death explosions (implosion, a fade-out over time, appear to collide and become one.
-// TODO spikes and food fall from sky better
-// TODO buy rope? boxes? Embed magnet in the rope, magnet sensor
-// TODO make tail look better
+// TODO spikes and food fall from sky slowly at first, then faster
 // TODO move player collision to player class?
+
 // TODO design sounds
-// TODO choose text
-// TODO make prettier
+// TODO choose font
+
+// TODO if you are following, your little directional arc becomes the color of the other player?
+
+
 // TODO fix shared horizon gameplay - what if I just "hold"? What if you just refuse to press?
-// TODO refactor everything :(
 // TODO Fix trim screen to small rectangle bugs
 // TODO: work on keypress ordering logic in serial
 // TODO Test visuals on actual projector
 // TODO Improve unique instruction scenes for each keypress version
+// TODO improve follow for seamless wrapping
+// TODO refactor everything :(
+// TODO add more movement and vivacity!
+
+
 
 
 
 
 // DESIGN
+// CONSIDER - do more thinking on accessibility!! diff body movement, eyes, ears, neuro!
 // CONSIDER - should there be a game over? consider a timer
 // CONSIDER - different end states with names
+// CONSIDER buy rope? boxes? Embed magnet in the rope, magnet sensor
 // CONSIDER - making food more "ring-like" (less translations)
+// CONSIDER I make an even more basic level which is just turning, no moving?
 // CONSIDER kinect as controller
+// CONSIDER enter "player names" https://p5js.org/reference/#/p5/createInput and leaderboard
+// CONSIDER smiley face when leading, frowny face when following, neutral face when neutral
 // CONSIDER should the one who is pressing the button should be "leading?" or is it even better to have the leader losing rings as a price
 // CONSIDER shared score
 // CONSIDER draw triangle on front of player????
 // CONSIDER turtles
+// https://p5js.org/reference/#/p5/rotateY
+// https://p5js.org/reference/#/p5/rotateZ
 // CONSIDER make health rings little circles that "follow" instead of wrap rings
 // CONSIDER give flavour text boxes to coins CONSIDER i'm just looking for a leader? ("i'll do what ever you tell me to do"? or should I give flavour text to players?)
 // CONSIDER should foods move around a bit?
@@ -70,6 +84,9 @@
 // Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie, Brent, Peiling,
 
 
+
+// p5.disableFriendlyErrors = true;
+
 var player1;
 var player2;
 var foodColor = [255, 255, 1]; // white
@@ -79,6 +96,26 @@ var player1Color = [255, 51, 153, 240]; // magenta
 var player2Color = [51, 153, 255, 240]; //   blue
 var player1FadeColor = [184, 125, 155, 100]; // faded pink
 var player2FadeColor = [145, 200, 255, 100]; // faded blue
+var player1InitialRingColors = [
+  [119, 37, 164],
+  [167, 105, 201],
+  [138, 66, 178],
+  [96, 14, 142],
+  [119, 37, 164],
+  [167, 105, 201],
+  [138, 66, 178],
+  [96, 14, 142]
+];
+var player2InitialRingColors = [
+  [119, 37, 164],
+  [167, 105, 201],
+  [138, 66, 178],
+  [96, 14, 142],
+  [119, 37, 164],
+  [167, 105, 201],
+  [138, 66, 178],
+  [96, 14, 142]
+];
 var scl = 30; // scale of almost everything in the game
 var vol = 0; // music volume standard
 var foods = [];
@@ -92,7 +129,11 @@ var sceneManager;
 var instructionScene;
 
 var standardTextSize = 40; // text size standard
+
 let speed;
+
+var spectral;
+
 var introSound;
 var foodGenSound;
 var eatSound; //working
@@ -104,8 +145,6 @@ var ringMoveSound;
 var ambientSound;
 
 var serial;
-
-let fontRegular, fontItalic, fontBold;
 
 // foodgen_sound, newScene (currently dupe sound), start game sound
 
@@ -130,9 +169,8 @@ function preload() {
   ambientSound = loadSound('sounds/ambience.mp3');
   ambientSound.setVolume(vol);
 
-  //fontRegular = loadFont('assets/Regular.otf');
-  //fontItalic = loadFont('assets/Italic.ttf');
-  //fontBold = loadFont('assets/Bold.ttf');
+  // spectral = loadFont(⁨'fonts⁩/⁨spectral.ttf');
+
 }
 
 // Setup is where I set up a bunch of important objects
@@ -142,8 +180,8 @@ function setup() {
   // p5 specific function for working with degrees
   angleMode(DEGREES);
   //special functions to construct an object from a class
-  player1 = new Player("1", " ", -0, windowWidth / 4, scl, player1Color, player1FadeColor);
-  player2 = new Player("2", " ", 0, windowWidth - windowWidth / 4, scl, player2Color, player2FadeColor);
+  player1 = new Player("1", " ", -0, windowWidth / 4, scl, player1Color, player1FadeColor, player1InitialRingColors);
+  player2 = new Player("2", " ", 0, windowWidth - windowWidth / 4, scl, player2Color, player2FadeColor, player2InitialRingColors);
   welcomeScene = new WelcomeScene();
   trainingScene = new TrainingScene();
   playScene = new PlayScene();
@@ -158,10 +196,13 @@ function setup() {
     foods[i].location(player1, player2);
   }
 
+  textFont('spectral');
+
+
   // Instantiate our SerialPort object
   serial = new p5.SerialPort();
   //copy this from serial control app
-  serial.open("/dev/tty.usbmodem14331");
+  serial.open("/dev/tty.usbmodem14201");
   // call my function gotData when you receive data on the serial port
   serial.on('data', gotData);
 }
@@ -173,6 +214,9 @@ function draw() {
   // update location of player1 and player2
   player1.update(player2);
   player2.update(player1);
+
+  // player1.updateTargetForFollowingLine(player2);
+  // player2.updateTargetForFollowingLine(player1);
 
   //implememt punishment/rewards for following/leading
   player1.updateTotal(player2);
@@ -231,19 +275,17 @@ function keyReleased() {
 function gotData() {
   // get the button state.
   var currentString = serial.readLine();
-  // console.log("got the line");
   // read the incoming string
   //same as readStringUntil(‘\r\n’)
   trim(currentString);
   // remove any trailing whitespace
   if (!currentString) return;
-  // console.log("no string");
   // if the string is empty, do no more
   // split: the string "1,0,1,1" -> ["1","0","1","1"]
   let buttonStates = split(currentString, ",");
   if (buttonStates.length > 1) {
     if (buttonStates.includes("0")) {
-      // console.log("serial: " + buttonStates);
+      console.log("serial: " + buttonStates);
     }
 
     var upButtonState = buttonStates[0];

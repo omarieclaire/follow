@@ -1,6 +1,6 @@
 class Player {
   //constructor is a method which is run only once to set up the object
-  constructor(temp_name, temp_playerDir, temp_xspeed, xOffSet, scl, tmp_playerColor, tmp_playerFadedColor, num) {
+  constructor(temp_name, temp_playerDir, temp_xspeed, xOffSet, scl, tmp_playerColor, tmp_playerFadedColor, initial_colors) {
     this.scl = scl; //note: I don't reset this in the reset, maybe I should
     this.name = temp_name;
     this.direction = temp_playerDir;
@@ -19,6 +19,7 @@ class Player {
     this.isFollowed = false;
     this.playerColor = tmp_playerColor;
     this.playerFadedColor = tmp_playerFadedColor;
+    this.initialColors = initial_colors;
     this.poppedRings = [];
     this.numTicksPoppedRing = 0;
     this.ringSpacer = this.scl / 4;
@@ -38,10 +39,14 @@ class Player {
       [167, 105, 201],
       [138, 66, 178],
       [96, 14, 142],
+      [119, 37, 164],
+      [167, 105, 201],
+      [138, 66, 178],
+      [96, 14, 142],
 
     ];
     for (var i = 0; i < this.total; i++) { //for each point in score
-      this.playerRings.push(new Rings(this, this.scl, random(randomColors))); //push a new ring to array
+      this.playerRings.push(new Rings(this, this.scl, this.initialColors[i])); //push a new ring to array
     }
 
     this.explodeParticles = [];
@@ -49,7 +54,7 @@ class Player {
       this.explodeParticles.push(new ExplodeParticle());
     }
 
-    this.lineWrapperHelper = new LineWrapperHelper(this, this.windowLoopSpacer);
+    // this.lineWrapperHelper = new LineWrapperHelper(this, this.windowLoopSpacer);
   }
 
   resetPlayer() {
@@ -77,6 +82,10 @@ class Player {
 
     this.playerRings = []; // store the rings within a local array
     let randomColors = [
+      [119, 37, 164],
+      [167, 105, 201],
+      [138, 66, 178],
+      [96, 14, 142],
       [119, 37, 164],
       [167, 105, 201],
       [138, 66, 178],
@@ -124,6 +133,7 @@ class Player {
 
 
   deathDraw() {
+    push();
     fill(this.playerColor);
     noStroke();
 
@@ -133,6 +143,7 @@ class Player {
       this.explodeParticles[i].update();
       this.explodeParticles[i].show();
     }
+    pop();
   }
 
   currentDiameter() {
@@ -261,7 +272,7 @@ class Player {
   }
 
   drawFollowLine(otherPlayer) {
-    this.lineWrapperHelper.drawWrappedFollowLine(otherPlayer);
+    // this.lineWrapperHelper.drawWrappedFollowLine(otherPlayer);
   }
 
   //directional speed of player
@@ -358,12 +369,9 @@ class Player {
     pop();
   }
 
-  //FOLLOW ME
-
   show() {
     this.numTicks++;
     this.ringBreathe();
-
     noStroke();
     //colored player circle
     if (this.isFollowing) {
@@ -425,7 +433,9 @@ class Player {
       let newRadius = (this.scl / 4) / (1 + i * radiusShrinkFactor);
       var length = this.currentDiameter() / 2;
       push();
-      stroke(100);
+      stroke(pointColor);
+      // findme try this when have working Version
+      // pointColor.setAlpha(128 + 128 * sin(millis() / 1000));
       strokeWeight(2);
       if (this.direction == "up") {
         let newYCoordinate = this.y + (i * spaceBetweenCircles) + length;

@@ -14,7 +14,6 @@ class LeaderRing {
     // var r = thePlayer.playerRings[3[3]];
     stroke(255, 215, 0, 250);
     strokeWeight(5);
-
     if (thePlayer.direction == "right") {
       ellipse(this.x, this.y, r, r);
     } else if (thePlayer.direction == "left") {
@@ -63,5 +62,4 @@ class LeaderRing {
       }
     }
   }
-
 }

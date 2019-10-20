@@ -174,9 +174,9 @@ class Scene {
   setInstructionText() {
     var keyMode = this.getCurrentKeyMode();
     if (keyMode == "solo") {
-      this.instructionText = "Player 1 use wasd keys. \n Player 2 use arrow keys. \n If you go in the same direction as the other player, you lose rings."
+      this.instructionText = "Player 1 use wasd keys. \n Player 2 use arrow keys. \n \n Give your rings to the other player by going the same direction"
     } else if (keyMode == "toggle") {
-      this.instructionText = "Only one player can move at a time. \n Use arrow keys to play, and hit spacebar to take control from the other player.";
+      this.instructionText = "Only one player can move at a time. \n \n Use arrow keys to play. \n \n Hit spacebar to take control from the other player.";
     } else if (keyMode == "split") {
       this.instructionText = "Player 1 can move both players left & up using 'a' and 's'. \n Player 2 can move both players down & right using '→' and '↓'.";
     } else if (keyMode == "sharedhorizon") {
@@ -350,7 +350,7 @@ class InstructionScene extends Scene {
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
     fill(player1Color);
-    text(this.instructionText, scl, windowHeight/4, windowWidth -scl, windowHeight -scl);
+    text(this.instructionText, scl, windowHeight/4, width - scl, windowHeight -scl);
     /*
     fill(player1Color);
     text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
@@ -359,7 +359,7 @@ class InstructionScene extends Scene {
     */
     fill(200);
     textSize(standardTextSize / 2);
-    text("press spacebar to begin", windowWidth / 2, windowHeight / 1.5);
+    text("press spacebar to begin", windowWidth / 2, height - height / 4);
   }
 
   advanceToNextScene(player1, player2) {
@@ -452,8 +452,8 @@ class TrainingScene extends Scene {
       stroke(player1Color);
       if (player1.isFollowing) {
         // ringMoveSound.loop();
-        stroke(player1Color);
-        text(player1.direction + " (following)", windowWidth / 4, windowHeight / 1.43);
+        // stroke(player1Color);
+        // text(player1.direction + " (following)", windowWidth / 4, windowHeight / 1.43);
         // text("Follower", windowWidth / 4, windowHeight / 1.23);
         // stroke(player2Color);
         // text("Leader", windowWidth - windowWidth / 4, windowHeight / 1.23);
@@ -461,8 +461,8 @@ class TrainingScene extends Scene {
         // ringMoveSound.loop();
         // stroke(player1Color);
         // text("Leader", windowWidth / 4, windowHeight / 1.23);
-        stroke(player2Color);
-        text(player2.direction + " (following)", windowWidth - windowWidth / 4, windowHeight / 1.43);
+        // stroke(player2Color);
+        // text(player2.direction + " (following)", windowWidth - windowWidth / 4, windowHeight / 1.43);
         // text("Follower", windowWidth - windowWidth / 4, windowHeight / 1.23);
       } else {
         stroke(player1Color);

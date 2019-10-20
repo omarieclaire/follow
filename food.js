@@ -65,6 +65,7 @@ class Food {
   }
 
   show() {
+    push();
     this.foodLocation.y = this.foodLocation.y + this.speed;
     if(this.foodLocation.y > windowHeight) {
       this.foodLocation.y = 0;
@@ -80,5 +81,6 @@ class Food {
       // ellipse(this.foodLocation.x, this.foodLocation.y, random(scl / 2, scl / 8), random(scl / 2, scl / 8));
       ellipse(this.foodLocation.x, this.foodLocation.y, random(scl / 2, scl / 8));
     }
+    pop();
   }
 }
