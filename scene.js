@@ -72,8 +72,8 @@ class Scene {
     if (this.getCurrentKeyMode() == "simultaneous") {
       push();
       fill(1);
-      rect(0, 0, windowWidth, windowHeight / 4);
-      rect(0, windowHeight - windowHeight / 4, windowWidth, windowHeight);
+      rect(0, 0, windowWidth, windowHeight / 6);
+      rect(0, windowHeight - windowHeight / 6, windowWidth, windowHeight);
       pop();
     }
   }
@@ -466,9 +466,9 @@ class TrainingScene extends Scene {
         // text("Follower", windowWidth - windowWidth / 4, windowHeight / 1.23);
       } else {
         stroke(player1Color);
-        text(player1.direction, windowWidth / 4, windowHeight / 1.43);
+        // text(player1.direction, windowWidth / 4, windowHeight / 1.43);
         stroke(player2Color);
-        text(player2.direction, windowWidth - windowWidth / 4, windowHeight / 1.43);
+        // text(player2.direction, windowWidth - windowWidth / 4, windowHeight / 1.43);
         // ringMoveSound.stop();
       }
       pop();
@@ -603,7 +603,7 @@ class FinalScene extends Scene {
 
     } else {}
     // GAME OVER TEXT
-    noStroke();
+    fill(foodColor);
     text("begin again?", windowWidth / 2, windowHeight / 2);
     // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
     this.numTicks++;

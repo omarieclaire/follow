@@ -12,21 +12,17 @@
 // - right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
 
 // TODOS
-// later - follow line
-// TODO original player ring colors should be CHOSEN not random.
-// TODO draw slowly fading arcs instead of ellipse for player trail.
 
-// TODO alternating death explosions (implosion, a fade-out over time, appear to collide and become one.
 // TODO spikes and food fall from sky slowly at first, then faster
+// TODO alternate death (explosion, implosion, a fade-out over time, 2 become one.
 // TODO move player collision to player class?
 
 // TODO design sounds
 // TODO choose font
 
 // TODO if you are following, your little directional arc becomes the color of the other player?
-
-
-// TODO fix shared horizon gameplay - what if I just "hold"? What if you just refuse to press?
+// later - follow line
+// TODO test shared horizon gameplay - what if I just "hold"? What if you just refuse to press?
 // TODO Fix trim screen to small rectangle bugs
 // TODO: work on keypress ordering logic in serial
 // TODO Test visuals on actual projector
@@ -41,6 +37,7 @@
 
 
 // DESIGN
+// CONSIDER fading arcs for player trail.
 // CONSIDER - do more thinking on accessibility!! diff body movement, eyes, ears, neuro!
 // CONSIDER - should there be a game over? consider a timer
 // CONSIDER - different end states with names

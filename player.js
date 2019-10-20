@@ -352,19 +352,19 @@ class Player {
     this.ringSpacer = (this.scl / 3.5) + (.6 * Math.sin(this.numTicks * breatheRate));
   }
   //findme
-  drawDirectionalArcs(playerDirection) {
+  drawDirectionalArcs(direction, x, y, length, color, strokeW) {
     push();
-    strokeWeight(2);
-    stroke(255, 255, 0);
+    strokeWeight(strokeW);
+    stroke(color);
     noFill();
-    if (this.direction == "up") {
-      arc(this.x, this.y, this.scl, this.scl, 180, 0);
-    } else if (this.direction == "left") {
-      arc(this.x, this.y, this.scl, this.scl, 90, 270);
-    } else if (this.direction == "down") {
-      arc(this.x, this.y, this.scl, this.scl, 0, 180);
-    } else if (this.direction == "right") {
-      arc(this.x, this.y, this.scl, this.scl, 270, 90);
+    if (direction == "up") {
+      arc(x, y, length, length, 180, 0);
+    } else if (direction == "left") {
+      arc(x, y, length, length, 90, 270);
+    } else if (direction == "down") {
+      arc(x, y, length, length, 0, 180);
+    } else if (direction == "right") {
+      arc(x, y, length, length, 270, 90);
     } else {}
     pop();
   }
@@ -384,7 +384,7 @@ class Player {
 
     // player circle / face
     ellipse(this.x, this.y, this.scl, this.scl);
-    this.drawDirectionalArcs(this.direction);
+    this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl, [255, 255, 0], 2);
 
     noFill();
     // stroke(255, 200);
@@ -428,29 +428,49 @@ class Player {
     let spaceBetweenCircles = 15;
     let radiusShrinkFactor = 0.5;
 
-    for (var i = 1; i < numberOfTrails; i++) {
-      //having 1 + ensures that the divisor is always above 1 so the trail will never be bigger than the player
-      let newRadius = (this.scl / 4) / (1 + i * radiusShrinkFactor);
-      var length = this.currentDiameter() / 2;
-      push();
-      stroke(pointColor);
-      // findme try this when have working Version
-      // pointColor.setAlpha(128 + 128 * sin(millis() / 1000));
-      strokeWeight(2);
-      if (this.direction == "up") {
-        let newYCoordinate = this.y + (i * spaceBetweenCircles) + length;
-        ellipse(this.x, newYCoordinate, newRadius);
-      } else if (this.direction == "down") {
-        let newYCoordinate = this.y - (i * spaceBetweenCircles) - length;
-        ellipse(this.x, newYCoordinate, newRadius);
-      } else if (this.direction == "left") {
-        let newXCoordinate = this.x + (i * spaceBetweenCircles) + length;
-        ellipse(newXCoordinate, this.y, newRadius);
-      } else if (this.direction == "right") {
-        let newXCoordinate = this.x - (i * spaceBetweenCircles) - length;
-        ellipse(newXCoordinate, this.y, newRadius);
+    // trail rings
+    // only draw when moving
+    if (this.direction !== " ") {
+
+      for (var i = 1; i < numberOfTrails; i++) {
+        //having 1 + ensures that the divisor is always above 1 so the trail will never be bigger than the player
+        //let newRadius = (this.scl / 4) / (1 + i * radiusShrinkFactor);
+        let newRadius = 100 / (1 + i * radiusShrinkFactor);
+        var length = this.currentDiameter() / 2;
+        var trailYCoordinate;
+        var trailXCoordinate;
+        var startAngle;
+        var endAngle;
+        if (this.direction == "up") {
+          trailYCoordinate = this.y + (i * spaceBetweenCircles) + length;
+          trailXCoordinate = this.x;
+          startAngle = 45;
+          endAngle = 135;
+        } else if (this.direction == "down") {
+          trailYCoordinate = this.y - (i * spaceBetweenCircles) - length;
+          trailXCoordinate = this.x;
+          startAngle = 0;
+          endAngle = 180;
+        } else if (this.direction == "left") {
+          trailYCoordinate = this.y
+          trailXCoordinate = this.x + (i * spaceBetweenCircles) + length;
+          startAngle = 90;
+          endAngle = 270;
+        } else if (this.direction == "right") {
+          trailYCoordinate = this.y;
+          trailXCoordinate = this.x - (i * spaceBetweenCircles) - length;
+          startAngle = 270;
+          endAngle = 90;
+        }
+
+        // findme try this when have working Version
+        // pointColor.setAlpha(128 + 128 * sin(millis() / 1000));
+        push();
+        strokeWeight(1);
+        stroke(pointColor);
+        //arc(trailXCoordinate, trailYCoordinate, newRadius, newRadius, startAngle, endAngle);
+        pop();
       }
-      pop();
     }
   }
 }
