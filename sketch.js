@@ -18,7 +18,6 @@
 // TODO alternating death explosions (implosion, a fade-out over time, appear to collide and become one.
 // TODO spikes and food fall from sky better
 // TODO buy rope? boxes? Embed magnet in the rope, magnet sensor
-// TODO improve ring loss animation
 // TODO make tail look better
 // TODO move player collision to player class?
 // TODO design sounds
@@ -106,6 +105,8 @@ var ambientSound;
 
 var serial;
 
+let fontRegular, fontItalic, fontBold;
+
 // foodgen_sound, newScene (currently dupe sound), start game sound
 
 function preload() {
@@ -128,6 +129,10 @@ function preload() {
   ringMoveSound.setVolume(vol);
   ambientSound = loadSound('sounds/ambience.mp3');
   ambientSound.setVolume(vol);
+
+  fontRegular = loadFont('assets/Regular.otf');
+  fontItalic = loadFont('assets/Italic.ttf');
+  fontBold = loadFont('assets/Bold.ttf');
 }
 
 // Setup is where I set up a bunch of important objects
