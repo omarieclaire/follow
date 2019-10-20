@@ -12,7 +12,6 @@
 // right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
 
 // TODOS
-// TODO dirctional arcs match player color EXCEPT in followstate becomes gray (follower) yellow (followed)
 // TODO draw MVP of other deaths (explosion, implosion, a fade-out over time, 2 become one.
 // TODO offline font integration
 // TODO Improve text display on instruction scenes
@@ -106,19 +105,21 @@ var scl = 30; // scale of almost everything in the game
 var vol = 0; // music volume standard
 var foods = [];
 
+var titleScene;
 var welcomeScene;
+var instructionScene;
 var trainingScene;
 var playScene;
 var bonusScene;
 var finalScene;
 var sceneManager;
-var instructionScene;
 
 var standardTextSize = 40; // text size standard
 
 let speed;
 
 var spectral;
+var openSansFont;
 
 var introSound;
 var foodGenSound;
@@ -158,7 +159,8 @@ function preload() {
   ghost1 = loadAnimation('img/ghost_standing0001.png', 'img/ghost_standing0002.png');
   ghost2 = loadAnimation('img/ghost_standing0001.png', 'img/ghost_standing0002.png');
 
-  // spectral = loadFont(⁨'fonts⁩/⁨spectral.ttf');
+  spectral = loadFont('fonts/spectral.ttf');
+  openSansFont = loadFont('fonts/OpenSans-Regular.ttf');
 
 }
 
@@ -171,13 +173,14 @@ function setup() {
   //special functions to construct an object from a class
   player1 = new Player("1", " ", -0, windowWidth / 4, scl, player1Color, player1FadeColor, player1InitialRingColors);
   player2 = new Player("2", " ", 0, windowWidth - windowWidth / 4, scl, player2Color, player2FadeColor, player2InitialRingColors);
+  titleScene = new TitleScene();
+  instructionScene = new InstructionScene();
   welcomeScene = new WelcomeScene();
   trainingScene = new TrainingScene();
   playScene = new PlayScene();
   bonusScene = new BonusScene();
   finalScene = new FinalScene();
-  instructionScene = new InstructionScene();
-  var allTheScenes = [instructionScene, welcomeScene, trainingScene, playScene, bonusScene];
+  var allTheScenes = [titleScene, instructionScene, welcomeScene, trainingScene, playScene, bonusScene];
   sceneManager = new SceneManager(0, allTheScenes, finalScene);
   // set up an array of food objects and an array of spike objects
   for (var i = 0; i < 1; i++) {

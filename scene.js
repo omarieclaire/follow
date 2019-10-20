@@ -338,6 +338,52 @@ class Scene {
 /////////////////////////////
 //// Instruction Scene  ////
 ////////////////////////////
+class TitleScene extends Scene {
+  constructor() {
+    super();
+    this.wasKeyPressed = false;
+    introSound.loop();
+  }
+
+  draw(player1, player2, foods) {
+    push();
+    background(0, 0, 20);
+    textSize(standardTextSize);
+    textAlign(CENTER, TOP);
+    textFont(spectral);
+    fill(player1Color);
+    text("follow", scl, windowHeight / 4, width - scl, windowHeight - scl);
+    fill(200);
+    textFont(openSansFont);
+    textSize(standardTextSize / 2);
+    text("press spacebar to begin", windowWidth / 2, height - height / 4);
+    pop();
+  }
+
+  advanceToNextScene(player1, player2) {
+    return this.wasKeyPressed == true;
+  }
+
+  keyWasPressed(keyCode, player1, player2) {
+    // introSound.stop();
+    // ambientSound.loop();
+    if (keyCode === 32) {
+      this.wasKeyPressed = true;
+    } else {
+      this.handleKeyPressMode(keyCode, player1, player2);
+    }
+  }
+
+  //advance to next scene bool needs to be reset when game restarts
+  resetScene() {
+    super.resetScene();
+    this.wasKeyPressed = false;
+  }
+}
+
+/////////////////////////////
+//// Instruction Scene  ////
+////////////////////////////
 class InstructionScene extends Scene {
   constructor() {
     super();
@@ -350,7 +396,8 @@ class InstructionScene extends Scene {
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
     fill(player1Color);
-    text(this.instructionText, scl, windowHeight/4, width - scl, windowHeight -scl);
+        textFont(openSansFont);
+    text(this.instructionText, scl, windowHeight / 4, width - scl, windowHeight - scl);
     /*
     fill(player1Color);
     text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
