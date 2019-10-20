@@ -130,9 +130,9 @@ function preload() {
   ambientSound = loadSound('sounds/ambience.mp3');
   ambientSound.setVolume(vol);
 
-  fontRegular = loadFont('assets/Regular.otf');
-  fontItalic = loadFont('assets/Italic.ttf');
-  fontBold = loadFont('assets/Bold.ttf');
+  //fontRegular = loadFont('assets/Regular.otf');
+  //fontItalic = loadFont('assets/Italic.ttf');
+  //fontBold = loadFont('assets/Bold.ttf');
 }
 
 // Setup is where I set up a bunch of important objects
@@ -173,9 +173,6 @@ function draw() {
   // update location of player1 and player2
   player1.update(player2);
   player2.update(player1);
-
-  player1.updateTargetForFollowingLine(player2);
-  player2.updateTargetForFollowingLine(player1);
 
   //implememt punishment/rewards for following/leading
   player1.updateTotal(player2);

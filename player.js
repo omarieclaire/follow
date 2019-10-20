@@ -48,6 +48,8 @@ class Player {
     for (var i = 0; i < 500; i++) {
       this.explodeParticles.push(new ExplodeParticle());
     }
+
+    this.lineWrapperHelper = new LineWrapperHelper(this, this.windowLoopSpacer);
   }
 
   resetPlayer() {
@@ -120,71 +122,6 @@ class Player {
     }
   }
 
-  pointsForWaveyLine(x1, y1, x2, y2, numSamples, phase, amplitude, frequency) {
-    var xStart = x1;
-    var yStart = y1;
-    var xEnd = x2;
-    var yEnd = y2;
-    var data = [];
-    var xDelta = xEnd - xStart;
-    var yDelta = yStart - yEnd;
-    var vecLength = Math.sqrt(xDelta * xDelta + yDelta * yDelta);
-    // Avoid divide by zero
-    vecLength = Math.max(vecLength, 0.0001);
-
-    // normalize it
-    xDelta = xDelta / vecLength;
-    yDelta = yDelta / vecLength;
-
-    var angle = Math.atan2(yDelta, xDelta);
-    var currentTime = Date.now();
-
-    for (var i = 0; i < numSamples; i++) {
-      var progress = (i.toFixed(10) / numSamples);
-      var xpos = lerp(xStart, xEnd, progress);
-      var ypos = lerp(yStart, yEnd, progress);
-      var amp = amplitude * (Math.cos(progress * Math.PI * 2. + 3.14) * 0.5 + 0.5);
-      var wave = Math.sin(phase + currentTime * 0.01 + progress * Math.PI * 2.0 * frequency) * amp;
-
-      xpos += Math.sin(angle) * wave * 0.5;
-      ypos += Math.cos(angle) * wave * 0.5;
-
-      var entry = {
-        x: xpos,
-        y: ypos
-      };
-      data.push(entry);
-    }
-    return data;
-  }
-
-  drawFollowLine(otherPlayer) {
-    if (this.isFollowing || this.isFollowed) {
-      push();
-      strokeWeight(5);
-      var playerWavesColours = [
-        [255, 51, 153, 50],
-        [51, 153, 255, 50]
-      ];
-      // var playerWavesColours = [[255, 51, 153, 50], [51, 153, 255, 50], [0, 255, 255, 50]];
-      // var playerWavesFrequencies = [0, 0.5*Math.PI, Math.PI];
-      var playerWavesFrequencies = [0.5 * Math.PI, Math.PI];
-      for (var i = 0; i < playerWavesColours.length; i++) {
-        var waveColour = playerWavesColours[i];
-        var waveFrequency = playerWavesFrequencies[i];
-        var waveyLinePoints = this.pointsForWaveyLine(this.x, this.y, this.targetX, this.targetY, 30, waveFrequency, 20, 25);
-        fill(waveColour);
-        stroke(waveColour);
-        strokeWeight(1);
-        beginShape();
-        for (var i = 0; i < waveyLinePoints.length; i++) {
-          vertex(waveyLinePoints[i].x, waveyLinePoints[i].y);
-        }
-        endShape();
-      }
-      pop();
-    }
-  }
 
   deathDraw() {
     fill(this.playerColor);
@@ -323,41 +260,8 @@ class Player {
     }
   }
 
-  updateTargetForFollowingLine(otherPlayer) {
-    // if I HAVE looped and the other player has NOT looped
-    if (this.numLoops - otherPlayer.numLoops == 1) {
-      if (this.direction == 'left') {
-        this.targetX = otherPlayer.x + width + this.windowLoopSpacer;
-        this.targetY = otherPlayer.y
-      } else if (this.direction == 'right') {
-        this.targetX = otherPlayer.x - width - this.windowLoopSpacer;
-        this.targetY = otherPlayer.y
-      } else if (this.direction == 'up') {
-        this.targetX = otherPlayer.x;
-        this.targetY = otherPlayer.y + width + this.windowLoopSpacer;
-      } else if (this.direction == 'down') {
-        this.targetX = otherPlayer.x;
-        this.targetY = otherPlayer.y - width - this.windowLoopSpacer;
-      }
-      // if I have NOT looped and the other player HAS looped
-    } else if (otherPlayer.numLoops - this.numLoops == 1) {
-      if (this.direction == 'left') {
-        this.targetX = otherPlayer.x - width - this.windowLoopSpacer;
-        this.targetY = otherPlayer.y
-      } else if (this.direction == 'right') {
-        this.targetX = otherPlayer.x + width + this.windowLoopSpacer;
-        this.targetY = otherPlayer.y
-      } else if (this.direction == 'up') {
-        this.targetX = otherPlayer.x;
-        this.targetY = otherPlayer.y - width - this.windowLoopSpacer;
-      } else if (this.direction == 'down') {
-        this.targetX = otherPlayer.x;
-        this.targetY = otherPlayer.y + width + this.windowLoopSpacer;
-      }
-    } else {
-      this.targetX = otherPlayer.x;
-      this.targetY = otherPlayer.y;
-    }
+  drawFollowLine(otherPlayer) {
+    this.lineWrapperHelper.drawWrappedFollowLine(otherPlayer);
   }
 
   //directional speed of player
