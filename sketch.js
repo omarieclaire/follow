@@ -102,7 +102,7 @@ var ghost1, ghost2;
 
 
 var scl = 30; // scale of almost everything in the game
-var vol = 0; // music volume standard
+var vol = 0.2; // music volume standard
 var foods = [];
 
 var titleScene;

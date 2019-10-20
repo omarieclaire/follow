@@ -157,9 +157,7 @@ class Player {
   collideWithSpike(spike, otherPlayer) {
     var d = dist(this.x, this.y, spike.x, spike.y);
     if (d < (this.currentDiameter() / 2) + (this.scl / 2)) {
-      if (!hitSound.isPlaying()) {
-        hitSound.play();
-      }
+      hitSound.play();
       this.changeRingTotal(-1, this.x, this.y);
       // otherPlayer handles flip direction because we need to
       // update isFollowed and isFollowing whenever a player's direction

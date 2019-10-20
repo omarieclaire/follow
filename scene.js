@@ -86,11 +86,11 @@ class Scene {
     for (let i = 0; i < foods.length; i++) {
       if (player1.eat(foods[i])) {
         foods[i].location(player1, player2);
-        foodGenSound.play();
+        //foodGenSound.play();
       }
       if (player2.eat(foods[i])) {
         foods[i].location(player1, player2);
-        foodGenSound.play();
+        //foodGenSound.play();
       }
     }
   }
@@ -342,7 +342,7 @@ class TitleScene extends Scene {
   constructor() {
     super();
     this.wasKeyPressed = false;
-    introSound.loop();
+    // introSound.loop();
   }
 
   draw(player1, player2, foods) {
@@ -388,7 +388,7 @@ class InstructionScene extends Scene {
   constructor() {
     super();
     this.wasKeyPressed = false;
-    introSound.loop();
+    //introSound.loop();
   }
 
   draw(player1, player2, foods) {
@@ -396,7 +396,7 @@ class InstructionScene extends Scene {
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
     fill(player1Color);
-        textFont(openSansFont);
+    textFont(openSansFont);
     text(this.instructionText, scl, windowHeight / 4, width - scl, windowHeight - scl);
     /*
     fill(player1Color);
@@ -651,6 +651,7 @@ class FinalScene extends Scene {
     } else {}
     // GAME OVER TEXT
     fill(foodColor);
+    textSize(standardTextSize);
     text("begin again?", windowWidth / 2, windowHeight / 2);
     // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
     this.numTicks++;
