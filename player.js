@@ -384,7 +384,13 @@ class Player {
 
     // player circle / face
     ellipse(this.x, this.y, this.scl, this.scl);
-    this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl, [255, 255, 0], 2);
+    if(this.isFollowing) {
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl, color("grey"), 2);
+    } else if(this.isFollowed) {
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl, [255, 255, 0], 2);
+    } else {
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl,color('white'), 2);
+    }
 
     noFill();
     // stroke(255, 200);

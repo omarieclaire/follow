@@ -12,7 +12,6 @@
 // right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
 
 // TODOS
-// TODO spikes and food fall from sky slowly at first, then faster
 // TODO dirctional arcs match player color EXCEPT in followstate becomes gray (follower) yellow (followed)
 // TODO draw MVP of other deaths (explosion, implosion, a fade-out over time, 2 become one.
 // TODO offline font integration
