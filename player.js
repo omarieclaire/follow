@@ -19,6 +19,10 @@ class Player {
     this.isFollowed = false;
     this.playerColor = tmp_playerColor;
     this.playerFadedColor = tmp_playerFadedColor;
+    this.arcFollowColor = [100,100,100];
+    this.arcLeadingColor = [255, 215, 0, 250];
+    this.arcBaseColor = [255,255,255];
+    this.directionalRingBaseColor =
     this.initialColors = initial_colors;
     this.poppedRings = [];
     this.numTicksPoppedRing = 0;
@@ -385,11 +389,11 @@ class Player {
     // player circle / face
     ellipse(this.x, this.y, this.scl, this.scl);
     if(this.isFollowing) {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl, color("grey"), 2);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl, this.arcFollowColor, 2);
     } else if(this.isFollowed) {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl, [255, 255, 0], 2);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl, this.arcLeadingColor, 2);
     } else {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl,color('white'), 2);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl, this.arcBaseColor, 2);
     }
 
     noFill();
