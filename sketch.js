@@ -4,46 +4,40 @@
 // What is following anyway?
 
 // DESIGN HIGH LEVEL
-// - what does player want to do?
-// - what does player feel?
-// - the DESIRE to do the opposite of the other player is not there yet
-// - how do I *immediately* communicate follow status to both players?
-// - should player *want* to be leading?
-// - right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
+// what does player want to do?
+// what does player feel?
+// the DESIRE to do the opposite of the other player is not there yet
+// how do I *immediately* communicate follow status to both players?
+// should player *want* to be leading?
+// right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
 
 // TODOS
-
 // TODO spikes and food fall from sky slowly at first, then faster
-// TODO alternate death (explosion, implosion, a fade-out over time, 2 become one.
-// TODO move player collision to player class?
+// TODO dirctional arcs match player color EXCEPT in followstate becomes gray (follower) yellow (followed)
+// TODO draw MVP of other deaths (explosion, implosion, a fade-out over time, 2 become one.
+// TODO offline font integration
+// TODO Improve text display on instruction scenes
 
-// TODO design sounds
-// TODO choose font
-
-// TODO if you are following, your little directional arc becomes the color of the other player?
-// later - follow line
 // TODO test shared horizon gameplay - what if I just "hold"? What if you just refuse to press?
-// TODO Fix trim screen to small rectangle bugs
-// TODO: work on keypress ordering logic in serial
-// TODO Test visuals on actual projector
-// TODO Improve unique instruction scenes for each keypress version
 // TODO improve follow for seamless wrapping
-// TODO refactor everything :(
-// TODO add more movement and vivacity!
+// TODO more movement and vivacity!
 
+// WAITING design sounds
+// WAITING work on keypress ordering logic in serial
+// WAITING Test visuals on actual projector
+// WAITING - follow line
 
-
-
-
+// TODO refactor :(
 
 // DESIGN
+// TODO choose fonts
+// CONSIDER holding down movement key causes acceleration
 // CONSIDER fading arcs for player trail.
 // CONSIDER - do more thinking on accessibility!! diff body movement, eyes, ears, neuro!
 // CONSIDER - should there be a game over? consider a timer
 // CONSIDER - different end states with names
 // CONSIDER buy rope? boxes? Embed magnet in the rope, magnet sensor
 // CONSIDER - making food more "ring-like" (less translations)
-// CONSIDER I make an even more basic level which is just turning, no moving?
 // CONSIDER kinect as controller
 // CONSIDER enter "player names" https://p5js.org/reference/#/p5/createInput and leaderboard
 // CONSIDER smiley face when leading, frowny face when following, neutral face when neutral
@@ -55,12 +49,8 @@
 // https://p5js.org/reference/#/p5/rotateZ
 // CONSIDER make health rings little circles that "follow" instead of wrap rings
 // CONSIDER give flavour text boxes to coins CONSIDER i'm just looking for a leader? ("i'll do what ever you tell me to do"? or should I give flavour text to players?)
-// CONSIDER should foods move around a bit?
-// CONSIDER integrate rippling ring from common
 // CONSIDER punishment should be immediately obvious!
 // CONSIDER Instructions? "if you follow you die" "if one of you dies, you die." ""
-// CONSIDER draw line between players?
-// CONSIDER playerX wins? (you are both dead so...)
 // CONSIDER you are both dead. playerX had more rings at time of death so congratulations.
 // CONSIDER - major refactor to actually fix: unexpected "follow state" after player collision -> @player 176
 
@@ -71,16 +61,12 @@
 // Floor pads?
 // Two facing monitors and controled with head (window)?
 
-// QUESTIONS
-
 // Serialport library: https://github.com/p5-serial/p5.serialport
 // 1) Open Arduino. Choose port in menu under tools>ports. Upload sketch. Open serial monitor. Check for values, then CLOSE.
 // 2) Open p5 Serialcontrol app. Select port. Click 'open'. Check 'console enabled' and 'read in ASCII' Check for values. Uncheck both check-boxes.
 // 3) Include library in this project folder. Include library path in index.html. Include unique serialport ID (e.g. "/dev/tty.usbmodem14201") in setup(),
 
 // Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie, Brent, Peiling,
-
-
 
 // p5.disableFriendlyErrors = true;
 
@@ -113,6 +99,10 @@ var player2InitialRingColors = [
   [138, 66, 178],
   [96, 14, 142]
 ];
+
+var ghost1, ghost2;
+
+
 var scl = 30; // scale of almost everything in the game
 var vol = 0; // music volume standard
 var foods = [];
@@ -165,6 +155,9 @@ function preload() {
   ringMoveSound.setVolume(vol);
   ambientSound = loadSound('sounds/ambience.mp3');
   ambientSound.setVolume(vol);
+
+  ghost1 = loadAnimation('img/ghost_standing0001.png', 'img/ghost_standing0002.png');
+  ghost2 = loadAnimation('img/ghost_standing0001.png', 'img/ghost_standing0002.png');
 
   // spectral = loadFont(⁨'fonts⁩/⁨spectral.ttf');
 
@@ -223,6 +216,8 @@ function draw() {
 
   // Finally actually drawing!
   sceneManager.drawScene(player1, player2, foods);
+
+  // animation(ghost1, 300, 150);
 }
 
 function playerCollision() {
