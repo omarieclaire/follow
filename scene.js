@@ -113,11 +113,15 @@ class Scene {
     textSize(standardTextSize / 2);
     fill(0, 255, 255);
     strokeWeight(1);
-    text("o - Debug and Keys", windowWidth / 2, rowHeight);
-    text("m - KeyMode (different play)", windowWidth / 2, rowHeight * 4);
-    text("i - Fullscreen", windowWidth / 2, rowHeight * 6);
-    text("awsd - Player 1 possible controls", windowWidth / 2, rowHeight * 8);
-    text("arrow keys - Player 2 possible controls", windowWidth / 2, rowHeight * 10);
+    var debugText =
+      "o - Debug and Keys\n" +
+      "m - KeyMode (different play)\n" +
+      "i - Fullscreen\n" +
+      "awsd - Player 1 possible controls\n" +
+      "arrow keys - Player 2 possible controls";
+    textLeading(20);
+    textAlign(LEFT);
+    text(debugText, windowWidth / 2, rowHeight, windowWidth, rowHeight * 10);
     pop();
   }
 
@@ -174,15 +178,15 @@ class Scene {
   setInstructionText() {
     var keyMode = this.getCurrentKeyMode();
     if (keyMode == "solo") {
-      this.instructionText = "Player 1 use wasd keys. \n Player 2 use arrow keys. \n \n Give your rings to the other player by going the same direction"
+      this.instructionText = "Player 1 use wasd keys.\nPlayer 2 use arrow keys.\n\nGive your rings to the other player by going the same direction"
     } else if (keyMode == "toggle") {
-      this.instructionText = "Only one player can move at a time. \n \n Use arrow keys to play. \n \n Hit spacebar to take control from the other player.";
+      this.instructionText = "Only one player can move at a time.\n\n Use arrow keys to play.\n\n Hit spacebar to take control from the other player.";
     } else if (keyMode == "split") {
-      this.instructionText = "Player 1 can move both players left & up using 'a' and 's'. \n Player 2 can move both players down & right using '→' and '↓'.";
+      this.instructionText = "Player 1 can move both players left & up using 'a' and 's'.\nPlayer 2 can move both players down & right using '→' and '↓'.";
     } else if (keyMode == "sharedhorizon") {
-      this.instructionText = "Player 1 steers both players left using the 'a' key. \n Player 2 steers both players right using the '→' key. \n Both players can move up and down independently";
+      this.instructionText = "Player 1 steers both players left using the 'a' key.\nPlayer 2 steers both players right using the '→' key.\n Both players can move up and down independently";
     } else if (keyMode == "simultaneous") {
-      this.instructionText = "Player 1 steers both players left using the 'a' key. \n Player 2 steers both players right using the '→' key. \n If both players hold their keys down both players stop moving";
+      this.instructionText = "Player 1 steers both players left using the 'a' key.\nPlayer 2 steers both players right using the '→' key.\n If both players hold their keys down both players stop moving";
     }
   }
 
@@ -352,11 +356,11 @@ class TitleScene extends Scene {
     textAlign(CENTER, TOP);
     textFont(spectral);
     fill(player1Color);
-    text("follow", scl, windowHeight / 4, width - scl, windowHeight - scl);
+    text("follow", width / 5, height / 5, 3/5 * width, 3/5 * height)
     fill(200);
     textFont(openSansFont);
     textSize(standardTextSize / 2);
-    text("press spacebar to begin", windowWidth / 2, height - height / 4);
+    text("press spacebar to begin", width/5 , 4/5 * height, 3/5 * width, height);
     pop();
   }
 
@@ -392,12 +396,14 @@ class InstructionScene extends Scene {
   }
 
   draw(player1, player2, foods) {
+    push();
     background(0, 0, 20);
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
     fill(player1Color);
     textFont(openSansFont);
-    text(this.instructionText, scl, windowHeight / 4, width - scl, windowHeight - scl);
+    textLeading(scl * 2);
+    text(this.instructionText, width/5, height/5, 3/5 * width, 3/5 * height);
     /*
     fill(player1Color);
     text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
@@ -406,7 +412,9 @@ class InstructionScene extends Scene {
     */
     fill(200);
     textSize(standardTextSize / 2);
-    text("press spacebar to begin", windowWidth / 2, height - height / 4);
+    textAlign(CENTER, TOP);
+    text("press spacebar to begin", width/5, 4/5 * height, 3/5 * width, height);
+    pop();
   }
 
   advanceToNextScene(player1, player2) {
@@ -447,8 +455,9 @@ class WelcomeScene extends Scene {
     background(0, 0, 20);
     fill(10, 255, 50);
     textSize(standardTextSize);
-    textAlign(CENTER, TOP);
-    text("Welcome", windowWidth / 2, windowHeight / 2);
+    textAlign(CENTER, CENTER);
+    textLeading(scl * 2);
+    text("Welcome", width / 5, height / 5, 3/5 * width, 3/5 * height);
     this.wideSceneDraw();
   }
 
@@ -626,6 +635,7 @@ class FinalScene extends Scene {
     this.numTicks = 0;
   }
   draw(player1, player2, foods) {
+    push();
     stroke(255);
     player1.halt();
     player2.halt();
@@ -650,12 +660,15 @@ class FinalScene extends Scene {
 
     } else {}
     // GAME OVER TEXT
-    fill(foodColor);
+    fill('red');
+    noStroke();
     textSize(standardTextSize);
-    text("begin again?", windowWidth / 2, windowHeight / 2);
+    textAlign(CENTER, CENTER);
+    text("begin again?", width / 5, height / 5, 3/5 * width, 3/5 * height);
     // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
     this.numTicks++;
     this.wideSceneDraw();
+    pop();
   }
   advanceToNextScene(player1, player2) {
     return this.numTicks >= 300;

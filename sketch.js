@@ -13,7 +13,6 @@
 
 // TODOS
 // TODO draw MVP of other deaths (explosion, implosion, a fade-out over time, 2 become one.
-// TODO offline font integration
 // TODO Improve text display on instruction scenes
 
 // TODO test shared horizon gameplay - what if I just "hold"? What if you just refuse to press?
