@@ -1,6 +1,6 @@
 class Player {
   //constructor is a method which is run only once to set up the object
-  constructor(temp_name, temp_playerDir, temp_xspeed, xOffSet, scl, tmp_playerColor, tmp_playerFadedColor, initial_colors) {
+  constructor(temp_name, temp_playerDir, temp_xspeed, xOffSet, scl, tmp_playerColor, tmp_playerFadedColor, initial_colors, temp_otherPlayerColor) {
     this.scl = scl; //note: I don't reset this in the reset, maybe I should
     this.name = temp_name;
     this.direction = temp_playerDir;
@@ -14,14 +14,15 @@ class Player {
     this.r = scl;
     this.yspeed = 0;
     this.lastYSpeed = this.yspeed;
-    this.total = 8;
+    this.total = 3;
     this.isFollowing = false;
     this.isFollowed = false;
     this.playerColor = tmp_playerColor;
     this.playerFadedColor = tmp_playerFadedColor;
-    this.arcFollowColor = [100,100,100];
-    this.arcLeadingColor = [255, 215, 0, 250];
-    this.arcBaseColor = [255,255,255];
+    this.otherPlayerColor = temp_otherPlayerColor;
+    this.arcFollowColor = this.otherPlayerColor;
+    this.arcLeadingColor = [255, 225, 0, 250];
+    this.arcBaseColor = [255, 215, 0, 250];
     this.directionalRingBaseColor =
     this.initialColors = initial_colors;
     this.poppedRings = [];
@@ -54,7 +55,7 @@ class Player {
     }
 
     this.explodeParticles = [];
-    for (var i = 0; i < 500; i++) {
+    for (var i = 0; i < 80; i++) {
       this.explodeParticles.push(new ExplodeParticle());
     }
 
@@ -387,11 +388,11 @@ class Player {
     // player circle / face
     ellipse(this.x, this.y, this.scl, this.scl);
     if(this.isFollowing) {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl, this.arcFollowColor, 2);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl/8, this.arcFollowColor, 4);
     } else if(this.isFollowed) {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl, this.arcLeadingColor, 2);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl/8, this.arcLeadingColor, 4);
     } else {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl, this.arcBaseColor, 2);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl/8, this.arcBaseColor, 4);
     }
 
     noFill();

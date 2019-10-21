@@ -352,7 +352,7 @@ class TitleScene extends Scene {
   draw(player1, player2, foods) {
     push();
     background(0, 0, 20);
-    textSize(standardTextSize);
+    textSize(standardTextSize*2);
     textAlign(CENTER, TOP);
     textFont(spectral);
     fill(player1Color);
@@ -360,7 +360,7 @@ class TitleScene extends Scene {
     fill(200);
     textFont(openSansFont);
     textSize(standardTextSize / 2);
-    text("press spacebar to begin", width/5 , 4/5 * height, 3/5 * width, height);
+    text("press spacebar to begin", width/5, 4/5 * height, 3/5 * width, height);
     pop();
   }
 

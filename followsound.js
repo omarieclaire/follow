@@ -9,13 +9,13 @@ class FollowSound {
       if (this.numTicks >= 2) {
         ambientSound.stop();
         if (!followingSound.isPlaying()) {
-          //followingSound.play();
+          followingSound.play();
         }
       }
     } else if (isFollowed != true) {
       followingSound.stop();
       if (!ambientSound.isPlaying()) {
-        //ambientSound.play();
+        ambientSound.play();
       }
       this.numTicks = 0;
     }

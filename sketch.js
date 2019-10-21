@@ -1,34 +1,31 @@
 // WHY AM I HERE?
-// We are locked in a dance with the other one
-// Each compelled/controlled by aversion/anti-mirroring.
+// We are locked in a dance with the other. Each compelled/controlled by anti-mirroring.
 // What is following anyway?
 
 // DESIGN HIGH LEVEL
 // what does player want to do?
 // what does player feel?
-// the DESIRE to do the opposite of the other player is not there yet
-// how do I *immediately* communicate follow status to both players?
-// should player *want* to be leading?
-// right now it is basically: don't go the direction someone else is going. is that what I want? should I try out "if they go up you go down - everything you do impacts the other"
+// what is this thing anyway? can I cut stuff for clarity?
 
 // TODOS
-// TODO draw MVP of other deaths (explosion, implosion, a fade-out over time, 2 become one.
-// TODO Improve text display on instruction scenes
+// TODO draw MVP of other deaths
+//        1. explosion - uneven death
+//        2. scattered ghost rings - equal death
+//        3. 2 become 1 giant ring - time out lots of rings
+// press spacebar to begin  ---- bad spacing
+// buy boxes
+// timer for final mode.
 
-// TODO test shared horizon gameplay - what if I just "hold"? What if you just refuse to press?
-// TODO improve follow for seamless wrapping
-// TODO more movement and vivacity!
-
-// WAITING design sounds
-// WAITING work on keypress ordering logic in serial
+// WAITING playtest & check keypress ordering logic in serial
 // WAITING Test visuals on actual projector
-// WAITING - follow line
+// WAITING - follow line, seamless wrapping
 
-// TODO refactor :(
+// TODO refactor ha. ha. ha.
 
 // DESIGN
+// TODO design sounds
 // TODO choose fonts
-// CONSIDER holding down movement key causes acceleration
+// IF TIME (for proper debug) holding down movement key causes acceleration
 // CONSIDER fading arcs for player trail.
 // CONSIDER - do more thinking on accessibility!! diff body movement, eyes, ears, neuro!
 // CONSIDER - should there be a game over? consider a timer
@@ -101,7 +98,7 @@ var ghost1, ghost2;
 
 
 var scl = 30; // scale of almost everything in the game
-var vol = 0.2; // music volume standard
+var vol = 0.02; // music volume standard
 var foods = [];
 
 var titleScene;
@@ -170,8 +167,8 @@ function setup() {
   // p5 specific function for working with degrees
   angleMode(DEGREES);
   //special functions to construct an object from a class
-  player1 = new Player("1", " ", -0, windowWidth / 4, scl, player1Color, player1FadeColor, player1InitialRingColors);
-  player2 = new Player("2", " ", 0, windowWidth - windowWidth / 4, scl, player2Color, player2FadeColor, player2InitialRingColors);
+  player1 = new Player("1", " ", -0, windowWidth / 4, scl, player1Color, player1FadeColor, player1InitialRingColors, player2Color);
+  player2 = new Player("2", " ", 0, windowWidth - windowWidth / 4, scl, player2Color, player2FadeColor, player2InitialRingColors, player1Color);
   titleScene = new TitleScene();
   instructionScene = new InstructionScene();
   welcomeScene = new WelcomeScene();

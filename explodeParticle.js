@@ -21,7 +21,7 @@ class ExplodeParticle {
   }
 
   show() {
-    ellipse(this.x, this.y, this.radius);
+    ellipse(this.x, this.y, this.radius * 2);
   }
 
 }
