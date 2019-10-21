@@ -16,6 +16,7 @@
 // rings should move around followline even when wrapping
 // check and debug all resets!
 // TODO fix numLoops loop counting bug (diff should alwyas be 0, 1, or -1)
+// text not centered on fullscreen
 
 // TODO refactor ha. ha. ha.
 
