@@ -194,11 +194,11 @@ class Scene {
     } else if (keyMode == "toggle") {
       this.instructionText = "Only one player can move at a time.\n\n Use arrow keys to play.\n\n Hit spacebar to take control from the other player.";
     } else if (keyMode == "split") {
-      this.instructionText = "Player 1 can move both players left & up using 'a' and 's'.\nPlayer 2 can move both players down & right using '→' and '↓'.";
+      this.instructionText = "Player 1 can move both players left & up using 'a' and 's'.\nPlayer 2 can move both players down & right using 'right arrow' and 'down arrow'.";
     } else if (keyMode == "sharedhorizon") {
-      this.instructionText = "Player 1 steers both players left using the 'a' key.\nPlayer 2 steers both players right using the '→' key.\n Both players can move up and down independently";
+      this.instructionText = "Player 1 steers both players left using the 'a' key.\nPlayer 2 steers both players right using the 'right arrow' key.\n Both players can move up and down independently";
     } else if (keyMode == "simultaneous") {
-      this.instructionText = "Player 1 steers both players left using the 'a' key.\nPlayer 2 steers both players right using the '→' key.\n If both players hold their keys down both players stop moving";
+      this.instructionText = "Player 1 steers both players left using the 'a' key.\nPlayer 2 steers both players right using the 'right arrow' key.\n If both players hold their keys down both players stop moving";
     }
   }
 

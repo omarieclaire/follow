@@ -95,7 +95,7 @@ var p1Ball, p2Ball;
 
 
 var scl = 30; // scale of almost everything in the game
-var vol = 0.02; // music volume standard
+var vol = 0.01; // music volume standard
 var foods = [];
 
 var titleScene;
