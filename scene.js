@@ -40,14 +40,14 @@ class Scene {
   }
 
   drawCountDown() {
-    if(this.getCurrentKeyMode() === "simultaneous") {
+    if (this.getCurrentKeyMode() === "simultaneous") {
       this.countDown--;
       push();
-      fill(255,0,0);
+      fill(255, 0, 0);
       noStroke();
       textAlign(CENTER, TOP);
       var numberToPrint = floor(this.countDown / 50);
-      text(numberToPrint, width/5, height/5, 3/5*width, 3/5*height);
+      text(numberToPrint, width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
       pop();
     }
   }
@@ -364,15 +364,15 @@ class TitleScene extends Scene {
   draw(player1, player2, foods) {
     push();
     background(0, 0, 20);
-    textSize(standardTextSize*2);
+    textSize(standardTextSize * 2);
     textAlign(CENTER, TOP);
     textFont(spectral);
     fill(player1Color);
-    text("follow", width / 5, height / 5, 3/5 * width, 3/5 * height)
+    text("follow", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height)
     fill(200);
     textFont(openSansFont);
     textSize(standardTextSize / 2);
-    text("press spacebar to begin", width/5, 4/5 * height, 3/5 * width, height);
+    text("press spacebar to begin", width / 5, 4 / 5 * height, 3 / 5 * width, height);
     pop();
   }
 
@@ -415,7 +415,7 @@ class InstructionScene extends Scene {
     fill(player1Color);
     textFont(openSansFont);
     textLeading(scl * 2);
-    text(this.instructionText, width/5, height/5, 3/5 * width, 3/5 * height);
+    text(this.instructionText, width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
     /*
     fill(player1Color);
     text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
@@ -425,7 +425,7 @@ class InstructionScene extends Scene {
     fill(200);
     textSize(standardTextSize / 2);
     textAlign(CENTER, TOP);
-    text("press spacebar to begin", width/5, 4/5 * height, 3/5 * width, height);
+    text("press spacebar to begin", width / 5, 4 / 5 * height, 3 / 5 * width, height);
     pop();
   }
 
@@ -469,7 +469,7 @@ class WelcomeScene extends Scene {
     textSize(standardTextSize);
     textAlign(CENTER, CENTER);
     textLeading(scl * 2);
-    text("Welcome", width / 5, height / 5, 3/5 * width, 3/5 * height);
+    text("Welcome", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
     this.wideSceneDraw();
   }
 
@@ -664,6 +664,7 @@ class FinalScene extends Scene {
     stroke(255);
     player1.halt();
     player2.halt();
+
     if (player2.total <= 0 && player1.total <= 0) {
       fill(1);
       stroke(1);
@@ -671,28 +672,36 @@ class FinalScene extends Scene {
       ellipse(player2.x, player2.y, player1.r);
       player1.deathDraw();
       player2.deathDraw();
+      if(this.getCurrentKeyMode() === "simultaneous") {
+        // text()
+      }
     } else if (player2.total <= 0 && player1.total > 0) {
       fill(1);
       stroke(1);
       ellipse(player2.x, player2.y, player1.r);
       player2.deathDraw();
-
+      if(this.getCurrentKeyMode() === "simultaneous") {
+        // text()
+      }
     } else if (player1.total <= 0 && player2.total > 0) {
       fill(1);
       stroke(1);
       ellipse(player1.x, player1.y, player1.r);
       player1.deathDraw();
-
+      if(this.getCurrentKeyMode() === "simultaneous") {
+        // text()
+      }
     } else {
-      // only here possible if in simultaneous mode.
+      // should only get here in simultaneous mode
       player1.twoBecomeOne(player2, this.numTicks / this.totalTicks);
     }
+
     // GAME OVER TEXT
     fill('red');
     noStroke();
     textSize(standardTextSize);
     textAlign(CENTER, CENTER);
-    text("begin again?", width / 5, height / 5, 3/5 * width, 3/5 * height);
+    text("begin again?", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
     // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
     this.numTicks++;
     this.wideSceneDraw();
