@@ -132,7 +132,6 @@ var serial;
 // foodgen_sound, newScene (currently dupe sound), start game sound
 
 function preload() {
-  p1_img = loadImage('img/p11.png');
   introSound = loadSound('sounds/intro.mp3');
   introSound.setVolume(vol);
   foodGenSound = loadSound('sounds/eat.mp3');
@@ -215,7 +214,6 @@ function draw() {
   // Finally actually drawing!
   sceneManager.drawScene(player1, player2, foods);
 
-  animation(p2Ball, 300, 150);
 }
 
 function playerCollision() {
