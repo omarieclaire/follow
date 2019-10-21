@@ -59,7 +59,7 @@ class Player {
       this.explodeParticles.push(new ExplodeParticle());
     }
 
-    // this.lineWrapperHelper = new LineWrapperHelper(this, this.windowLoopSpacer);
+    this.lineWrapperHelper = new LineWrapperHelper(this, this.windowLoopSpacer);
   }
 
   resetPlayer() {
@@ -284,7 +284,7 @@ class Player {
   }
 
   drawFollowLine(otherPlayer) {
-    // this.lineWrapperHelper.drawWrappedFollowLine(otherPlayer);
+    this.lineWrapperHelper.drawWrappedFollowLine(otherPlayer);
   }
 
   //directional speed of player
