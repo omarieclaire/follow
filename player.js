@@ -24,7 +24,7 @@ class Player {
     this.arcLeadingColor = [255, 225, 0, 250];
     this.arcBaseColor = [255, 215, 0, 250];
     this.directionalRingBaseColor =
-    this.initialColors = initial_colors;
+      this.initialColors = initial_colors;
     this.poppedRings = [];
     this.numTicksPoppedRing = 0;
     this.ringSpacer = this.scl / 4;
@@ -59,7 +59,7 @@ class Player {
       this.explodeParticles.push(new ExplodeParticle());
     }
 
-    // this.lineWrapperHelper = new LineWrapperHelper(this, this.windowLoopSpacer);
+    this.lineWrapperHelper = new LineWrapperHelper(this, this.windowLoopSpacer);
   }
 
   resetPlayer() {
@@ -235,7 +235,7 @@ class Player {
     // this.yspeed = this.lastYSpeed;
   }
 
-  changeRingTotal(amount, x, y, newRingColor) {
+  changeRingTotal(amount, x, y, newRingColor, wrapCountsDiff) {
     var oldTotal = this.total;
     this.total = this.total + amount;
     //floor of old total minus floor of new total, then the absolute value of that (if pos we leave it, if neg we make it pos)
@@ -250,10 +250,17 @@ class Player {
       } else {
         // create a ring that follows 'this' and has the start x and y coordinates passed to changeRingTotal
         // if we pass a new ringcolor use it, otherwise use the default
+        var colorOfRing;
         if (typeof(newRingColor) === "undefined") {
-          this.playerRings.push(new Rings(this, this.scl, ringColor, x, y)); //add a ring
+          colorOfRing = ringColor;
         } else {
-          this.playerRings.push(new Rings(this, this.scl, newRingColor, x, y)); //add a ring
+          colorOfRing = newRingColor;
+        }
+        // depending on if the ring needs to travel via wrapping
+        if (typeof(wrapCountsDiff) === 'undefined') {
+          this.playerRings.push(new Rings(this, this.scl, colorOfRing, x, y));
+        } else {
+          this.playerRings.push(new Rings(this, this.scl, colorOfRing, x, y));
         }
       }
     }
@@ -284,7 +291,7 @@ class Player {
   }
 
   drawFollowLine(otherPlayer) {
-    // this.lineWrapperHelper.drawWrappedFollowLine(otherPlayer);
+    this.lineWrapperHelper.drawWrappedFollowLine(otherPlayer);
   }
 
   //directional speed of player
@@ -399,12 +406,12 @@ class Player {
     // animation(p2Ball, this.x, this.y);
     // animation(p2Ball, 300, 150);
 
-    if(this.isFollowing) {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl/8, this.arcFollowColor, 4);
-    } else if(this.isFollowed) {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl/8, this.arcLeadingColor, 4);
+    if (this.isFollowing) {
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcFollowColor, 4);
+    } else if (this.isFollowed) {
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcLeadingColor, 4);
     } else {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl/8, this.arcBaseColor, 4);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcBaseColor, 4);
     }
 
     noFill();

@@ -1,5 +1,5 @@
 class Rings {
-  constructor(player, scl, ringColor, initX, initY) {
+  constructor(player, scl, ringColor, initX, initY, wrappedX, wrappedY) {
     this.scl = scl;
     this.ringColor = ringColor;
     //if we don't pass in an x or a y, just leave them as is
@@ -21,6 +21,9 @@ class Rings {
     this.easing = createBezierCurve(0.55, 0.055, 0.675, 0.19);
     //
     this.numDeadTicks = 0;
+
+    this.wrappedX = wrappedX;
+    this.wrappedY = wrappedY;
   }
   //function to manage the rings when they reach the edge of the screen
   updateLocation(newX, newY) {
@@ -29,20 +32,24 @@ class Rings {
   }
 
   move() {
-    //this.x and this.y of the rings
-    let v1 = createVector(this.x, this.y);
-    //this.x and this.y of a player
-    let v2 = createVector(this.player.x, this.player.y);
-    let lerp = p5.Vector.lerp(v1, v2, this.spectrum);
-    this.x = lerp.x;
-    this.y = lerp.y;
-    if (this.spectrum >= 1) {
-      this.spectrum = 1;
+    if (typeof(this.wrappedX) === 'undefined' || typeof(this.wrappedY) === 'undefined') {
+      //this.x and this.y of the rings
+      let v1 = createVector(this.x, this.y);
+      //this.x and this.y of a player
+      let v2 = createVector(this.player.x, this.player.y);
+      let lerp = p5.Vector.lerp(v1, v2, this.spectrum);
+      this.x = lerp.x;
+      this.y = lerp.y;
+      if (this.spectrum >= 1) {
+        this.spectrum = 1;
+      } else {
+        // Incrememt t because it's how far we are along in time
+        this.time = this.time + 0.01;
+        // set spectrum equal to the easing function of time at the current time
+        this.spectrum = this.easing(this.time);
+      }
     } else {
-      // Incrememt t because it's how far we are along in time
-      this.time = this.time + 0.01;
-      // set spectrum equal to the easing function of time at the current time
-      this.spectrum = this.easing(this.time);
+
     }
   }
 
