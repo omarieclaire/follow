@@ -136,12 +136,21 @@ class Player {
     }
   }
 
+  twoBecomeOne(otherPlayer, progress) {
+    var thisPlayerLerp = p5.Vector.lerp(createVector(this.x, this.y), createVector(otherPlayer.x, otherPlayer.y), progress);
+    var otherPlayerLerp = p5.Vector.lerp(createVector(otherPlayer.x, otherPlayer.y), createVector(this.x, this.y), progress);
+    this.x = thisPlayerLerp.x;
+    this.y = thisPlayerLerp.y;
+    otherPlayer.x = otherPlayerLerp.x;
+    otherPlayerLerp.y;
+    this.show();
+    otherPlayer.show();
+  }
 
   deathDraw() {
     push();
     fill(this.playerColor);
     noStroke();
-
     // speed = 10;
     for (let i = 0; i < this.explodeParticles.length; i++) {
       this.explodeParticles[i].initialPosition(this.x, this.y);

@@ -46,7 +46,8 @@ class Scene {
       fill(255,0,0);
       noStroke();
       textAlign(CENTER, TOP);
-      text(this.countDown, width/5, height/5, 3/5*width, 3/5*height);
+      var numberToPrint = floor(this.countDown / 50);
+      text(numberToPrint, width/5, height/5, 3/5*width, 3/5*height);
       pop();
     }
   }
@@ -489,7 +490,7 @@ class TrainingScene extends Scene {
   constructor() {
     super();
     this.numTicks = 0;
-    this.countDown = 50000;
+    this.countDown = 1000;
   };
 
   keyWasPressed(keyCode, player1, player2) {
@@ -544,6 +545,10 @@ class TrainingScene extends Scene {
     this.wideSceneDraw();
   }
 
+  isGameOverCheck(player1, player2) {
+    return super.isGameOverCheck(player1, player2) || this.countDown <= 0;
+  }
+
   advanceToNextScene(player1, player2) {
     return this.numTicks >= 1000; // training scene length
   }
@@ -551,7 +556,7 @@ class TrainingScene extends Scene {
   resetScene() {
     super.resetScene();
     this.numTicks = 0;
-    this.countDown = 50000;
+    this.countDown = 1000;
   }
 
 }
@@ -652,6 +657,7 @@ class FinalScene extends Scene {
   constructor() {
     super();
     this.numTicks = 0;
+    this.totalTicks = 300;
   }
   draw(player1, player2, foods) {
     push();
@@ -677,7 +683,10 @@ class FinalScene extends Scene {
       ellipse(player1.x, player1.y, player1.r);
       player1.deathDraw();
 
-    } else {}
+    } else {
+      // only here possible if in simultaneous mode.
+      player1.twoBecomeOne(player2, this.numTicks / this.totalTicks);
+    }
     // GAME OVER TEXT
     fill('red');
     noStroke();
@@ -690,7 +699,7 @@ class FinalScene extends Scene {
     pop();
   }
   advanceToNextScene(player1, player2) {
-    return this.numTicks >= 300;
+    return this.numTicks >= this.totalTicks;
   }
   resetScene() {
     super.resetScene();
