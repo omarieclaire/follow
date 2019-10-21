@@ -39,6 +39,17 @@ class Scene {
     }
   }
 
+  drawCountDown() {
+    if(this.getCurrentKeyMode() === "simultaneous") {
+      this.countDown--;
+      push();
+      fill(255,0,0);
+      noStroke();
+      textAlign(CENTER, TOP);
+      text(this.countDown, width/5, height/5, 3/5*width, 3/5*height);
+      pop();
+    }
+  }
   ///////////////////////////
   //// Basic Scene Draw /////
   ///////////////////////////
@@ -478,7 +489,7 @@ class TrainingScene extends Scene {
   constructor() {
     super();
     this.numTicks = 0;
-
+    this.countDown = 50000;
   };
 
   keyWasPressed(keyCode, player1, player2) {
@@ -528,6 +539,7 @@ class TrainingScene extends Scene {
         // ringMoveSound.stop();
       }
       pop();
+      this.drawCountDown();
     } else {}
     this.wideSceneDraw();
   }
@@ -539,6 +551,7 @@ class TrainingScene extends Scene {
   resetScene() {
     super.resetScene();
     this.numTicks = 0;
+    this.countDown = 50000;
   }
 
 }
@@ -562,6 +575,10 @@ class PlayScene extends Scene {
     }
   }
 
+  setupFromPreviousScene(previousScene) {
+    super.setupFromPreviousScene(previousScene);
+    this.countDown = previousScene.countDown;
+  }
 
   playStartSound() {
     newSceneSound.play();
@@ -601,6 +618,7 @@ class PlayScene extends Scene {
     player2.drawFollowLine(player1);
 
     this.wideSceneDraw();
+    this.drawCountDown();
   }
 
   advanceToNextScene(player1, player2) {
@@ -617,6 +635,7 @@ class PlayScene extends Scene {
     this.initializeSpikes();
   }
 }
+
 /////////////////////////
 //// bonus scene ////
 /////////////////////////
