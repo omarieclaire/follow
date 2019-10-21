@@ -396,6 +396,9 @@ class Player {
 
     // player circle / face
     ellipse(this.x, this.y, this.scl, this.scl);
+    // animation(p2Ball, this.x, this.y);
+    // animation(p2Ball, 300, 150);
+
     if(this.isFollowing) {
       this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl/8, this.arcFollowColor, 4);
     } else if(this.isFollowed) {

@@ -94,7 +94,7 @@ var player2InitialRingColors = [
   [96, 14, 142]
 ];
 
-var ghost1, ghost2;
+var p1Ball, p2Ball;
 
 
 var scl = 30; // scale of almost everything in the game
@@ -132,7 +132,7 @@ var serial;
 // foodgen_sound, newScene (currently dupe sound), start game sound
 
 function preload() {
-  p1_img = loadImage('img/p1.png');
+  p1_img = loadImage('img/p11.png');
   introSound = loadSound('sounds/intro.mp3');
   introSound.setVolume(vol);
   foodGenSound = loadSound('sounds/eat.mp3');
@@ -152,8 +152,8 @@ function preload() {
   ambientSound = loadSound('sounds/ambience.mp3');
   ambientSound.setVolume(vol);
 
-  ghost1 = loadAnimation('img/ghost_standing0001.png', 'img/ghost_standing0002.png');
-  ghost2 = loadAnimation('img/ghost_standing0001.png', 'img/ghost_standing0002.png');
+  p1Ball = loadAnimation('img/p11.png', 'img/p12.png', 'img/p13.png','img/p14.png', 'img/p15.png', 'img/p16.png');
+  p2Ball = loadAnimation('img/p21.png', 'img/p22.png', 'img/p23.png','img/p24.png', 'img/p25.png', 'img/p26.png');
 
   spectral = loadFont('fonts/spectral.ttf');
   openSansFont = loadFont('fonts/OpenSans-Regular.ttf');
@@ -215,7 +215,7 @@ function draw() {
   // Finally actually drawing!
   sceneManager.drawScene(player1, player2, foods);
 
-  // animation(ghost1, 300, 150);
+  animation(p2Ball, 300, 150);
 }
 
 function playerCollision() {
@@ -282,6 +282,13 @@ function gotData() {
     var rightButtonState = buttonStates[1];
     var downButtonState = buttonStates[2];
     var leftButtonState = buttonStates[3];
+    var dButtonState = buttonStates[4];
+    var aButtonState = buttonStates[5];
+    var wButtonState = buttonStates[6];
+    var sButtonState = buttonStates[7];
+    var spaceButtonState = buttonStates[8];
+
+
 
     // TODO: work on logic here right now, the last button in the list of
     // ifs will override any other button. so if you press left and then 'up'
@@ -297,6 +304,21 @@ function gotData() {
     }
     if (leftButtonState === "0") {
       sceneManager.keyWasPressed(LEFT_ARROW, player1, player2);
+    }
+    if (spaceButtonState === "0") {
+      sceneManager.keyWasPressed(32, player1, player2);
+    }
+    if (aButtonState === "0") {
+      sceneManager.keyWasPressed(65, player1, player2);
+    }
+    if (wButtonState === "0") {
+      sceneManager.keyWasPressed(87, player1, player2);
+    }
+    if (sButtonState === "0") {
+      sceneManager.keyWasPressed(83, player1, player2);
+    }
+    if (dButtonState === "0") {
+      sceneManager.keyWasPressed(68, player1, player2);
     }
   }
 }
