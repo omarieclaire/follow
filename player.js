@@ -14,7 +14,7 @@ class Player {
     this.r = scl;
     this.yspeed = 0;
     this.lastYSpeed = this.yspeed;
-    this.total = 3;
+    this.total = 6;
     this.isFollowing = false;
     this.isFollowed = false;
     this.playerColor = tmp_playerColor;

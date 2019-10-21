@@ -63,6 +63,7 @@ class LineWrapperHelper {
   }
 
   getTargetCoordinatesForLeft(trailingPlayer, leadingPlayer) {
+    console.log("trailing player x " + trailingPlayer.x + " and leading player x " + leadingPlayer.x);
     var totalXDistance = (windowWidth - this.spacer) + trailingPlayer.x - leadingPlayer.x;
     var totalYDistance = leadingPlayer.y - trailingPlayer.y;
     var distanceFromEdge = 0 + trailingPlayer.x;
@@ -77,6 +78,7 @@ class LineWrapperHelper {
   }
 
   getTargetCoordinatesForUp(trailingPlayer, leadingPlayer) {
+    console.log("trailing player x " + trailingPlayer.x + " and leading player x " + leadingPlayer.x);
     var totalXDistance = trailingPlayer.x - leadingPlayer.x;
     var totalYDistance = trailingPlayer.y + (windowHeight - this.spacer) - leadingPlayer.y;
     var distanceFromEdge = trailingPlayer.y;
@@ -117,6 +119,10 @@ class LineWrapperHelper {
       // I'm trailing (I have less counts)
       trailingPlayer = this.player;
       leadingPlayer = otherPlayer;
+    } else {
+      console.log("THIS IS BAD");
+      trailingPlayer = this.player;
+      leadingPlayer = otherPlayer;
     }
 
     return {
@@ -142,7 +148,6 @@ class LineWrapperHelper {
   }
 
   handleDirUp(otherPlayer) {
-    //debugger;
     var leadingOrTrailing = this.getTrailingAndLeadingPlayer(otherPlayer);
     var leadingPlayer = leadingOrTrailing.leading;
     var trailingPlayer = leadingOrTrailing.trailing;
@@ -225,7 +230,7 @@ class LineWrapperHelper {
   }
 
   drawWrappedFollowLine(otherPlayer) {
-    if (this.player.numLoops === otherPlayer.numLoops) {
+    if (this.player.numLoops === otherPlayer.numLoops || Math.abs(this.player.numLoops - otherPlayer.numLoops) > 1) {
       this.drawFollowLine(otherPlayer.x, otherPlayer.y);
     } else {
       var targetCoordinates;

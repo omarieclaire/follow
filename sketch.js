@@ -8,17 +8,14 @@
 // what is this thing anyway? can I cut stuff for clarity?
 
 // TODOS
-// TODO draw MVP of other deaths
-//        1. explosion - uneven death
-//        2. scattered ghost rings - equal death
-//        3. 2 become 1 giant ring - time out lots of rings
-// press spacebar to begin  ---- bad spacing
+//
 // buy boxes
-// timer for final mode.
 
-// WAITING playtest & check keypress ordering logic in serial
-// WAITING Test visuals on actual projector
-// WAITING - follow line, seamless wrapping
+// fix keypress/hold
+// Test visuals on actual projector
+// rings should move around followline even when wrapping
+// check and debug all resets!
+// TODO fix numLoops loop counting bug (diff should alwyas be 0, 1, or -1)
 
 // TODO refactor ha. ha. ha.
 
@@ -129,6 +126,16 @@ var ambientSound;
 
 var serial;
 
+var upButtonIsDown = false;
+var rightButtonIsDown = false;
+var downButtonIsDown = false;
+var leftButtonIsDown = false;
+var dButtonIsDown = false;
+var aButtonIsDown = false;
+var wButtonIsDown = false;
+var sButtonIsDown = false;
+var spaceButtonIsDown = false;
+
 // foodgen_sound, newScene (currently dupe sound), start game sound
 
 function preload() {
@@ -189,7 +196,7 @@ function setup() {
   // Instantiate our SerialPort object
   serial = new p5.SerialPort();
   //copy this from serial control app
-  serial.open("/dev/tty.usbmodem14201");
+  serial.open("/dev/tty.usbmodem14111");
   // call my function gotData when you receive data on the serial port
   serial.on('data', gotData);
 }
@@ -286,16 +293,20 @@ function gotData() {
     var sButtonState = buttonStates[7];
     var spaceButtonState = buttonStates[8];
 
-
-
     // TODO: work on logic here right now, the last button in the list of
     // ifs will override any other button. so if you press left and then 'up'
     // the character will move left.
     if (upButtonState === "0") {
       sceneManager.keyWasPressed(UP_ARROW, player1, player2);
+      upButtonIsDown = true;
+    } else {
+      upButtonIsDown = false;
     }
     if (rightButtonState === "0") {
       sceneManager.keyWasPressed(RIGHT_ARROW, player1, player2);
+      rightButtonIsDown = true;
+    } else {
+      rightButtonIsDown = false;
     }
     if (downButtonState === "0") {
       sceneManager.keyWasPressed(DOWN_ARROW, player1, player2);
@@ -308,6 +319,9 @@ function gotData() {
     }
     if (aButtonState === "0") {
       sceneManager.keyWasPressed(65, player1, player2);
+      aButtonIsDown = true;
+    } else {
+      aButtonIsDown = false;
     }
     if (wButtonState === "0") {
       sceneManager.keyWasPressed(87, player1, player2);
