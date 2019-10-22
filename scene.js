@@ -49,7 +49,7 @@ class Scene {
       noStroke();
       textAlign(CENTER, TOP);
       var numberToPrint = floor(this.countDown / 50);
-      text(numberToPrint, width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
+      text(numberToPrint, windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
       pop();
     }
   }
@@ -330,7 +330,7 @@ class Scene {
       if (keyCode === 65) {
         player2.changeDirectionLeft(player1);
         player1.changeDirectionLeft(player2);
-        player2.isFollowed = true; //hacky temp sol 
+        player2.isFollowed = true; //hacky temp sol
         player1.isFollowing = true;
         player1.numLoops = 0;
         player2.numLoops = 0;
@@ -378,11 +378,11 @@ class TitleScene extends Scene {
     textAlign(CENTER, TOP);
     textFont(spectral);
     fill(player1Color);
-    text("follow", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height)
+    text("follow", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height)
     fill(200);
     textFont(openSansFont);
     textSize(standardTextSize / 2);
-    text("press spacebar to begin", width / 5, 4 / 5 * height, 3 / 5 * width, height);
+    text("press spacebar to begin", windowWidth/ 5, 4 / 5 * height, 3 / 5 * windowWidth, height);
     pop();
   }
 
@@ -425,7 +425,7 @@ class InstructionScene extends Scene {
     fill(player1Color);
     textFont(openSansFont);
     textLeading(scl * 2);
-    text(this.instructionText, width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
+    text(this.instructionText, windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
     /*
     fill(player1Color);
     text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
@@ -435,7 +435,7 @@ class InstructionScene extends Scene {
     fill(200);
     textSize(standardTextSize / 2);
     textAlign(CENTER, TOP);
-    text("press spacebar to begin", width / 5, 4 / 5 * height, 3 / 5 * width, height);
+    text("press spacebar to begin", windowWidth/ 5, 4 / 5 * height, 3 / 5 * windowWidth, height);
     pop();
   }
 
@@ -479,7 +479,7 @@ class WelcomeScene extends Scene {
     textSize(standardTextSize);
     textAlign(CENTER, CENTER);
     textLeading(scl * 2);
-    text("Welcome", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
+    text("Welcome", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
     this.wideSceneDraw();
   }
 
@@ -688,7 +688,7 @@ class FinalScene extends Scene {
       textSize(standardTextSize);
       textAlign(CENTER, TOP);
       if(this.getCurrentKeyMode() === "simultaneous") {
-        text("mutal end", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
+        text("mutal end", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
         console.log("mutual end");
       }
     } else if (player2.total <= 0 && player1.total > 0) {
@@ -702,7 +702,7 @@ class FinalScene extends Scene {
       textSize(standardTextSize);
       textAlign(CENTER, TOP);
       if(this.getCurrentKeyMode() === "simultaneous") {
-        text("one gives, one takes", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
+        text("one gives, one takes", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
         console.log("one gives one takes");
 
       }
@@ -717,7 +717,7 @@ class FinalScene extends Scene {
       textSize(standardTextSize);
       textAlign(CENTER, TOP);
       if(this.getCurrentKeyMode() === "simultaneous") {
-        text("one gives, one takes", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
+        text("one gives, one takes", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
         console.log("one gives one takes");
 
       }
@@ -728,14 +728,14 @@ class FinalScene extends Scene {
       noStroke();
       textSize(standardTextSize);
       textAlign(CENTER, TOP);
-      text("together", width / 5, height / 5 , 3 / 5 * width, 3 / 5 * height);
+      text("together", windowWidth/ 5, height / 5 , 3 / 5 * windowWidth, 3 / 5 * height);
       console.log("together");
     }
     // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
     this.numTicks++;
     this.wideSceneDraw();
     textAlign(CENTER, CENTER);
-    text("begin again?", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
+    text("begin again?", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
     pop();
   }
   advanceToNextScene(player1, player2) {

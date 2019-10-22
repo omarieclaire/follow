@@ -10,11 +10,9 @@
 // TODOS
 //
 // buy mdf
-// text not centered on fullscreen - check to see if something is relying on width instead of windowWidth and causing the text to be not centered in full screen
-// update follow colors
+// text not centered on fullscreen - check to see if something is relying on windowWidthinstead of windowWidth and causing the text to be not centered in full screen
 // rings should move around followline even when wrapping
-// TODO fix numLoops loop counting bug (diff should alwyas be 0, 1, or -1)
-//
+// change line between players (thick to thin communicating direction)
 
 // TODO refactor ha. ha. ha.
 
