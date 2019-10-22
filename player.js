@@ -9,7 +9,7 @@ class Player {
     this.total = 6;
     this.isFollowing = false;
     this.isFollowed = false;
-    this.arcLeadingColor = [255, 225, 0, 250];
+    this.arcLeadingColor = [255, 215, 0, 250];
     this.arcBaseColor = [255, 215, 0, 250];
     this.poppedRings = [];
     this.numTicksPoppedRing = 0;
@@ -371,7 +371,11 @@ class Player {
     // animation(p2Ball, 300, 150);
 
     if (this.isFollowing) {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcFollowColor, 4);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcBaseColor, 4);
+      // push();
+      // strokeWeight(.05);
+      // this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcFollowColor, 4);
+      // pop();
     } else if (this.isFollowed) {
       this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcLeadingColor, 4);
     } else {

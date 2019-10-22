@@ -11,7 +11,6 @@
 //
 // buy mdf
 // text not centered on fullscreen - check to see if something is relying on width instead of windowWidth and causing the text to be not centered in full screen
-// Make spikes and food bigger
 // update follow colors
 // rings should move around followline even when wrapping
 // TODO fix numLoops loop counting bug (diff should alwyas be 0, 1, or -1)
@@ -68,8 +67,8 @@ var ringColor = [230, 230, 230];
 var pointColor = [255, 215, 0, 250]; // gold
 var player1Color = [255, 51, 153, 240]; // magenta
 var player2Color = [51, 153, 255, 240]; //   blue
-var player1FadeColor = [184, 125, 155, 100]; // faded pink
-var player2FadeColor = [145, 200, 255, 100]; // faded blue
+var player1FadeColor = [255, 51, 153, 240]; // faded pink
+var player2FadeColor = [51, 153, 255, 240]; // faded blue
 var player1InitialRingColors = [
   [119, 37, 164],
   [167, 105, 201],
