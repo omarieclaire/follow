@@ -682,7 +682,6 @@ class FinalScene extends Scene {
       if(this.getCurrentKeyMode() === "simultaneous") {
         text("mutal end", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
         console.log("mutual end");
-
       }
     } else if (player2.total <= 0 && player1.total > 0) {
       fill(1);
@@ -724,11 +723,11 @@ class FinalScene extends Scene {
       text("together", width / 5, height / 5 , 3 / 5 * width, 3 / 5 * height);
       console.log("together");
     }
-    textAlign(CENTER, CENTER);
-    text("begin again?", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
     // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
     this.numTicks++;
     this.wideSceneDraw();
+    textAlign(CENTER, CENTER);
+    text("begin again?", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
     pop();
   }
   advanceToNextScene(player1, player2) {

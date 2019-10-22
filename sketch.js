@@ -10,10 +10,10 @@
 // TODOS
 //
 // buy boxes
+// check to see if something is relying on width instead of windowWidth and causing the text to be not centered in full screen
 // Make spikes and food bigger
 // update follow colors
 // rings should move around followline even when wrapping
-// check and debug all resets!
 // TODO fix numLoops loop counting bug (diff should alwyas be 0, 1, or -1)
 // text not centered on fullscreen
 

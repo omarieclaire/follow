@@ -33,6 +33,8 @@ class SceneManager {
     } else {
       if (theCurrentScene.isGameOverCheck(player1, player2) == true) {
         this.gameOverMode = true;
+        var theCurrentScene = this.allTheScenes[this.currSceneIndex];
+        this.finalScene.setupFromPreviousScene(theCurrentScene);
       }
       return this.gameOverMode;
     }
