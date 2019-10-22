@@ -1,15 +1,7 @@
 class Player {
-  //constructor is a method which is run only once to set up the object
-  constructor(temp_name, temp_playerDir, temp_xspeed, xOffSet, scl, tmp_playerColor, tmp_playerFadedColor, initial_colors, temp_otherPlayerColor) {
+
+  initializePlayerValues() {
     this.scl = scl; //note: I don't reset this in the reset, maybe I should
-    this.name = temp_name;
-    this.direction = temp_playerDir;
-    this.initialDirection = temp_playerDir; //store initial diection for reset
-    this.xspeed = temp_xspeed;
-    this.initialxspeed = temp_xspeed;
-    this.lastXSpeed = this.xspeed;
-    this.x = xOffSet;
-    this.initialXOffset = xOffSet;
     this.y = windowHeight / 2;
     this.r = scl;
     this.yspeed = 0;
@@ -17,20 +9,13 @@ class Player {
     this.total = 6;
     this.isFollowing = false;
     this.isFollowed = false;
-    this.playerColor = tmp_playerColor;
-    this.playerFadedColor = tmp_playerFadedColor;
-    this.otherPlayerColor = temp_otherPlayerColor;
-    this.arcFollowColor = this.otherPlayerColor;
     this.arcLeadingColor = [255, 225, 0, 250];
     this.arcBaseColor = [255, 215, 0, 250];
-    this.directionalRingBaseColor =
-    this.initialColors = initial_colors;
     this.poppedRings = [];
     this.numTicksPoppedRing = 0;
     this.ringSpacer = this.scl / 4;
     this.explodeParticles = [];
     this.followSoundClass = new FollowSound();
-
     this.numTicks = 0;
     // this.newColor = [0, 255, 255];
     this.windowLoopSpacer = this.scl / 2;
@@ -62,49 +47,30 @@ class Player {
     this.lineWrapperHelper = new LineWrapperHelper(this, this.windowLoopSpacer);
   }
 
+  //constructor is a method which is run only once to set up the object
+  constructor(temp_name, temp_playerDir, temp_xspeed, xOffSet, scl, tmp_playerColor, tmp_playerFadedColor, initial_colors, temp_otherPlayerColor) {
+    this.name = temp_name;
+    this.direction = temp_playerDir;
+    this.initialDirection = temp_playerDir; //store initial diection for reset
+    this.xspeed = temp_xspeed;
+    this.initialxspeed = temp_xspeed;
+    this.lastXSpeed = this.xspeed;
+    this.x = xOffSet;
+    this.initialXOffset = xOffSet;
+    this.playerColor = tmp_playerColor;
+    this.playerFadedColor = tmp_playerFadedColor;
+    this.otherPlayerColor = temp_otherPlayerColor;
+    this.arcFollowColor = this.otherPlayerColor;
+    this.initialColors = initial_colors;
+    this.initializePlayerValues();
+  }
+
   resetPlayer() {
     this.xspeed = this.initialxspeed;
     this.lastXSpeed = this.xspeed;
     this.x = this.initialXOffset;
-    this.y = windowHeight / 2;
-    this.r = scl;
-    this.yspeed = 0;
-    this.lastYSpeed = this.yspeed;
-    this.total = 5;
-    this.isFollowing = false;
-    this.isFollowed = false;
     this.direction = this.initialDirection;
-    this.poppedRings = [];
-    this.numTicksPoppedRing = 0;
-    this.followSound = new FollowSound();
-
-    this.numTicks = 0;
-    // this.newColor = [0, 255, 255];
-    this.windowLoopSpacer = this.scl / 2;
-    this.hasLooped = false;
-    this.loopDirection;
-
-
-    this.playerRings = []; // store the rings within a local array
-    let randomColors = [
-      [119, 37, 164],
-      [167, 105, 201],
-      [138, 66, 178],
-      [96, 14, 142],
-      [119, 37, 164],
-      [167, 105, 201],
-      [138, 66, 178],
-      [96, 14, 142],
-
-    ];
-    for (var i = 0; i < this.total; i++) { //for each point in score
-      this.playerRings.push(new Rings(this, this.scl, random(randomColors))); //push a new ring to array
-    }
-
-    this.explodeParticles = [];
-    for (var i = 0; i < 500; i++) {
-      this.explodeParticles.push(new ExplodeParticle());
-    }
+    this.initializePlayerValues();
   }
 
   handlePlayerFollowing(otherPlayer, ourFutureDirection) {
@@ -399,12 +365,12 @@ class Player {
     // animation(p2Ball, this.x, this.y);
     // animation(p2Ball, 300, 150);
 
-    if(this.isFollowing) {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl/8, this.arcFollowColor, 4);
-    } else if(this.isFollowed) {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl/8, this.arcLeadingColor, 4);
+    if (this.isFollowing) {
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcFollowColor, 4);
+    } else if (this.isFollowed) {
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcLeadingColor, 4);
     } else {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl/8, this.arcBaseColor, 4);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcBaseColor, 4);
     }
 
     noFill();

@@ -10,7 +10,6 @@
 // TODOS
 //
 // buy boxes
-// fix keypress/hold
 // Make spikes and food bigger
 // update follow colors
 // rings should move around followline even when wrapping

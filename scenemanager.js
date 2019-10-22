@@ -15,6 +15,9 @@ class SceneManager {
     }
     player1.resetPlayer();
     player2.resetPlayer();
+    foods.forEach(function(food) {
+      food.reset();
+    });
     //reset the game over scene
     this.finalScene.resetScene();
     this.gameOverMode = false;

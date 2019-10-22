@@ -1,14 +1,22 @@
 class Food {
-  constructor(temp_scl) {
-    this.scl = temp_scl;
-    this.total = 3;
-    this.x;
-    this.y;
-    this.speed = 2;
+
+  initializeFood() {
     this.color = this.foodColorPicker();
     this.numTicks = 0;
     // every this-many-ticks, increasing the speed.
     this.speedIncreaseCondition = 1000;
+    this.speed = 2;
+    this.total = 3;
+  }
+  constructor(temp_scl) {
+    this.scl = temp_scl;
+    this.x;
+    this.y;
+    this.initializeFood();
+  }
+
+  reset() {
+    this.initializeFood();
   }
 
   foodColorPicker() {
