@@ -299,10 +299,15 @@ class Player {
       }
       iHaveLooped = true;
     }
-
+    // I have looped and am following OR am followed
     if (iHaveLooped && (this.isFollowing || this.isFollowed)) {
       this.numLoops++;
+      console.log("Player " + this.name + " numLoops = " + this.numLoops);
+      // I am NOT following and am NOT followed
     } else if (!this.isFollowing && !this.isFollowed) {
+      if(this.numLoops !== 0) {
+        console.log("Player " + this.name + " numLoops Reset from " + this.numLoops + " to 0");
+      }
       this.numLoops = 0;
     }
 

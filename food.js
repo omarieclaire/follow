@@ -87,14 +87,14 @@ class Food {
     }
     this.y = this.foodLocation.y;
     stroke(this.color);
-    strokeWeight(.75);
+    strokeWeight(1);
     noFill();
-    ellipse(this.foodLocation.x, this.foodLocation.y, this.scl, this.scl);
+    ellipse(this.foodLocation.x, this.foodLocation.y, this.scl*1.5, this.scl*1.5);
     for (var i = 0; i < this.total; i++) {
       // fill(random(220, 10), random(220, 10), 0);
 //old food
       // ellipse(this.foodLocation.x, this.foodLocation.y, random(scl / 2, scl / 8), random(scl / 2, scl / 8));
-      ellipse(this.foodLocation.x, this.foodLocation.y, random(scl / 2, scl / 8));
+      ellipse(this.foodLocation.x, this.foodLocation.y, random(scl / 1.5, scl / 7.5));
     }
     pop();
   }
