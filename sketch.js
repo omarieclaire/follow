@@ -10,9 +10,9 @@
 // TODOS
 //
 // buy boxes
-// when a player releases their key (from halt state) they need to stop losing rings
 // fix keypress/hold
-// Test visuals on actual projector
+// Make spikes and food bigger
+// update follow colors
 // rings should move around followline even when wrapping
 // check and debug all resets!
 // TODO fix numLoops loop counting bug (diff should alwyas be 0, 1, or -1)
@@ -159,8 +159,8 @@ function preload() {
   ambientSound = loadSound('sounds/ambience.mp3');
   ambientSound.setVolume(vol);
 
-  p1Ball = loadAnimation('img/p11.png', 'img/p12.png', 'img/p13.png','img/p14.png', 'img/p15.png', 'img/p16.png');
-  p2Ball = loadAnimation('img/p21.png', 'img/p22.png', 'img/p23.png','img/p24.png', 'img/p25.png', 'img/p26.png');
+  p1Ball = loadAnimation('img/p11.png', 'img/p12.png', 'img/p13.png', 'img/p14.png', 'img/p15.png', 'img/p16.png');
+  p2Ball = loadAnimation('img/p21.png', 'img/p22.png', 'img/p23.png', 'img/p24.png', 'img/p25.png', 'img/p26.png');
 
   spectral = loadFont('fonts/spectral.ttf');
   openSansFont = loadFont('fonts/OpenSans-Regular.ttf');
@@ -266,6 +266,21 @@ function keyReleased() {
   return false;
 }
 
+function handleButtonPress(buttonState, downFlag, keyCode) {
+  if (buttonState === "0") {
+    if (this[downFlag] === false) {
+      // this is the first time we're seeing the button down.
+      this[downFlag] = true;
+      sceneManager.keyWasPressed(keyCode, player1, player2);
+    }
+  } else {
+    if (this[downFlag] == true) {
+      this[downFlag] = false;
+      sceneManager.keyWasReleased(keyCode, player1, player2);
+    }
+  }
+}
+
 // function to process incoming data from the arduino (serial)
 // serial will call this each time data is available.
 function gotData() {
@@ -297,41 +312,14 @@ function gotData() {
     // TODO: work on logic here right now, the last button in the list of
     // ifs will override any other button. so if you press left and then 'up'
     // the character will move left.
-    if (upButtonState === "0") {
-      sceneManager.keyWasPressed(UP_ARROW, player1, player2);
-      upButtonIsDown = true;
-    } else {
-      upButtonIsDown = false;
-    }
-    if (rightButtonState === "0") {
-      sceneManager.keyWasPressed(RIGHT_ARROW, player1, player2);
-      rightButtonIsDown = true;
-    } else {
-      rightButtonIsDown = false;
-    }
-    if (downButtonState === "0") {
-      sceneManager.keyWasPressed(DOWN_ARROW, player1, player2);
-    }
-    if (leftButtonState === "0") {
-      sceneManager.keyWasPressed(LEFT_ARROW, player1, player2);
-    }
-    if (spaceButtonState === "0") {
-      sceneManager.keyWasPressed(32, player1, player2);
-    }
-    if (aButtonState === "0") {
-      sceneManager.keyWasPressed(65, player1, player2);
-      aButtonIsDown = true;
-    } else {
-      aButtonIsDown = false;
-    }
-    if (wButtonState === "0") {
-      sceneManager.keyWasPressed(87, player1, player2);
-    }
-    if (sButtonState === "0") {
-      sceneManager.keyWasPressed(83, player1, player2);
-    }
-    if (dButtonState === "0") {
-      sceneManager.keyWasPressed(68, player1, player2);
-    }
+    handleButtonPress(upButtonState, 'upButtonIsDown', UP_ARROW);
+    handleButtonPress(rightButtonState, 'rightButtonIsDown', RIGHT_ARROW);
+    handleButtonPress(downButtonState, 'downButtonIsDown', DOWN_ARROW);
+    handleButtonPress(leftButtonState, 'leftButtonIsDown', LEFT_ARROW);
+    handleButtonPress(aButtonState, 'aButtonIsDown', 65);
+    handleButtonPress(wButtonState, 'wButtonIsDown', 87);
+    handleButtonPress(sButtonState, 'sButtonIsDown', 83);
+    handleButtonPress(dButtonState, 'dButtonIsDown', 68);
+    handleButtonPress(spaceButtonState, 'spaceButtonIsDown', 32);
   }
 }
