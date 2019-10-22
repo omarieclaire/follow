@@ -10,7 +10,7 @@
 // TODOS
 //
 // buy boxes
-
+// when a player releases their key (from halt state) they need to stop losing rings
 // fix keypress/hold
 // Test visuals on actual projector
 // rings should move around followline even when wrapping
@@ -96,7 +96,7 @@ var p1Ball, p2Ball;
 
 
 var scl = 30; // scale of almost everything in the game
-var vol = 0.01; // music volume standard
+var vol = 0.1; // music volume standard
 var foods = [];
 
 var titleScene;

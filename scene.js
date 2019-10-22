@@ -43,7 +43,9 @@ class Scene {
     if (this.getCurrentKeyMode() === "simultaneous") {
       this.countDown--;
       push();
-      fill(255, 0, 0);
+      textSize(standardTextSize);
+
+      fill(138,43,226); //purple
       noStroke();
       textAlign(CENTER, TOP);
       var numberToPrint = floor(this.countDown / 50);
@@ -84,8 +86,8 @@ class Scene {
     if (this.getCurrentKeyMode() == "simultaneous") {
       push();
       fill(1);
-      rect(0, 0, windowWidth, windowHeight / 6);
-      rect(0, windowHeight - windowHeight / 6, windowWidth, windowHeight);
+      // rect(0, 0, windowWidth, windowHeight / 6);
+      // rect(0, windowHeight - windowHeight / 6, windowWidth, windowHeight);
       pop();
     }
   }
@@ -178,8 +180,8 @@ class Scene {
     // if in a previous halt state and now NOT in a halt state, then resume.
     if (previouslyHalted && !currentlyHalted) {
       if (this.player1LeftKeyDown) {
-        player1.changeDirectionLeft(player2);
         player2.changeDirectionLeft(player1);
+        player1.changeDirectionLeft(player2);
       } else if (this.player2RightKeyDown) {
         player1.changeDirectionRight(player2);
         player2.changeDirectionRight(player1);
@@ -490,7 +492,7 @@ class TrainingScene extends Scene {
   constructor() {
     super();
     this.numTicks = 0;
-    this.countDown = 1000;
+    this.countDown = 90000;
   };
 
   keyWasPressed(keyCode, player1, player2) {
@@ -556,7 +558,7 @@ class TrainingScene extends Scene {
   resetScene() {
     super.resetScene();
     this.numTicks = 0;
-    this.countDown = 1000;
+    this.countDown = 9000;
   }
 
 }
@@ -672,34 +674,56 @@ class FinalScene extends Scene {
       ellipse(player2.x, player2.y, player1.r);
       player1.deathDraw();
       player2.deathDraw();
+
+      fill(foodColor);
+      noStroke();
+      textSize(standardTextSize);
+      textAlign(CENTER, TOP);
       if(this.getCurrentKeyMode() === "simultaneous") {
-        // text()
+        text("mutal end", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
+        console.log("mutual end");
+
       }
     } else if (player2.total <= 0 && player1.total > 0) {
       fill(1);
       stroke(1);
       ellipse(player2.x, player2.y, player1.r);
       player2.deathDraw();
+
+      fill(foodColor);
+      noStroke();
+      textSize(standardTextSize);
+      textAlign(CENTER, TOP);
       if(this.getCurrentKeyMode() === "simultaneous") {
-        // text()
+        text("one gives, one takes", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
+        console.log("one gives one takes");
+
       }
     } else if (player1.total <= 0 && player2.total > 0) {
       fill(1);
       stroke(1);
       ellipse(player1.x, player1.y, player1.r);
       player1.deathDraw();
+
+      fill(foodColor);
+      noStroke();
+      textSize(standardTextSize);
+      textAlign(CENTER, TOP);
       if(this.getCurrentKeyMode() === "simultaneous") {
-        // text()
+        text("one gives, one takes", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
+        console.log("one gives one takes");
+
       }
     } else {
       // should only get here in simultaneous mode
       player1.twoBecomeOne(player2, this.numTicks / this.totalTicks);
+      fill(foodColor);
+      noStroke();
+      textSize(standardTextSize);
+      textAlign(CENTER, TOP);
+      text("together", width / 5, height / 5 , 3 / 5 * width, 3 / 5 * height);
+      console.log("together");
     }
-
-    // GAME OVER TEXT
-    fill('red');
-    noStroke();
-    textSize(standardTextSize);
     textAlign(CENTER, CENTER);
     text("begin again?", width / 5, height / 5, 3 / 5 * width, 3 / 5 * height);
     // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);

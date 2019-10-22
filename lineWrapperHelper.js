@@ -63,7 +63,6 @@ class LineWrapperHelper {
   }
 
   getTargetCoordinatesForLeft(trailingPlayer, leadingPlayer) {
-    console.log("trailing player x " + trailingPlayer.x + " and leading player x " + leadingPlayer.x);
     var totalXDistance = (windowWidth - this.spacer) + trailingPlayer.x - leadingPlayer.x;
     var totalYDistance = leadingPlayer.y - trailingPlayer.y;
     var distanceFromEdge = 0 + trailingPlayer.x;
@@ -78,7 +77,6 @@ class LineWrapperHelper {
   }
 
   getTargetCoordinatesForUp(trailingPlayer, leadingPlayer) {
-    console.log("trailing player x " + trailingPlayer.x + " and leading player x " + leadingPlayer.x);
     var totalXDistance = trailingPlayer.x - leadingPlayer.x;
     var totalYDistance = trailingPlayer.y + (windowHeight - this.spacer) - leadingPlayer.y;
     var distanceFromEdge = trailingPlayer.y;

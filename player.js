@@ -342,8 +342,8 @@ class Player {
 
     // following player jitter (x speed is for the death case)
     if (this.isFollowing && this.xspeed != 0) {
-      this.x = this.x + random(-2, 2);
-      this.y = this.y + random(-2, 2);
+      this.x = this.x; //+ random(-2, 2);
+      this.y = this.y; //+ random(-2, 2);
     }
     for (var i = 0; i < this.playerRings.length; i++) {
       this.playerRings[i].move();
