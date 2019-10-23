@@ -8,11 +8,9 @@
 // what is this thing anyway? can I cut stuff for clarity?
 
 // TODOS
-// text still not centered on fullscreen
-// fix death text alignment
-
+// text not centered on fullscreen
+// follow line should be drawn behind the player OR taper off OR
 // rings should move around followline even when wrapping
-// change line between players (thick to thin communicating direction)
 
 // rug, table, lamp?
 // is the venue wheelchair accessible?
@@ -45,7 +43,7 @@
 // 2) Open p5 Serialcontrol app. Select port. Click 'open'. Check 'console enabled' and 'read in ASCII' Check for values. Uncheck both check-boxes.
 // 3) Include library in this project folder. Include library path in index.html. Include unique serialport ID (e.g. "/dev/tty.usbmodem14201") in setup(),
 
-// Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie, Brent, Peiling,
+// Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie, Brent, Peiling, Nun, Atharva, 
 
 // p5.disableFriendlyErrors = true;
 

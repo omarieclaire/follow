@@ -192,7 +192,6 @@ class Scene {
 
   setInstructionText() {
     var keyMode = this.getCurrentKeyMode();
-    console.log("Getting instrcutions");
     if (keyMode == "solo") {
       this.instructionText = "Player 1 use wasd keys.\nPlayer 2 use arrow keys.\n\nGive your rings to the other player by going the same direction"
     } else if (keyMode == "toggle") {
@@ -705,7 +704,7 @@ class FinalScene extends Scene {
       textSize(standardTextSize);
       textAlign(CENTER, BOTTOM);
       if(this.getCurrentKeyMode() === "simultaneous") {
-        text("one gives, one takes", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
+        text("1 gives & 1 takes", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
         console.log("one gives one takes");
 
       }
@@ -720,7 +719,7 @@ class FinalScene extends Scene {
       textSize(standardTextSize);
       textAlign(CENTER, BOTTOM);
       if(this.getCurrentKeyMode() === "simultaneous") {
-        text("one gives, one takes", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
+        text("1 gives & 1 takes", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
         console.log("one gives one takes");
 
       }

@@ -327,7 +327,7 @@ class Player {
     if (this.xspeed == 0 && this.yspeed == 0) {
       breatheRate = 0.05;
     } else {
-      breatheRate = 0.02;
+      breatheRate = 0.03;
     }
     //Change spacing of ring according to time
     //.6 is the limit of how large it can be
