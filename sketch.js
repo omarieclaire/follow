@@ -14,6 +14,11 @@
 // rings should move around followline even when wrapping
 // change line between players (thick to thin communicating direction)
 
+// rug, table, lamp?
+// is the venue wheelchair accessible?
+// should I get prof feedback?
+
+
 // DESIGN
 // TODO design sounds
 // TODO design layout

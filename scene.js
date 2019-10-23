@@ -5,7 +5,7 @@
 class Scene {
   constructor() {
     this.leaderRing = new LeaderRing(scl);
-    this.keyModes = ["solo", "toggle", "split", "sharedhorizon", "simultaneous"];
+    this.keyModes = ["simultaneous", "solo", "toggle", "split", "sharedhorizon"];
     this.keyModeIndex = 0;
     this.toggleFlag = true;
     this.player1LeftKeyDown = false;
@@ -192,16 +192,17 @@ class Scene {
 
   setInstructionText() {
     var keyMode = this.getCurrentKeyMode();
+    console.log("Getting instrcutions");
     if (keyMode == "solo") {
       this.instructionText = "Player 1 use wasd keys.\nPlayer 2 use arrow keys.\n\nGive your rings to the other player by going the same direction"
     } else if (keyMode == "toggle") {
-      this.instructionText = "Only one player can move at a time.\n\n Use arrow keys to play.\n\n Hit spacebar to take control from the other player.";
+      this.instructionText = "Only one player can move at a time.\n\n Hit spacebar to take control from the other player.";
     } else if (keyMode == "split") {
       this.instructionText = "Player 1 can move both players left & up using 'a' and 's'.\nPlayer 2 can move both players down & right using 'right arrow' and 'down arrow'.";
     } else if (keyMode == "sharedhorizon") {
       this.instructionText = "Player 1 steers both players left using the 'a' key.\nPlayer 2 steers both players right using the 'right arrow' key.\n Both players can move up and down independently";
     } else if (keyMode == "simultaneous") {
-      this.instructionText = "Player 1 steers both players left using the 'a' key.\nPlayer 2 steers both players right using the 'right arrow' key.\n If both players hold their keys down both players stop moving";
+      this.instructionText = "Button 1 steers left. Button 2 steers right.\n\n When both buttons are down, both players stop";
     }
   }
 
@@ -348,6 +349,7 @@ class Scene {
 
   movePlayerOnKeyPress(keyCode, player1, player2) {
     var keyMode = this.getCurrentKeyMode();
+    console.log(keyMode);
     if (keyMode == "solo") {
       this.soloKeyPressMode(keyCode, player1, player2);
     } else if (keyMode == "toggle") {
@@ -375,7 +377,7 @@ class TitleScene extends Scene {
   draw(player1, player2, foods) {
     push();
     background(0, 0, 20);
-    textSize(standardTextSize * 2);
+    textSize(standardTextSize * 3);
     textAlign(CENTER, TOP);
     textFont(spectral);
     fill(player1Color);

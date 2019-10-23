@@ -340,13 +340,13 @@ class Player {
     strokeWeight(strokeW);
     stroke(color);
     noFill();
-    if (direction == "up") {
+    if (direction == "up" && this.xspeed != 0) {
       arc(x, y, length, length, 180, 0);
-    } else if (direction == "left") {
+    } else if (direction == "left" && this.xspeed != 0) {
       arc(x, y, length, length, 90, 270);
-    } else if (direction == "down") {
+    } else if (direction == "down" && this.xspeed != 0) {
       arc(x, y, length, length, 0, 180);
-    } else if (direction == "right") {
+    } else if (direction == "right" && this.xspeed != 0) {
       arc(x, y, length, length, 270, 90);
     } else {}
     pop();
