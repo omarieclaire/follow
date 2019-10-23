@@ -184,7 +184,10 @@ class LineWrapperHelper {
       var progress = (i.toFixed(10) / numSamples);
       var xpos = lerp(xStart, xEnd, progress);
       var ypos = lerp(yStart, yEnd, progress);
-      var amp = amplitude * (Math.cos(progress * Math.PI * 2. + 3.14) * 0.5 + 0.5);
+      // this amplitude determines the broad envelope of the wave.
+      // if amplitude is 1 for all the samples, then the wave will be a Regular
+      // sine wave.
+      var amp = (amplitude / (numSamples - i))  * (Math.cos(progress * Math.PI * 2. + 3.14) * 0.5 + 0.5);
       var wave = Math.sin(phase + currentTime * 0.01 + progress * Math.PI * 2.0 * frequency) * amp;
 
       xpos += Math.sin(angle) * wave * 0.5;
@@ -202,24 +205,35 @@ class LineWrapperHelper {
   drawFollowLine(targetX, targetY) {
     if (this.player.isFollowing || this.player.isFollowed) {
       push();
-      strokeWeight(5);
       var playerWavesColours = [
-        [255, 51, 153, 50],
-        [51, 153, 255, 50]
+        [255, 51, 153, 85],
+        [51, 153, 255, 85],
+        [0,0,200,85],
       ];
-      // var playerWavesColours = [[255, 51, 153, 50], [51, 153, 255, 50], [0, 255, 255, 50]];
-      // var playerWavesFrequencies = [0, 0.5*Math.PI, Math.PI];
-      var playerWavesFrequencies = [0.5 * Math.PI, Math.PI];
-      for (var i = 0; i < playerWavesColours.length; i++) {
-        var waveColour = playerWavesColours[i];
-        var waveFrequency = playerWavesFrequencies[i];
-        var waveyLinePoints = this.pointsForWaveyLine(this.player.x, this.player.y, targetX, targetY, 30, waveFrequency, 20, 25);
-        fill(waveColour);
+      var playerWavesPhases = [
+        0.5 * Math.PI,
+        0,
+        Math.PI
+      ];
+      // more samples is better fidelity
+      var waveyLineNumSamples = 30;
+      // maximum amplitude of the wave. (crescendo)
+      var waveyLineAmplitude = 200;
+      // distance between wave crests. Higher means shorter distance, "more humps"
+      var waveyLineFrequency = 25;
+
+      for (var j = 0; j < playerWavesColours.length; j++) {
+        var waveColour = playerWavesColours[j];
+        // start point of the wave (different start points mean the waves overlap)
+        var wavePhase = playerWavesPhases[j];
+        var waveyLinePoints = this.pointsForWaveyLine(this.player.x, this.player.y, targetX, targetY, waveyLineNumSamples, wavePhase, waveyLineAmplitude, waveyLineFrequency);
+        //fill(waveColour);
+        noFill();
         stroke(waveColour);
-        strokeWeight(1);
+        strokeWeight(3);
         beginShape();
-        for (var i = 0; i < waveyLinePoints.length; i++) {
-          vertex(waveyLinePoints[i].x, waveyLinePoints[i].y);
+        for (var k = 0; k < waveyLinePoints.length; k++) {
+          vertex(waveyLinePoints[k].x, waveyLinePoints[k].y);
         }
         endShape();
       }
@@ -229,7 +243,10 @@ class LineWrapperHelper {
 
   drawWrappedFollowLine(otherPlayer) {
     if (this.player.numLoops === otherPlayer.numLoops || Math.abs(this.player.numLoops - otherPlayer.numLoops) > 1) {
-      this.drawFollowLine(otherPlayer.x, otherPlayer.y);
+      // only draw line from player if following.
+      if(this.player.isFollowing) {
+        this.drawFollowLine(otherPlayer.x, otherPlayer.y);
+      }
     } else {
       var targetCoordinates;
       if (this.player.direction === "right") {

@@ -8,46 +8,32 @@
 // what is this thing anyway? can I cut stuff for clarity?
 
 // TODOS
-//
-// buy mdf
-// text not centered on fullscreen - check to see if something is relying on windowWidthinstead of windowWidth and causing the text to be not centered in full screen
+// text still not centered on fullscreen
+// fix death text alignment
+
 // rings should move around followline even when wrapping
 // change line between players (thick to thin communicating direction)
 
-// TODO refactor ha. ha. ha.
-
 // DESIGN
 // TODO design sounds
+// TODO design layout
+// TODO choose colors
 // TODO choose fonts
 // IF TIME (for proper debug) holding down movement key causes acceleration
-// CONSIDER fading arcs for player trail.
 // CONSIDER - do more thinking on accessibility!! diff body movement, eyes, ears, neuro!
-// CONSIDER - should there be a game over? consider a timer
+// CONSIDER - consider the timer
 // CONSIDER - different end states with names
-// CONSIDER buy rope? boxes? Embed magnet in the rope, magnet sensor
 // CONSIDER - making food more "ring-like" (less translations)
-// CONSIDER kinect as controller
 // CONSIDER enter "player names" https://p5js.org/reference/#/p5/createInput and leaderboard
-// CONSIDER smiley face when leading, frowny face when following, neutral face when neutral
 // CONSIDER should the one who is pressing the button should be "leading?" or is it even better to have the leader losing rings as a price
 // CONSIDER shared score
 // CONSIDER draw triangle on front of player????
-// CONSIDER turtles
-// https://p5js.org/reference/#/p5/rotateY
-// https://p5js.org/reference/#/p5/rotateZ
 // CONSIDER make health rings little circles that "follow" instead of wrap rings
 // CONSIDER give flavour text boxes to coins CONSIDER i'm just looking for a leader? ("i'll do what ever you tell me to do"? or should I give flavour text to players?)
 // CONSIDER punishment should be immediately obvious!
 // CONSIDER Instructions? "if you follow you die" "if one of you dies, you die." ""
 // CONSIDER you are both dead. playerX had more rings at time of death so congratulations.
 // CONSIDER - major refactor to actually fix: unexpected "follow state" after player collision -> @player 176
-
-// CONTROLLER
-// strip of projected play
-// two controller boxes connected by a rope
-// Want visually interesting draw people in, durable, accessible, visible (kinesthetically feel the other player)
-// Floor pads?
-// Two facing monitors and controled with head (window)?
 
 // Serialport library: https://github.com/p5-serial/p5.serialport
 // 1) Open Arduino. Choose port in menu under tools>ports. Upload sketch. Open serial monitor. Check for values, then CLOSE.

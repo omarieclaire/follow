@@ -48,8 +48,9 @@ class Scene {
       fill(138,43,226); //purple
       noStroke();
       textAlign(CENTER, TOP);
-      var numberToPrint = floor(this.countDown / 50);
-      text(numberToPrint, windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
+      var numberToPrint = floor(this.countDown / 100);
+
+      text(numberToPrint, windowWidth/ 5, height / 8, 3 / 5 * windowWidth, 3 / 5 * height);
       pop();
     }
   }
@@ -686,9 +687,9 @@ class FinalScene extends Scene {
       fill(foodColor);
       noStroke();
       textSize(standardTextSize);
-      textAlign(CENTER, TOP);
+      textAlign(CENTER, BOTTOM);
       if(this.getCurrentKeyMode() === "simultaneous") {
-        text("mutal end", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
+        text("mutal end", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
         console.log("mutual end");
       }
     } else if (player2.total <= 0 && player1.total > 0) {
@@ -700,9 +701,9 @@ class FinalScene extends Scene {
       fill(foodColor);
       noStroke();
       textSize(standardTextSize);
-      textAlign(CENTER, TOP);
+      textAlign(CENTER, BOTTOM);
       if(this.getCurrentKeyMode() === "simultaneous") {
-        text("one gives, one takes", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
+        text("one gives, one takes", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
         console.log("one gives one takes");
 
       }
@@ -715,9 +716,9 @@ class FinalScene extends Scene {
       fill(foodColor);
       noStroke();
       textSize(standardTextSize);
-      textAlign(CENTER, TOP);
+      textAlign(CENTER, BOTTOM);
       if(this.getCurrentKeyMode() === "simultaneous") {
-        text("one gives, one takes", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
+        text("one gives, one takes", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
         console.log("one gives one takes");
 
       }
@@ -727,14 +728,14 @@ class FinalScene extends Scene {
       fill(foodColor);
       noStroke();
       textSize(standardTextSize);
-      textAlign(CENTER, TOP);
-      text("together", windowWidth/ 5, height / 5 , 3 / 5 * windowWidth, 3 / 5 * height);
+      textAlign(CENTER, BOTTOM);
+      text("together", windowWidth/ 5, height / 5 , 3 / 5 * windowWidth, 3 / 10 * height);
       console.log("together");
     }
     // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
     this.numTicks++;
     this.wideSceneDraw();
-    textAlign(CENTER, CENTER);
+    textAlign(CENTER, BOTTOM);
     text("begin again?", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
     pop();
   }
