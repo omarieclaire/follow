@@ -25,7 +25,7 @@ class Rings {
     this.multiTargetMode = typeof(targets) !== 'undefined';
     this.currentTarget = 0;
 
-    // 
+    //
     this.targets = targets;
   }
   //function to manage the rings when they reach the edge of the screen
@@ -86,6 +86,7 @@ class Rings {
 
   draw(radius) {
     push();
+    strokeWeight(2);
     stroke(this.ringColor);
     ellipse(this.x, this.y, radius);
     pop();

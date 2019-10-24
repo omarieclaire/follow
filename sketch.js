@@ -1,6 +1,8 @@
 // WHY AM I HERE?
 // We are locked in a dance with the other. Each compelled/controlled by anti-mirroring.
 
+// push the button and the ring shoots layout
+
 // DESIGN HIGH LEVEL
 // what does player want to do?
 // what does player feel?
@@ -14,6 +16,9 @@
 // rug, table, lamp?
 // is the venue wheelchair accessible?
 // should I get prof feedback?
+
+// make rings all purple
+// make the follow line player 1, 2, and rings
 
 // CODE TODOS
 // rings should move around followline even when wrapping
@@ -54,9 +59,9 @@ var player2;
 var foodColor = [255, 255, 1]; // white
 var ringColor = [230, 230, 230];
 var pointColor = [255, 215, 0, 250]; // gold
-var player1Color = [255, 51, 153, 240]; // magenta
+var player1Color = [202, 44, 146, 240]; // magenta
 var player2Color = [51, 153, 255, 240]; //   blue
-var player1FadeColor = [255, 51, 153, 240]; // faded pink
+var player1FadeColor = [202, 44, 146, 240]; // faded pink
 var player2FadeColor = [51, 153, 255, 240]; // faded blue
 var player1InitialRingColors = [
   [119, 37, 164],

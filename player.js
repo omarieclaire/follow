@@ -390,15 +390,15 @@ class Player {
     // animation(p2Ball, 300, 150);
 
     if (this.isFollowing) {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcBaseColor, 4);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcBaseColor, 3);
       // push();
       // strokeWeight(.05);
-      // this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcFollowColor, 4);
+      // this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcFollowColor, 3);
       // pop();
     } else if (this.isFollowed) {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcLeadingColor, 4);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcLeadingColor, 3);
     } else {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcBaseColor, 4);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcBaseColor, 3);
     }
 
     noFill();
