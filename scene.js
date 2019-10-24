@@ -99,11 +99,11 @@ class Scene {
   // If food is eaten -> make more food
   foodEaten(player1, player2, foods) {
     for (let i = 0; i < foods.length; i++) {
-      if (player1.eat(foods[i])) {
+      if (player1.eat(foods[i], player2)) {
         foods[i].location(player1, player2);
         //foodGenSound.play();
       }
-      if (player2.eat(foods[i])) {
+      if (player2.eat(foods[i], player1)) {
         foods[i].location(player1, player2);
         //foodGenSound.play();
       }

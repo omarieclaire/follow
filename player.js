@@ -91,11 +91,11 @@ class Player {
     }
   }
 
-  eat(food) {
+  eat(food, otherPlayer) {
     var d = dist(this.x, this.y, food.x, food.y);
     if (d < this.currentDiameter() / 2 + this.scl / 2) {
       eatSound.play();
-      this.changeRingTotal(1, this.x, this.y, food.color);
+      this.changeRingTotal(1, this.x, this.y, food.color, otherPlayer);
       return true;
     } else {
       return false;
@@ -134,7 +134,7 @@ class Player {
     var d = dist(this.x, this.y, spike.x, spike.y);
     if (d < (this.currentDiameter() / 2) + (this.scl / 2)) {
       hitSound.play();
-      this.changeRingTotal(-1, this.x, this.y);
+      this.changeRingTotal(-1, this.x, this.y, otherPlayer);
       // otherPlayer handles flip direction because we need to
       // update isFollowed and isFollowing whenever a player's direction
       // is changed.
@@ -201,7 +201,7 @@ class Player {
     // this.yspeed = this.lastYSpeed;
   }
 
-  changeRingTotal(amount, x, y, newRingColor) {
+  changeRingTotal(amount, x, y, newRingColor, otherPlayer) {
     var oldTotal = this.total;
     this.total = this.total + amount;
     //floor of old total minus floor of new total, then the absolute value of that (if pos we leave it, if neg we make it pos)
@@ -214,12 +214,31 @@ class Player {
           this.playerRings.pop();
         }
       } else {
-        // create a ring that follows 'this' and has the start x and y coordinates passed to changeRingTotal
-        // if we pass a new ringcolor use it, otherwise use the default
-        if (typeof(newRingColor) === "undefined") {
-          this.playerRings.push(new Rings(this, this.scl, ringColor, x, y)); //add a ring
+
+        var colorOfRing;
+        if(typeof(newRingColor) === "undefined") {
+          colorOfRing = ringColor;
         } else {
-          this.playerRings.push(new Rings(this, this.scl, newRingColor, x, y)); //add a ring
+          colorOfRing = newRingColor;
+        }
+
+        var loopDiff = this.numLoops - otherPlayer.numLoops;
+
+        if(loopDiff === 0) {
+          // create a ring that follows 'this' and has the start x and y coordinates passed to changeRingTotal
+          // if we pass a new ringcolor use it, otherwise use the default
+          this.playerRings.push(new Rings(this, this.scl, colorOfRing, x, y)); //add a ring
+        } else {
+          // rings are being sent _from_ otherPlayer _to_ this.
+          var targetCoordinates = otherPlayer.lineWrapperHelper.getTargetCoordinates(this);
+          var wrappedTargetCoordinates = otherPlayer.lineWrapperHelper.getWrappedTargetCoordinates(targetCoordinates);
+          var coordinateArray;
+          if(loopDiff <= -1) {
+            coordinateArray = [wrappedTargetCoordinates, targetCoordinates];
+          } else {
+            coordinateArray = [targetCoordinates, wrappedTargetCoordinates];
+          }
+          this.playerRings.push(new Rings(this, this.scl, colorOfRing, x, y, coordinateArray));
         }
       }
     }
@@ -243,9 +262,9 @@ class Player {
       //increment!
       //other player is an object. we pass the values below into changeringtotal.
       //create a ring that follows other player
-      otherPlayer.changeRingTotal(ringTransferSpd, this.x, this.y, this.colorOfOuterMostRing());
+      otherPlayer.changeRingTotal(ringTransferSpd, this.x, this.y, this.colorOfOuterMostRing(), this);
       //decrement! (note: we never use this.x and this.y here bc of the above logic (amount < 0))
-      this.changeRingTotal(-ringTransferSpd, this.x, this.y);
+      this.changeRingTotal(-ringTransferSpd, this.x, this.y, otherPlayer);
     }
   }
 

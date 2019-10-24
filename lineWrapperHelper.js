@@ -105,7 +105,6 @@ class LineWrapperHelper {
   }
 
   getTrailingAndLeadingPlayer(otherPlayer) {
-
     var trailingPlayer;
     var leadingPlayer;
     if (this.player.numLoops - otherPlayer.numLoops === 1) {
@@ -242,6 +241,39 @@ class LineWrapperHelper {
     }
   }
 
+  getTargetCoordinates(otherPlayer) {
+    var targetCoordinates;
+    if (this.player.direction === "right") {
+      targetCoordinates = this.handleDirRight(otherPlayer);
+    } else if (this.player.direction === "up") {
+      targetCoordinates = this.handleDirUp(otherPlayer);
+    } else if (this.player.direction === "left") {
+      targetCoordinates = this.handleDirLeft(otherPlayer);
+    } else if (this.player.direction === "down") {
+      targetCoordinates = this.handleDirDown(otherPlayer);
+    } else {
+      throw "Invalid direction";
+    }
+    return targetCoordinates;
+  }
+
+  getWrappedTargetCoordinates(targetCoordinates) {
+    var wrappedTargetCoordinates = {};
+    Object.assign(wrappedTargetCoordinates, targetCoordinates);
+    if (this.player.direction === "right") {
+      wrappedTargetCoordinates.x = 0;
+    } else if (this.player.direction === "up") {
+      wrappedTargetCoordinates.y = windowHeight - this.spacer;
+    } else if (this.player.direction === "left") {
+      wrappedTargetCoordinates.x = windowWidth - this.spacer;
+    } else if (this.player.direction === "down") {
+      wrappedTargetCoordinates.y = 0;
+    } else {
+      throw "invalid direction";
+    }
+    return wrappedTargetCoordinates;
+  }
+
   drawWrappedFollowLine(otherPlayer) {
     if (this.player.numLoops === otherPlayer.numLoops || Math.abs(this.player.numLoops - otherPlayer.numLoops) > 1) {
       // only draw line from player if following.
@@ -249,31 +281,15 @@ class LineWrapperHelper {
         this.drawFollowLine(otherPlayer.x, otherPlayer.y);
       }
     } else {
-      var targetCoordinates;
-      if (this.player.direction === "right") {
-        targetCoordinates = this.handleDirRight(otherPlayer);
-      } else if (this.player.direction === "up") {
-        targetCoordinates = this.handleDirUp(otherPlayer);
-      } else if (this.player.direction === "left") {
-        targetCoordinates = this.handleDirLeft(otherPlayer);
-      } else if (this.player.direction === "down") {
-        targetCoordinates = this.handleDirDown(otherPlayer);
-      }
+      var targetCoordinates = this.getTargetCoordinates(otherPlayer);
 
       if (this.player.numLoops - otherPlayer.numLoops == -1) {
         // me (this.player) is trailing
         this.drawFollowLine(targetCoordinates.x, targetCoordinates.y);
       } else if (this.player.numLoops - otherPlayer.numLoops == 1) {
         // me (this.player) is leading
-        if (this.player.direction === "right") {
-          this.drawFollowLine(0, targetCoordinates.y);
-        } else if (this.player.direction === "up") {
-          this.drawFollowLine(targetCoordinates.x, windowHeight - this.spacer);
-        } else if (this.player.direction === "left") {
-          this.drawFollowLine(windowWidth - this.spacer, targetCoordinates.y);
-        } else if (this.player.direction === "down") {
-          this.drawFollowLine(targetCoordinates.x, 0);
-        }
+        var wrappedCoordinates = this.getWrappedTargetCoordinates(targetCoordinates);
+        this.drawFollowLine(wrappedCoordinates.x, wrappedCoordinates.y);
       }
     }
   }

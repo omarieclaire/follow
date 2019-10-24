@@ -1,5 +1,5 @@
 class Rings {
-  constructor(player, scl, ringColor, initX, initY) {
+  constructor(player, scl, ringColor, initX, initY, targets) {
     this.scl = scl;
     this.ringColor = ringColor;
     //if we don't pass in an x or a y, just leave them as is
@@ -21,6 +21,12 @@ class Rings {
     this.easing = createBezierCurve(0.55, 0.055, 0.675, 0.19);
     //
     this.numDeadTicks = 0;
+
+    this.multiTargetMode = typeof(targets) !== 'undefined';
+    this.currentTarget = 0;
+
+    // 
+    this.targets = targets;
   }
   //function to manage the rings when they reach the edge of the screen
   updateLocation(newX, newY) {
@@ -28,12 +34,8 @@ class Rings {
     this.y = newY;
   }
 
-  move() {
-    //this.x and this.y of the rings
-    let v1 = createVector(this.x, this.y);
-    //this.x and this.y of a player
-    let v2 = createVector(this.player.x, this.player.y);
-    let lerp = p5.Vector.lerp(v1, v2, this.spectrum);
+  moveRing(sourceVector, destinationVector) {
+    let lerp = p5.Vector.lerp(sourceVector, destinationVector, this.spectrum);
     this.x = lerp.x;
     this.y = lerp.y;
     if (this.spectrum >= 1) {
@@ -42,7 +44,43 @@ class Rings {
       // Incrememt t because it's how far we are along in time
       this.time = this.time + 0.01;
       // set spectrum equal to the easing function of time at the current time
-      this.spectrum = this.easing(this.time);
+      if(this.multiTargetMode) {
+        if(this.currentTarget == 1) {
+          this.time = this.time + 0.05;
+        }
+        this.spectrum = this.easing(this.time);
+      } else {
+        this.spectrum = this.easing(this.time);
+      }
+    }
+  }
+
+  move() {
+    if(this.multiTargetMode) {
+      var target = this.targets[this.currentTarget];
+      if(this.currentTarget == 0) {
+        //this.x and this.y of the rings
+        let v1 = createVector(this.x, this.y);
+        // now v2 will be the target
+        let v2 = createVector(target.x, target.y);
+        let d = dist(v1.x, v1.y, v2.x, v2.y);
+        this.moveRing(v1, v2);
+        if(this.currentTarget == 0 && (d <= 3 || this.spectrum >= 0.5)) {
+          this.currentTarget++;
+          this.spectrum = 0;
+          this.time = 0;
+        }
+      } else {
+        let v1 = createVector(target.x, target.y);
+        let v2 = createVector(this.player.x, this.player.y);
+        this.moveRing(v1, v2);
+      }
+    } else {
+      //this.x and this.y of the rings
+      let v1 = createVector(this.x, this.y);
+      //this.x and this.y of a player
+      let v2 = createVector(this.player.x, this.player.y);
+      this.moveRing(v1, v2);
     }
   }
 
