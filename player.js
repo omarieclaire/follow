@@ -9,7 +9,7 @@ class Player {
     this.total = 6;
     this.isFollowing = false;
     this.isFollowed = false;
-    this.arcLeadingColor = [255, 215, 0, 250];
+    this.arcLeadingColor = [255, 215, 0, 200];
     this.arcBaseColor = [255, 215, 0, 250];
     this.poppedRings = [];
     this.numTicksPoppedRing = 0;
@@ -344,14 +344,14 @@ class Player {
     var breatheRate;
 
     if (this.xspeed == 0 && this.yspeed == 0) {
-      breatheRate = 0.05;
+      breatheRate = 0.055;
     } else {
-      breatheRate = 0.03;
+      breatheRate = 0.035;
     }
     //Change spacing of ring according to time
     //.6 is the limit of how large it can be
     //.025 slows it keyPressDown
-    this.ringSpacer = (this.scl / 3.5) + (.6 * Math.sin(this.numTicks * breatheRate));
+    this.ringSpacer = (this.scl / 3) + (.6 * Math.sin(this.numTicks * breatheRate));
   }
   //findme
   drawDirectionalArcs(direction, x, y, length, color, strokeW) {
@@ -390,15 +390,15 @@ class Player {
     // animation(p2Ball, 300, 150);
 
     if (this.isFollowing) {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcBaseColor, 3);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcBaseColor, 2);
       // push();
       // strokeWeight(.05);
       // this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcFollowColor, 3);
       // pop();
     } else if (this.isFollowed) {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcLeadingColor, 3);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcLeadingColor, 2);
     } else {
-      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcBaseColor, 3);
+      this.drawDirectionalArcs(this.direction, this.x, this.y, this.scl - this.scl / 8, this.arcBaseColor, 2);
     }
 
     noFill();

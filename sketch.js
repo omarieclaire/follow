@@ -17,7 +17,6 @@
 // is the venue wheelchair accessible?
 // should I get prof feedback?
 
-// make rings all purple
 // make the follow line player 1, 2, and rings
 
 // CODE TODOS
@@ -57,7 +56,7 @@
 var player1;
 var player2;
 var foodColor = [255, 255, 1]; // white
-var ringColor = [230, 230, 230];
+var ringColor = [153, 0, 204];
 var pointColor = [255, 215, 0, 250]; // gold
 var player1Color = [202, 44, 146, 240]; // magenta
 var player2Color = [51, 153, 255, 240]; //   blue
