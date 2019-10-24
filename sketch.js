@@ -53,6 +53,16 @@
 
 // p5.disableFriendlyErrors = true;
 
+
+  // beginShape();
+  // let spacing = map(mousex, 0, width, 5, 100);
+  // for (let a = 0; a < 360; a += spacing) {
+  //   let x = 100 * sin(a) + 200;
+  //   let y = 100 * cos(a) + 200;
+  //   vertex(x, y);
+  // }
+  // endShape();
+
 var player1;
 var player2;
 var foodColor = [255, 255, 1]; // white
