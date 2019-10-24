@@ -42,19 +42,19 @@ class LineWrapperHelper {
     this.player = player;
     this.spacer = spacer;
   }
-
+//
   getTargetCoordinatesForRight(trailingPlayer, leadingPlayer) {
 
     // total x distance between us
-    var totalXDistance = (windowWidth - this.spacer) - trailingPlayer.x + leadingPlayer.x;
+    var totalXDistance = (windowWidth + this.spacer) - trailingPlayer.x + leadingPlayer.x;
     // total y distance between us
     var totalYDistance = leadingPlayer.y - trailingPlayer.y;
     // distance of us from edge
-    var distanceFromEdge = windowWidth - this.spacer - trailingPlayer.x;
+    var distanceFromEdge = windowWidth + this.spacer - trailingPlayer.x;
 
     // this is the target Y value.
     var targetY = trailingPlayer.y + (totalYDistance / totalXDistance) * distanceFromEdge;
-    var targetX = windowWidth - this.spacer;
+    var targetX = windowWidth + this.spacer;
 
     return {
       x: targetX,
@@ -63,12 +63,12 @@ class LineWrapperHelper {
   }
 
   getTargetCoordinatesForLeft(trailingPlayer, leadingPlayer) {
-    var totalXDistance = (windowWidth - this.spacer) + trailingPlayer.x - leadingPlayer.x;
+    var totalXDistance = (windowWidth + this.spacer) + trailingPlayer.x - leadingPlayer.x;
     var totalYDistance = leadingPlayer.y - trailingPlayer.y;
     var distanceFromEdge = 0 + trailingPlayer.x;
 
     var targetY = trailingPlayer.y + (totalYDistance / totalXDistance) * distanceFromEdge;
-    var targetX = 0;
+    var targetX = 0 - this.spacer;
 
     return {
       x: targetX,
@@ -78,10 +78,10 @@ class LineWrapperHelper {
 
   getTargetCoordinatesForUp(trailingPlayer, leadingPlayer) {
     var totalXDistance = trailingPlayer.x - leadingPlayer.x;
-    var totalYDistance = trailingPlayer.y + (windowHeight - this.spacer) - leadingPlayer.y;
+    var totalYDistance = trailingPlayer.y + (windowHeight + this.spacer) - leadingPlayer.y;
     var distanceFromEdge = trailingPlayer.y;
 
-    var targetY = 0;
+    var targetY = 0 - this.spacer;
     var targetX = trailingPlayer.x - (totalXDistance / totalYDistance) * distanceFromEdge;
 
     return {
@@ -92,10 +92,10 @@ class LineWrapperHelper {
 
   getTargetCoordinatesForDown(trailingPlayer, leadingPlayer) {
     var totalXDistance = trailingPlayer.x - leadingPlayer.x;
-    var totalYDistance = (windowHeight - this.spacer) - trailingPlayer.y + leadingPlayer.y;
-    var distanceFromEdge = (windowHeight - this.spacer) - trailingPlayer.y;
+    var totalYDistance = (windowHeight + this.spacer) - trailingPlayer.y + leadingPlayer.y;
+    var distanceFromEdge = (windowHeight + this.spacer) - trailingPlayer.y;
 
-    var targetY = windowHeight - this.spacer;
+    var targetY = windowHeight + this.spacer;
     var targetX = trailingPlayer.x - (totalXDistance / totalYDistance) * distanceFromEdge;
 
     return {

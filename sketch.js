@@ -1,6 +1,5 @@
 // WHY AM I HERE?
 // We are locked in a dance with the other. Each compelled/controlled by anti-mirroring.
-// What is following anyway?
 
 // DESIGN HIGH LEVEL
 // what does player want to do?
@@ -16,13 +15,16 @@
 // is the venue wheelchair accessible?
 // should I get prof feedback?
 
+// CODE TODOS
+// rings should move around followline even when wrapping
+// IF TIME (for proper debug) holding down movement key causes acceleration
 
-// DESIGN
+// DESIGN TODOS
+// GET LIGHTSS! Rugs? Table?
 // TODO design sounds
 // TODO design layout
 // TODO choose colors
 // TODO choose fonts
-// IF TIME (for proper debug) holding down movement key causes acceleration
 // CONSIDER - do more thinking on accessibility!! diff body movement, eyes, ears, neuro!
 // CONSIDER - consider the timer
 // CONSIDER - different end states with names
@@ -43,7 +45,7 @@
 // 2) Open p5 Serialcontrol app. Select port. Click 'open'. Check 'console enabled' and 'read in ASCII' Check for values. Uncheck both check-boxes.
 // 3) Include library in this project folder. Include library path in index.html. Include unique serialport ID (e.g. "/dev/tty.usbmodem14201") in setup(),
 
-// Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie, Brent, Peiling, Nun, Atharva, 
+// Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie, Brent, Peiling, Nun, Atharva,
 
 // p5.disableFriendlyErrors = true;
 
