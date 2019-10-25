@@ -81,7 +81,7 @@ class Scene {
       this.debugScreen();
     } else {}
 
-    this.leaderRing.drawLeaderRing(player1, player2);
+    // this.leaderRing.drawLeaderRing(player1, player2);
     this.printDebugToScreen();
     pop();
   }

@@ -205,10 +205,9 @@ class LineWrapperHelper {
     if (this.player.isFollowing || this.player.isFollowed) {
       push();
       var playerWavesColours = [
-        [0,0,200,85],
-
-        [255, 51, 153, 85],
-        [51, 153, 255, 85],
+        [202, 44, 146, 90],
+        [51, 153, 255, 90],
+        [153, 0, 204, 90],
       ];
       var playerWavesPhases = [
         0.5 * Math.PI,

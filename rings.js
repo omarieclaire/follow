@@ -89,6 +89,7 @@ class Rings {
 
   draw(radius) {
     push();
+    strokeWeight(2);
     stroke(this.ringColor);
     ellipse(this.x, this.y, radius);
     pop();

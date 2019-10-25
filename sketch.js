@@ -1,6 +1,8 @@
 // WHY AM I HERE?
 // We are locked in a dance with the other. Each compelled/controlled by anti-mirroring.
 
+// push the button and the ring shoots layout
+
 // DESIGN HIGH LEVEL
 // what does player spend time doing? what does player want to do? what does player feel? what am I making?
 
@@ -37,14 +39,24 @@
 
 p5.disableFriendlyErrors = true;
 
+
+  // beginShape();
+  // let spacing = map(mousex, 0, width, 5, 100);
+  // for (let a = 0; a < 360; a += spacing) {
+  //   let x = 100 * sin(a) + 200;
+  //   let y = 100 * cos(a) + 200;
+  //   vertex(x, y);
+  // }
+  // endShape();
+
 var player1;
 var player2;
 var foodColor = [255, 255, 1]; // white
-var ringColor = [230, 230, 230];
+var ringColor = [153, 0, 204];
 var pointColor = [255, 215, 0, 250]; // gold
-var player1Color = [255, 51, 153, 240]; // magenta
+var player1Color = [202, 44, 146, 240]; // magenta
 var player2Color = [51, 153, 255, 240]; //   blue
-var player1FadeColor = [255, 51, 153, 240]; // faded pink
+var player1FadeColor = [202, 44, 146, 240]; // faded pink
 var player2FadeColor = [51, 153, 255, 240]; // faded blue
 var player1InitialRingColors = [
   [119, 37, 164],

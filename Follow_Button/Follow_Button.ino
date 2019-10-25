@@ -14,7 +14,7 @@ const int RedButtonPin4 = 5;
 
 // the number of the White button pins on the arduino
 const int WhiteButtonPin1 = 6;
-
+  
 // variables will change:
 
 // variable for reading the Arcade button status
