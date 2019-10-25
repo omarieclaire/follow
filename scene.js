@@ -472,12 +472,10 @@ class TitleScene extends Scene {
   }
 
   keyWasPressed(keyCode, player1, player2) {
-    // introSound.stop();
-    // ambientSound.loop();
-    if (keyCode === 32) {
-      this.wasKeyPressed = true;
-    } else {
+    if(keyCode == 77) {
       this.handleKeyPressMode(keyCode, player1, player2);
+    } else {
+      this.wasKeyPressed = true;
     }
   }
 
@@ -525,12 +523,10 @@ class InstructionScene extends Scene {
   }
 
   keyWasPressed(keyCode, player1, player2) {
-    // introSound.stop();
-    // ambientSound.loop();
-    if (keyCode === 32) {
-      this.wasKeyPressed = true;
-    } else {
+    if(keyCode == 77) {
       this.handleKeyPressMode(keyCode, player1, player2);
+    } else {
+      this.wasKeyPressed = true;
     }
   }
 
