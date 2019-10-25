@@ -630,13 +630,14 @@ class TrainingScene extends Scene {
         // ringMoveSound.stop();
       }
       pop();
-      this.drawCountDown();
+      //this.drawCountDown();
     } else {}
     this.wideSceneDraw();
   }
 
   isGameOverCheck(player1, player2) {
-    return super.isGameOverCheck(player1, player2) || this.countDown <= 0;
+    //return super.isGameOverCheck(player1, player2) || this.countDown <= 0;
+    return super.isGameOverCheck(player1, player2);
   }
 
   advanceToNextScene(player1, player2) {
@@ -710,7 +711,7 @@ class PlayScene extends Scene {
     }
 
     this.wideSceneDraw();
-    this.drawCountDown();
+    //this.drawCountDown();
   }
 
   advanceToNextScene(player1, player2) {
