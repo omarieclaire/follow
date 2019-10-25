@@ -177,8 +177,8 @@ void changeColor() {
   if (RedButtonState2 == 1 && MassiveButtonState2 == 1) {
 
     //yellow
-    led1.setPixelColor(0, 153, 0, 204, 0);
-    led2.setPixelColor(0, 153, 0, 204, 0);
+    led1.setPixelColor(0, 117, 26, 255, 0);
+    led2.setPixelColor(0, 117, 26, 255, 0);
     led1.show();
     led2.show();
 

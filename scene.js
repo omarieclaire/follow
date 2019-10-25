@@ -204,7 +204,7 @@ class Scene {
     } else if (keyMode == "sharedhorizon") {
       this.instructionText = "Player 1 steers both players left using the 'a' key.\nPlayer 2 steers both players right using the 'right arrow' key.\n Both players can move up and down independently";
     } else if (keyMode == "simultaneous") {
-      this.instructionText = "Button 1 steers left. Button 2 steers right.\n\n When both buttons are down, both players stop";
+      this.instructionText = "Button 1 steers left. Button 2 steers right.\n\n When both buttons are down, both players stop.";
     }
   }
 
@@ -507,7 +507,7 @@ class InstructionScene extends Scene {
   draw(player1, player2, foods) {
     push();
     background(0, 0, 20);
-    textSize(standardTextSize);
+    textSize(standardTextSize * 2);
     textAlign(CENTER, TOP);
     textFont(openSansFont);
     fill(player1Color);
@@ -519,7 +519,7 @@ class InstructionScene extends Scene {
     text("player 2 use arrow keys to move", windowWidth / 2, windowHeight / 3);
     */
     fill(200);
-    textSize(standardTextSize / 2);
+    textSize(standardTextSize);
     textAlign(CENTER, TOP);
     text("press a button to begin", windowWidth / 5, 4 / 5 * height, 3 / 5 * windowWidth, height);
     pop();
@@ -564,7 +564,7 @@ class WelcomeScene extends Scene {
     // this.basicSceneDraw(player1, player2, foods);
     background(0, 0, 20);
     fill(10, 255, 50);
-    textSize(standardTextSize);
+    textSize(standardTextSize * 2);
     textAlign(CENTER, CENTER);
     textLeading(scl * 2);
     text("Welcome", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);

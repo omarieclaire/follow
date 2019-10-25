@@ -71,6 +71,7 @@ class Spike {
     }
     this.angle = this.angle + 3;
     pop();
+
   }
 
   collision(player1, player2) {

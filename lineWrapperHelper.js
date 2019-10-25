@@ -205,9 +205,10 @@ class LineWrapperHelper {
     if (this.player.isFollowing || this.player.isFollowed) {
       push();
       var playerWavesColours = [
-        [202, 44, 146, 90],
-        [51, 153, 255, 90],
-        [153, 0, 204, 90],
+        [202, 44, 146, 95], //pink
+        [51, 153, 255, 95], // blue
+        // [255, 255, 0, 90] // yellow
+        [190, 3, 252, 95] // purple
       ];
       var playerWavesPhases = [
         0.5 * Math.PI,
@@ -217,7 +218,7 @@ class LineWrapperHelper {
       // more samples is better fidelity
       var waveyLineNumSamples = 30;
       // maximum amplitude of the wave. (crescendo)
-      var waveyLineAmplitude = 200;
+      var waveyLineAmplitude = 280;
       // distance between wave crests. Higher means shorter distance, "more humps"
       var waveyLineFrequency = 25;
 
@@ -229,7 +230,7 @@ class LineWrapperHelper {
         //fill(waveColour);
         noFill();
         stroke(waveColour);
-        strokeWeight(3);
+        strokeWeight(4);
         beginShape();
         for (var k = 0; k < waveyLinePoints.length; k++) {
           vertex(waveyLinePoints[k].x, waveyLinePoints[k].y);
