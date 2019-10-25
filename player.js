@@ -17,6 +17,7 @@ class Player {
     this.explodeParticles = [];
     this.followSoundClass = new FollowSound();
     this.numTicks = 0;
+    this.acceleration = 0.001;
     // this.newColor = [0, 255, 255];
     this.windowLoopSpacer = this.scl / 2;
 
@@ -158,9 +159,9 @@ class Player {
       this.xspeed = 0;
     } else {
       if(keyPressed && this.direction == "left") {
-        this.xspeed -= 0.01;
+        this.xspeed -= this.acceleration;
       } else if(this.direction == "left") {
-        this.xspeed = Math.min(-0.1, this.xspeed + 0.1);
+        this.xspeed = Math.min(-0.1, this.xspeed + this.acceleration);
       }
     }
   }
@@ -171,9 +172,9 @@ class Player {
       this.xspeed = 0;
     } else {
       if(keyPressed && this.direction == "right") {
-        this.xspeed += 0.01;
+        this.xspeed += this.acceleration;
       } else if(this.direction == "right") {
-        this.xspeed = Math.max(0.1, this.xspeed - 0.1);
+        this.xspeed = Math.max(0.1, this.xspeed - this.acceleration);
       }
     }
   }
