@@ -71,6 +71,9 @@ class Scene {
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
 
+    player1.drawFollowLine(player2);
+    player2.drawFollowLine(player1);
+
     player1.show();
     player2.show();
 
@@ -364,7 +367,7 @@ class Scene {
 }
 
 /////////////////////////////
-//// Instruction Scene  ////
+//////// Title Scene  ///////
 ////////////////////////////
 class TitleScene extends Scene {
   constructor() {
@@ -372,6 +375,7 @@ class TitleScene extends Scene {
     this.wasKeyPressed = false;
     // introSound.loop();
   }
+
 
   draw(player1, player2, foods) {
     push();
@@ -381,6 +385,8 @@ class TitleScene extends Scene {
     textFont(spectral);
     fill(player1Color);
     text("follow", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height)
+    player1.show();
+    player2.show();
     fill(200);
     textFont(openSansFont);
     textSize(standardTextSize / 2);
@@ -519,8 +525,7 @@ class TrainingScene extends Scene {
     } else {}
 
     this.basicSceneDraw(player1, player2, foods);
-    player1.drawFollowLine(player2);
-    player2.drawFollowLine(player1);
+
 
 
     //only print directional cues if player is still living TEXTDISPLAYBUG
@@ -587,7 +592,7 @@ class PlayScene extends Scene {
     //create spikes
     this.spikes = [];
     for (var i = 0; i < 2; i++) {
-      this.spikes[i] = new Spike(scl);
+      this.spikes[i] = new Spike(scl, player1, player2);
       this.spikes[i].location(player1, player2);
     }
   }
@@ -624,15 +629,12 @@ class PlayScene extends Scene {
 
     // every 1000 ticks, add a spike.
     if (this.numTicks % 5000 == 0) {
-      this.spikes.push(new Spike(scl));
+      this.spikes.push(new Spike(scl, player1, player2));
     }
 
     for (let i = 0; i < this.spikes.length; i++) {
       this.spikes[i].show();
     }
-
-    player1.drawFollowLine(player2);
-    player2.drawFollowLine(player1);
 
     this.wideSceneDraw();
     this.drawCountDown();

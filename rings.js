@@ -25,7 +25,7 @@ class Rings {
     this.multiTargetMode = typeof(targets) !== 'undefined';
     this.currentTarget = 0;
 
-    // 
+    //
     this.targets = targets;
   }
   //function to manage the rings when they reach the edge of the screen
@@ -93,10 +93,20 @@ class Rings {
 
   drawDeadRing(initialRadius) {
     this.numDeadTicks++;
+
+
+    //
+    // push();
+    // stroke(this.ringColor);
+    // strokeWeight(Math.max(0, 1 - this.numDeadTicks / 8));
+    // ellipse(this.x, this.y, initialRadius);
+    // pop();
+
     push();
-    stroke(this.ringColor);
-    strokeWeight(Math.max(0, 3 - this.numDeadTicks / 8));
-    ellipse(this.x, this.y, initialRadius);
+    stroke(255, 0, 0);
+    strokeWeight(Math.max(0, 3 - this.numDeadTicks / 30));
+    ellipse(this.x, this.y, initialRadius + 5);
     pop();
+
   }
 }

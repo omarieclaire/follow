@@ -2,42 +2,31 @@
 // We are locked in a dance with the other. Each compelled/controlled by anti-mirroring.
 
 // DESIGN HIGH LEVEL
-// what does player want to do?
-// what does player feel?
-// what is this thing anyway? can I cut stuff for clarity?
+// what does player spend time doing? what does player want to do? what does player feel? what am I making?
 
 // TODOS
-// text not centered on fullscreen
-// follow line should be drawn behind the player OR taper off OR
-// rings should move around followline even when wrapping
 
-// rug, table, lamp?
-// is the venue wheelchair accessible?
-// should I get prof feedback?
+// CODE fix ring movement
+// CODE - player must HOLD button for movement
+// CODE (IF TIME for proper debug) holding down movement key causes acceleration
 
-// CODE TODOS
-// rings should move around followline even when wrapping
-// IF TIME (for proper debug) holding down movement key causes acceleration
+// CODE - remove timer at top of the screen
+// CODE improve food and spikes visually
+// CODE food and spike collisions should have immediate visual impact
+// DESIGN/CODE improve instruction page and title screen (draw shapes for letters and use players as Os)
 
-// DESIGN TODOS
-// GET LIGHTSS! Rugs? Table?
-// TODO design sounds
-// TODO design layout
-// TODO choose colors
-// TODO choose fonts
-// CONSIDER - do more thinking on accessibility!! diff body movement, eyes, ears, neuro!
-// CONSIDER - consider the timer
-// CONSIDER - different end states with names
-// CONSIDER - making food more "ring-like" (less translations)
-// CONSIDER enter "player names" https://p5js.org/reference/#/p5/createInput and leaderboard
-// CONSIDER should the one who is pressing the button should be "leading?" or is it even better to have the leader losing rings as a price
-// CONSIDER shared score
-// CONSIDER draw triangle on front of player????
-// CONSIDER make health rings little circles that "follow" instead of wrap rings
-// CONSIDER give flavour text boxes to coins CONSIDER i'm just looking for a leader? ("i'll do what ever you tell me to do"? or should I give flavour text to players?)
-// CONSIDER punishment should be immediately obvious!
-// CONSIDER Instructions? "if you follow you die" "if one of you dies, you die." ""
-// CONSIDER you are both dead. playerX had more rings at time of death so congratulations.
+// "press any key to begin"
+// SETUP check power, sound, table, light, tablecloth, HEADPHONES?
+// DESIGN get feedback?
+// DESIGN - color (rings, core colors, fonts)
+// DESIGN - fonts
+// DESIGN - sounds
+// DESIGN - remove leader ring?
+// DESIGN - do I need the players to know who they are? (number, emoji, iden)
+// DESIGN - remove directional arc? change it? what does it say?
+// DESIGN - do I need a total player score?
+// DESIGN - choose end message(s)
+
 // CONSIDER - major refactor to actually fix: unexpected "follow state" after player collision -> @player 176
 
 // Serialport library: https://github.com/p5-serial/p5.serialport
@@ -47,7 +36,7 @@
 
 // Thanks: Aaron, Arnab, Ida, Game Center, Mailis, Sukanya, Jessica, Eric, Danny, Coding Rainbow, Jackie, Brent, Peiling, Nun, Atharva,
 
-// p5.disableFriendlyErrors = true;
+p5.disableFriendlyErrors = true;
 
 var player1;
 var player2;

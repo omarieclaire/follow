@@ -138,9 +138,8 @@ class Player {
       // otherPlayer handles flip direction because we need to
       // update isFollowed and isFollowing whenever a player's direction
       // is changed.
-      console.log("collide then flip");
       this.flipDirection(otherPlayer);
-      spike.location(this, otherPlayer);
+      spike.collision(this, otherPlayer);
       return true;
     } else {
       return false;
