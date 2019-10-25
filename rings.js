@@ -70,8 +70,8 @@ class Rings {
         this.moveRing(v1, v2);
         if(this.currentTarget == 0 && (d <= 3 || this.spectrum >= 0.5)) {
           this.currentTarget++;
-          this.spectrum = 0;
-          this.time = 0;
+          this.spectrum = 0.5;
+          this.time = 0.5;
         }
       } else {
         let v1 = createVector(target.x, target.y);
