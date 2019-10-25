@@ -8,7 +8,6 @@
 
 // TODOS
 
-// LEADER ring APPEARS for 2 seconds on a player when (total increments) they win a ring (food or following) and then disappears)
 // fix code so a player can press any button to skip title scene AND instruction scene (instead of spacebar)
 // put a timer on instruction scene so it only displays for 7 seconds (in case player doesn't push button)
 // WILL THIS CREATE A BUG? think carefully! player HOLDS button for faster movement speed

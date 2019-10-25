@@ -6,6 +6,7 @@ class TemporaryRing {
     this.y = player.y;
     this.length = animationLength;
     this.numTicks = 0;
+    this.maxOpacity = 150;
   }
 
   isDone() {
@@ -22,10 +23,10 @@ class TemporaryRing {
     var r = radius + 5;
     if(this.numTicks < this.length/2) {
       // fade in
-      stroke(255, 215, 0, this.numTicks/(this.length/2) * 150);
+      stroke(255, 215, 0, this.numTicks/(this.length/2) * this.maxOpacity);
     } else {
       // fade out
-      stroke(255, 215, 0, 150 * (2 - this.numTicks/(this.length/2)));
+      stroke(255, 215, 0, (2 - this.numTicks/(this.length/2)) * this.maxOpacity);
     }
     ellipse(this.x, this.y, r, r);
     pop();
