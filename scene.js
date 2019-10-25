@@ -738,7 +738,7 @@ class FinalScene extends Scene {
       textSize(standardTextSize);
       textAlign(CENTER, BOTTOM);
       if (this.getCurrentKeyMode() === "simultaneous") {
-        text("There is enough", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
+        text("Enough", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
 
       }
     } else if (player1.total <= 0 && player2.total > 0) {
