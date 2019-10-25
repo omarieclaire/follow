@@ -55,9 +55,9 @@ class Spike {
   }
 
   drawSpike() {
-    push();
+    push( );
     stroke(this.spikeColor);
-    ellipse(this.x, this.y, 3, 3);
+    // ellipse(this.x, this.y, 3, 3);
     strokeWeight(1);
     noFill();
     // translate changes the origin point for everything after it
@@ -68,6 +68,12 @@ class Spike {
       triangle(-scl / 2.5, scl / 5.5, scl / 2.5, scl / 5.5, 0, -scl / 1.5);
       triangle(-scl / 2.5, -scl / 5.5, scl / 2.5, -scl / 5.5, 0, scl / 1.5); //upside down
       this.angle = this.angle + 3;
+    }
+    for (var i = 0; i < this.total; i++) {
+      // line(10, 10, 50, 50);
+      triangle(-scl / 2.5, scl / 5.5, scl / 2.5, scl / 5.5, 0, -scl / 1.5);
+      triangle(-scl / 2.5, -scl / 5.5, scl / 2.5, -scl / 5.5, 0, scl / 1.5); //upside down
+      this.angle = this.angle + 4;
     }
     this.angle = this.angle + 3;
     pop();
