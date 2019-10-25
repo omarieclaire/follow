@@ -4,7 +4,7 @@ class Food {
     this.color = this.foodColorPicker();
     this.numTicks = 0;
     // every this-many-ticks, increasing the speed.
-    this.speedIncreaseCondition = 1000;
+    this.speedIncreaseCondition = 5000;
     this.speed = 2;
     this.total = 3;
   }
@@ -21,14 +21,18 @@ class Food {
 
   foodColorPicker() {
     var arrayOfColors = [
-      [119, 37, 164],
-      [167, 105, 201],
-      [138, 66, 178],
-      [96, 14, 142],
-      [119, 37, 164],
-      [167, 105, 201],
-      [138, 66, 178],
-      [96, 14, 142],
+      [184, 120, 245],
+      [159, 7, 247],
+      [152, 23, 191],
+      [152, 25, 207],
+      [132, 41, 196],
+      [172, 46, 240],
+      [184, 120, 245],
+      [159, 7, 247],
+      [152, 23, 191],
+      [152, 25, 207],
+      [132, 41, 196],
+      [172, 46, 240]
     ];
     var randomNumber = floor(random(arrayOfColors.length));
     return arrayOfColors[randomNumber];
@@ -75,14 +79,14 @@ class Food {
     }
     this.y = this.foodLocation.y;
     stroke(this.color);
-    strokeWeight(1);
+    strokeWeight(1.5 );
     noFill();
     ellipse(this.foodLocation.x, this.foodLocation.y, this.scl*1.5, this.scl*1.5);
     for (var i = 0; i < this.total; i++) {
       // fill(random(220, 10), random(220, 10), 0);
 //old food
-      ellipse(this.foodLocation.x, this.foodLocation.y, random(scl / 1.5, scl / 2), random(scl / 1.5, scl / 2));
-      // ellipse(this.foodLocation.x, this.foodLocation.y, random(scl / 1.5, scl / 7.5));
+      // ellipse(this.foodLocation.x, this.foodLocation.y, random(scl / 1.5, scl / 2), random(scl / 1.5, scl / 2));
+      ellipse(this.foodLocation.x, this.foodLocation.y, random(scl / 1.2, scl / 7.5));
     }
     pop();
   }

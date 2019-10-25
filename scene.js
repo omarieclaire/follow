@@ -208,7 +208,7 @@ class Scene {
     } else if (keyMode == "sharedhorizon") {
       this.instructionText = "Player 1 steers both players left using the 'a' key.\nPlayer 2 steers both players right using the 'right arrow' key.\n Both players can move up and down independently";
     } else if (keyMode == "simultaneous") {
-      this.instructionText = "Button 1 steers left. Button 2 steers right.\n\n When both buttons are down, both players stop.";
+      this.instructionText = "One button is left, the other is right.\n\n  Press both to stop";
     }
   }
 
@@ -398,6 +398,11 @@ class TitleScene extends Scene {
     text("L", windowWidth - windowWidth/ 2.6, height / 2.2);
     // text("o", windowWidth / 5, height / 2.2);
     text("W", windowWidth - windowWidth/8, height / 2.2);
+
+    fill(ringColor);
+    textSize(standardTextSize);
+    // text("for two", windowWidth - scl * 7, height - scl*2);
+
     player1.show();
     player2.show();
     fill(200);
@@ -414,64 +419,6 @@ class TitleScene extends Scene {
       // ellipse(windowWidth/2, [i] * 8, 100, 100)
     }
     pop();
-
-
-    // let xAdd = 400;
-    // let yAdd = 180;
-    //
-    //
-    // beginShape();
-    // vertex(64 + xAdd, 6.69 + yAdd);
-    // vertex(0 + xAdd, 6.69 + yAdd);
-    // vertex(0 + xAdd, 120.37 + yAdd);
-    // vertex(12.82 + xAdd, 120.37 + yAdd);
-    // vertex(12.82 + xAdd, 53.5 + yAdd);
-    // vertex(35.67 + xAdd, 53.5 + yAdd);
-    // vertex(35.67 + xAdd, 45.55 + yAdd);
-    // vertex(12.26 + xAdd, 45.55 + yAdd);
-    // vertex(12.26 + xAdd, 17.28 + yAdd);
-    // vertex(55.17 + xAdd, 17.28 + yAdd);
-    // vertex(64.92 + xAdd, 6.69 + yAdd);
-    // endShape();
-    //
-    //
-    // beginShape();
-    // vertex(196.72 + xAdd, 6.69 + yAdd);
-    // vertex(196.72 + xAdd, 94.74 + yAdd);
-    // vertex(255.79 + xAdd, 94.74 + yAdd);
-    // vertex(255.79 + xAdd, 81.36 + yAdd);
-    // vertex(208.98 + xAdd, 81.36 + yAdd);
-    // vertex(208.98 + xAdd, 6.69 + yAdd);
-    // vertex(196.72 + xAdd, 6.69 + yAdd);
-    // endShape();
-    //
-    //
-    // beginShape();
-    // vertex(286.33 + xAdd, 6.69 + yAdd);
-    // vertex(286.33 + xAdd, 94.74 + yAdd);
-    // vertex(345.4 + xAdd, 94.74 + yAdd);
-    // vertex(345.4 + xAdd, 81.36 + yAdd);
-    // vertex(298.59 + xAdd, 81.36 + yAdd);
-    // vertex(298.59 + xAdd, 6.69 + yAdd);
-    // vertex(286.33 + xAdd, 6.69 + yAdd);
-    // endShape();
-    //
-    //
-    // beginShape();
-    // vertex(475.92 + xAdd, 6.69 + yAdd);
-    // vertex(506.01 + xAdd, 94.74 + yAdd);
-    // vertex(536.67 + xAdd, 26.19 + yAdd);
-    // vertex(563.41 + xAdd, 94.74 + yAdd);
-    // vertex(595.18 + xAdd, 6.69 + yAdd);
-    // vertex(584.03 + xAdd, 6.69 + yAdd);
-    // vertex(563.97 + xAdd, 67.43 + yAdd);
-    // vertex(535.55 + xAdd, 0 + yAdd);
-    // vertex(508.24 + xAdd, 64.09 + yAdd);
-    // vertex(489.3 + xAdd, 6.69 + yAdd);
-    // vertex(475.92 + xAdd, 6.69 + yAdd);
-    // endShape();
-    // textFont(openSansFont);
-
 
   }
 
@@ -503,7 +450,7 @@ class InstructionScene extends Scene {
   constructor() {
     super();
     this.wasKeyPressed = false;
-    this.length = 400;
+    this.length = 500;
     this.numTicks = 0;
     //introSound.loop();
   }
@@ -511,21 +458,21 @@ class InstructionScene extends Scene {
   draw(player1, player2, foods) {
     push();
     background(0, 0, 20);
-    textSize(standardTextSize * 2);
+    textSize(standardTextSize * 1.5);
     textAlign(CENTER, TOP);
-    textFont(openSansFont);
+    // textFont(openSansFont);
     fill(player1Color);
-    text(this.instructionText, windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
-    /*
-    fill(player1Color);
-    text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
+    text(this.instructionText, windowWidth / 5, height / 2, 3 / 5 * windowWidth, 3 / 5 * height);
+
+    // fill(player1Color);
+    // text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
     fill(player2Color);
-    text("player 2 use arrow keys to move", windowWidth / 2, windowHeight / 3);
-    */
+    text("For two players", windowWidth / 2, windowHeight / 3);
+
     fill(200);
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
-    text("press a button to begin", windowWidth / 5, 4 / 5 * height, 3 / 5 * windowWidth, height);
+    // text("press a button to begin", windowWidth / 5, 4 / 5 * height, 3 / 5 * windowWidth, height);
     pop();
     this.numTicks++;
   }
@@ -777,8 +724,8 @@ class FinalScene extends Scene {
       textSize(standardTextSize);
       textAlign(CENTER, BOTTOM);
       if (this.getCurrentKeyMode() === "simultaneous") {
-        text("mutal end", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
-        console.log("mutual end");
+        // text("mutal end", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
+        // console.log("mutual end");
       }
     } else if (player2.total <= 0 && player1.total > 0) {
       fill(1);
@@ -791,8 +738,7 @@ class FinalScene extends Scene {
       textSize(standardTextSize);
       textAlign(CENTER, BOTTOM);
       if (this.getCurrentKeyMode() === "simultaneous") {
-        text("1 gives & 1 takes", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
-        console.log("one gives one takes");
+        text("There is enough", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
 
       }
     } else if (player1.total <= 0 && player2.total > 0) {
@@ -806,8 +752,8 @@ class FinalScene extends Scene {
       textSize(standardTextSize);
       textAlign(CENTER, BOTTOM);
       if (this.getCurrentKeyMode() === "simultaneous") {
-        text("1 gives & 1 takes", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
-        console.log("one gives one takes");
+        text("One gives / one takes", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
+        console.log("One gives one takes");
 
       }
     } else {
@@ -818,7 +764,7 @@ class FinalScene extends Scene {
       textSize(standardTextSize);
       textAlign(CENTER, BOTTOM);
       text("together", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
-      console.log("together");
+      console.log("Together");
     }
     // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
     this.numTicks++;

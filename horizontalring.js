@@ -37,9 +37,9 @@ class HorizontalRing {
         console.log("this is bad");
         this.direction = "right";
       }
-    } else if (loopDiff >= -1) {
+    } else if (loopDiff <= -1) {
       this.direction = this.source.direction;
-    } else if (loopDiff <= 1) {
+    } else if (loopDiff >= 1) {
       this.direction = this.oppositeDir(this.source.direction);
     } else {
       throw "bad loop diff";

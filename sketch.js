@@ -124,7 +124,7 @@ var spaceButtonIsDown = false;
 
 function preload() {
   introSound = loadSound('sounds/intro.mp3');
-  introSound.setVolume(vol);
+  introSound.setVolume(vol/2);
   foodGenSound = loadSound('sounds/eat.mp3');
   foodGenSound.setVolume(vol);
   eatSound = loadSound('sounds/eat.mp3');
@@ -140,7 +140,7 @@ function preload() {
   ringMoveSound = loadSound('sounds/ringmove.mp3');
   ringMoveSound.setVolume(vol);
   ambientSound = loadSound('sounds/ambience.mp3');
-  ambientSound.setVolume(vol);
+  ambientSound.setVolume(vol/2);
 
   p1Ball = loadAnimation('img/p11.png', 'img/p12.png', 'img/p13.png', 'img/p14.png', 'img/p15.png', 'img/p16.png');
   p2Ball = loadAnimation('img/p21.png', 'img/p22.png', 'img/p23.png', 'img/p24.png', 'img/p25.png', 'img/p26.png');
