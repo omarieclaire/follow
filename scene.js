@@ -54,8 +54,7 @@ class Scene {
       pop();
     }
   }
-  ///////////////////////////
-  //// Basic Scene Draw /////
+  /////////////////////////// // Basic Scene Draw /////
   ///////////////////////////
   basicSceneDraw(player1, player2, foods) {
     push();
@@ -76,6 +75,11 @@ class Scene {
 
     player1.show();
     player2.show();
+
+    player1.leftKeyState(this.player1LeftKeyDown, this.player2RightKeyDown);
+    player2.leftKeyState(this.player1LeftKeyDown, this.player2RightKeyDown);
+    player1.rightKeyState(this.player2RightKeyDown, this.player1LeftKeyDown);
+    player2.rightKeyState(this.player2RightKeyDown, this.player1LeftKeyDown);
 
     if (keyIsDown(79)) {
       this.debugScreen();

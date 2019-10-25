@@ -152,6 +152,31 @@ class Player {
     this.yspeed = y;
   }
 
+  leftKeyState(keyPressed, rightPressed) {
+    if(keyPressed && rightPressed) {
+      // halt state
+      this.xspeed = 0;
+    } else {
+      if(keyPressed && this.direction == "left") {
+        this.xspeed -= 0.01;
+      } else if(this.direction == "left") {
+        this.xspeed = Math.min(-0.1, this.xspeed + 0.1);
+      }
+    }
+  }
+
+  rightKeyState(keyPressed, leftKeyPressed) {
+    if(keyPressed && leftKeyPressed) {
+      // halt state
+      this.xspeed = 0;
+    } else {
+      if(keyPressed && this.direction == "right") {
+        this.xspeed += 0.01;
+      } else if(this.direction == "right") {
+        this.xspeed = Math.max(0.1, this.xspeed - 0.1);
+      }
+    }
+  }
   flipDirection(otherPlayer) {
     if (this.direction == "up") {
       this.changeDirectionDown(otherPlayer);
