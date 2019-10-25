@@ -335,14 +335,18 @@ class Scene {
         player2.changeDirectionLeft(player1);
         player1.changeDirectionLeft(player2);
         player2.isFollowed = true; //hacky temp sol
+        player2.isFollowing = false;
         player1.isFollowing = true;
+        player1.isFollowed = false;
         player1.numLoops = 0;
         player2.numLoops = 0;
       } else if (keyCode === RIGHT_ARROW) {
         player1.changeDirectionRight(player2);
         player2.changeDirectionRight(player1);
         player1.isFollowed = true;
+        player1.isFollowing = false;
         player2.isFollowing = true;
+        player2.isFollowed = false;
         player1.numLoops = 0;
         player2.numLoops = 0;
       }
