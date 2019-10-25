@@ -17,7 +17,7 @@ class TemporaryRing {
     this.x = this.player.x;
     this.y = this.player.y
     push();
-    strokeWeight(10);
+    strokeWeight(5);
     noFill();
     var r = radius + 5;
     if(this.numTicks < this.length/2) {
@@ -32,4 +32,3 @@ class TemporaryRing {
     this.numTicks++;
   }
 }
-

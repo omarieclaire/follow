@@ -504,14 +504,8 @@ class InstructionScene extends Scene {
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
     textFont(openSansFont);
-
-    var remainingTime = Math.floor((this.length - this.numTicks)/50);
-    fill(200);
-    text(remainingTime, windowWidth / 5, height / 20, 3 / 5 * windowWidth, 3 / 5 * height);
-
     fill(player1Color);
-    // put the "1.3 *" to shift the text down a bit under the timer
-    text(this.instructionText, windowWidth / 5, 1.3 * height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
+    text(this.instructionText, windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
     /*
     fill(player1Color);
     text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
