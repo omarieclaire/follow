@@ -14,7 +14,6 @@ class TemporaryRing {
   }
 
   draw(radius) {
-    console.log("drawing temp ring");
     this.x = this.player.x;
     this.y = this.player.y
     push();

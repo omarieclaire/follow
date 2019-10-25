@@ -107,7 +107,7 @@ class Rings {
     // pop();
 
     push();
-    stroke(255, 0, 0);
+    stroke(255, 0, 0, 70);
     strokeWeight(Math.max(0, 3 - this.numDeadTicks / 30));
     ellipse(this.x, this.y, initialRadius + 5);
     pop();
