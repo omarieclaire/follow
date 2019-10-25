@@ -6,26 +6,25 @@
 
 // TODOS
 
-// CODE fix ring movement
-// CODE - player must HOLD button for movement
-// CODE (IF TIME for proper debug) holding down movement key causes acceleration
+// CODE - comment out timer at top of the screen (and related logic)
+// LEADER ring APPEARS for 2 seconds on a player when they win a ring (food or following) and then disappears)
+// fix code so a player can press any button to skip title scene AND instruction scene (instead of spacebar)
+// put a timer on instruction scene so it only displays for 7 seconds (in case player doesn't push button)
+// WILL THIS CREATE A BUG? think carefully! player HOLDS button for faster movement speed
+// fix ring movement
+// WAITING ON - (need to be at NYU) check arduino code!
 
-// CODE - remove timer at top of the screen
-// CODE improve food and spikes visually
-// CODE food and spike collisions should have immediate visual impact
-// DESIGN/CODE improve instruction page and title screen (draw shapes for letters and use players as Os)
+// make spikes look less like a star of david
 
-// "press any key to begin"
-// SETUP check power, sound, table, light, tablecloth, HEADPHONES?
-// DESIGN get feedback?
-// DESIGN - color (rings, core colors, fonts)
-// DESIGN - fonts
-// DESIGN - sounds
-// DESIGN - remove leader ring?
-// DESIGN - do I need the players to know who they are? (number, emoji, iden)
-// DESIGN - remove directional arc? change it? what does it say?
+
+// improve sounds
+// improve colors (fonts?)
+// enlargen fonts where needed.
+// fix end messages
 // DESIGN - do I need a total player score?
-// DESIGN - choose end message(s)
+
+
+// DESIGN/CODE improve instruction page and title screen (draw shapes for letters and use players as Os)
 
 // CONSIDER - major refactor to actually fix: unexpected "follow state" after player collision -> @player 176
 

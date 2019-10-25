@@ -45,10 +45,13 @@ class Rings {
       this.time = this.time + 0.01;
       // set spectrum equal to the easing function of time at the current time
       if(this.multiTargetMode) {
-        if(this.currentTarget == 1) {
-          this.time = this.time + 0.05;
+        if(this.currentTarget == 0) {
+          // linearly increase spectrum for the first target.
+          this.spectrum = this.time;
         }
-        this.spectrum = this.easing(this.time);
+        if(this.currentTarget == 1) {
+          this.spectrum = this.easing(this.time);
+        }
       } else {
         this.spectrum = this.easing(this.time);
       }

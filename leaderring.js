@@ -1,8 +1,9 @@
 class LeaderRing {
   constructor(scl) {
     this.scl = scl;
+    this.spacer = scl/2;
     // how much we move each time
-    this.move = .9;
+    this.move = 1;
     this.x = windowWidth / 2;
     this.y = windowHeight / 2;
     this.lastPlayerLeading = undefined;
@@ -33,16 +34,18 @@ class LeaderRing {
     this.x = lerp.x;
     this.y = lerp.y;
 
-    if (this.x < 0 - 20) {
+    if (this.x < 0 - this.spacer) {
       this.x = windowWidth - this.scl;
-    } else if (this.x > windowWidth - this.scl + 20) {
-      this.x = 0 - 20;
-    } else if (this.y < 0 - 20) {
+    } else if (this.x > windowWidth - this.scl + this.spacer) {
+      this.x = 0 - this.spacer;
+    } else if (this.y < 0 - this.spacer) {
       this.y = windowHeight - this.scl;
-    } else if (this.y > windowHeight - this.scl + 20) {
-      this.y = 0 - 20;
+    } else if (this.y > windowHeight - this.scl + this.spacer) {
+      this.y = 0 - this.spacer;
+
     }
   }
+
 
   drawLeaderRing(player1, player2) {
     if (player1.isFollowing) {

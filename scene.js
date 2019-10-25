@@ -45,12 +45,12 @@ class Scene {
       push();
       textSize(standardTextSize);
 
-      fill(138,43,226); //purple
+      fill(138, 43, 226); //purple
       noStroke();
       textAlign(CENTER, TOP);
       var numberToPrint = floor(this.countDown / 100);
 
-      text(numberToPrint, windowWidth/ 5, height / 8, 3 / 5 * windowWidth, 3 / 5 * height);
+      text(numberToPrint, windowWidth / 5, height / 8, 3 / 5 * windowWidth, 3 / 5 * height);
       pop();
     }
   }
@@ -381,17 +381,90 @@ class TitleScene extends Scene {
     push();
     background(0, 0, 20);
     textSize(standardTextSize * 3);
-    textAlign(CENTER, TOP);
     textFont(spectral);
     fill(player1Color);
-    text("follow", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height)
+    textAlign(CENTER, CENTER);
+    text("F", windowWidth / 8, height / 2.2);
+    // text("o", windowWidth / 5, height / 2.2);
+    text("L", windowWidth / 2.6, height / 2.2);
+    text("L", windowWidth - windowWidth/ 2.6, height / 2.2);
+    // text("o", windowWidth / 5, height / 2.2);
+    text("W", windowWidth - windowWidth/8, height / 2.2);
     player1.show();
     player2.show();
     fill(200);
     textFont(openSansFont);
     textSize(standardTextSize / 2);
-    text("press spacebar to begin", windowWidth/ 5, 4 / 5 * height, 3 / 5 * windowWidth, height);
+    text("press spacebar to begin", windowWidth / 5, 4 / 5 * height, 3 / 5 * windowWidth, height);
     pop();
+
+    push();
+    for (var i = -10; i < 500; i++) {
+      noFill();
+      strokeWeight(.25);
+      stroke('purple');
+      // ellipse(windowWidth/2, [i] * 8, 100, 100)
+    }
+    pop();
+
+
+    // let xAdd = 400;
+    // let yAdd = 180;
+    //
+    //
+    // beginShape();
+    // vertex(64 + xAdd, 6.69 + yAdd);
+    // vertex(0 + xAdd, 6.69 + yAdd);
+    // vertex(0 + xAdd, 120.37 + yAdd);
+    // vertex(12.82 + xAdd, 120.37 + yAdd);
+    // vertex(12.82 + xAdd, 53.5 + yAdd);
+    // vertex(35.67 + xAdd, 53.5 + yAdd);
+    // vertex(35.67 + xAdd, 45.55 + yAdd);
+    // vertex(12.26 + xAdd, 45.55 + yAdd);
+    // vertex(12.26 + xAdd, 17.28 + yAdd);
+    // vertex(55.17 + xAdd, 17.28 + yAdd);
+    // vertex(64.92 + xAdd, 6.69 + yAdd);
+    // endShape();
+    //
+    //
+    // beginShape();
+    // vertex(196.72 + xAdd, 6.69 + yAdd);
+    // vertex(196.72 + xAdd, 94.74 + yAdd);
+    // vertex(255.79 + xAdd, 94.74 + yAdd);
+    // vertex(255.79 + xAdd, 81.36 + yAdd);
+    // vertex(208.98 + xAdd, 81.36 + yAdd);
+    // vertex(208.98 + xAdd, 6.69 + yAdd);
+    // vertex(196.72 + xAdd, 6.69 + yAdd);
+    // endShape();
+    //
+    //
+    // beginShape();
+    // vertex(286.33 + xAdd, 6.69 + yAdd);
+    // vertex(286.33 + xAdd, 94.74 + yAdd);
+    // vertex(345.4 + xAdd, 94.74 + yAdd);
+    // vertex(345.4 + xAdd, 81.36 + yAdd);
+    // vertex(298.59 + xAdd, 81.36 + yAdd);
+    // vertex(298.59 + xAdd, 6.69 + yAdd);
+    // vertex(286.33 + xAdd, 6.69 + yAdd);
+    // endShape();
+    //
+    //
+    // beginShape();
+    // vertex(475.92 + xAdd, 6.69 + yAdd);
+    // vertex(506.01 + xAdd, 94.74 + yAdd);
+    // vertex(536.67 + xAdd, 26.19 + yAdd);
+    // vertex(563.41 + xAdd, 94.74 + yAdd);
+    // vertex(595.18 + xAdd, 6.69 + yAdd);
+    // vertex(584.03 + xAdd, 6.69 + yAdd);
+    // vertex(563.97 + xAdd, 67.43 + yAdd);
+    // vertex(535.55 + xAdd, 0 + yAdd);
+    // vertex(508.24 + xAdd, 64.09 + yAdd);
+    // vertex(489.3 + xAdd, 6.69 + yAdd);
+    // vertex(475.92 + xAdd, 6.69 + yAdd);
+    // endShape();
+    // textFont(openSansFont);
+
+
   }
 
   advanceToNextScene(player1, player2) {
@@ -433,7 +506,7 @@ class InstructionScene extends Scene {
     fill(player1Color);
     textFont(openSansFont);
     textLeading(scl * 2);
-    text(this.instructionText, windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
+    text(this.instructionText, windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
     /*
     fill(player1Color);
     text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
@@ -443,7 +516,7 @@ class InstructionScene extends Scene {
     fill(200);
     textSize(standardTextSize / 2);
     textAlign(CENTER, TOP);
-    text("press spacebar to begin", windowWidth/ 5, 4 / 5 * height, 3 / 5 * windowWidth, height);
+    text("press spacebar to begin", windowWidth / 5, 4 / 5 * height, 3 / 5 * windowWidth, height);
     pop();
   }
 
@@ -487,7 +560,7 @@ class WelcomeScene extends Scene {
     textSize(standardTextSize);
     textAlign(CENTER, CENTER);
     textLeading(scl * 2);
-    text("Welcome", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
+    text("Welcome", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
     this.wideSceneDraw();
   }
 
@@ -691,8 +764,8 @@ class FinalScene extends Scene {
       noStroke();
       textSize(standardTextSize);
       textAlign(CENTER, BOTTOM);
-      if(this.getCurrentKeyMode() === "simultaneous") {
-        text("mutal end", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
+      if (this.getCurrentKeyMode() === "simultaneous") {
+        text("mutal end", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
         console.log("mutual end");
       }
     } else if (player2.total <= 0 && player1.total > 0) {
@@ -705,8 +778,8 @@ class FinalScene extends Scene {
       noStroke();
       textSize(standardTextSize);
       textAlign(CENTER, BOTTOM);
-      if(this.getCurrentKeyMode() === "simultaneous") {
-        text("1 gives & 1 takes", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
+      if (this.getCurrentKeyMode() === "simultaneous") {
+        text("1 gives & 1 takes", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
         console.log("one gives one takes");
 
       }
@@ -720,8 +793,8 @@ class FinalScene extends Scene {
       noStroke();
       textSize(standardTextSize);
       textAlign(CENTER, BOTTOM);
-      if(this.getCurrentKeyMode() === "simultaneous") {
-        text("1 gives & 1 takes", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
+      if (this.getCurrentKeyMode() === "simultaneous") {
+        text("1 gives & 1 takes", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
         console.log("one gives one takes");
 
       }
@@ -732,14 +805,14 @@ class FinalScene extends Scene {
       noStroke();
       textSize(standardTextSize);
       textAlign(CENTER, BOTTOM);
-      text("together", windowWidth/ 5, height / 5 , 3 / 5 * windowWidth, 3 / 10 * height);
+      text("together", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 10 * height);
       console.log("together");
     }
     // text("One of you may have more rings but you are both dead", windowWidth / 2, windowWidth - windowHeight / 4);
     this.numTicks++;
     this.wideSceneDraw();
     textAlign(CENTER, BOTTOM);
-    text("begin again?", windowWidth/ 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
+    text("begin again?", windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
     pop();
   }
   advanceToNextScene(player1, player2) {
