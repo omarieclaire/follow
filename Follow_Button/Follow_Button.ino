@@ -123,7 +123,8 @@ void readButtonValues() {
   // Print button state values to serial
   Serial.print(MassiveButtonState1);
   Serial.print(",");
-  Serial.print(MassiveButtonState2);
+  Serial.print(RedButtonState2);
+  //Serial.print(MassiveButtonState2);
   Serial.print(",");
   Serial.print(MassiveButtonState3);
   Serial.print(",");
@@ -132,7 +133,8 @@ void readButtonValues() {
 
   Serial.print(RedButtonState1);
   Serial.print(",");
-  Serial.print(RedButtonState2);
+  Serial.print(MassiveButtonState2);
+  //Serial.print(RedButtonState2);
   Serial.print(",");
   Serial.print(RedButtonState3);
   Serial.print(",");
@@ -144,11 +146,10 @@ void readButtonValues() {
 }
 
 void changeColor() {
-
   if (RedButtonState2 == 0 && MassiveButtonState2 == 0) {
 
-    led1.setPixelColor(0, 255, 255, 0, 255);
-    led2.setPixelColor(0, 255, 255, 0, 255);
+    led1.setPixelColor(0, 255, 255, 1, 255);
+    led2.setPixelColor(0, 255, 255, 1, 255);
     led1.show();
     led2.show();
 
@@ -156,8 +157,8 @@ void changeColor() {
 
   if (RedButtonState2 == 0 && MassiveButtonState2 == 1) {
 
-    //purple
-    led1.setPixelColor(0, 255, 0, 255, 255);
+    //blue
+    led1.setPixelColor(0, 51, 153, 255, 255);
     led2.setPixelColor(0, 0, 0, 0, 0);
     led1.show();
     led2.show();
@@ -167,7 +168,7 @@ void changeColor() {
 
     //pink
     led1.setPixelColor(0, 0, 0, 0, 0);
-    led2.setPixelColor(0, 255,192,203, 255);
+    led2.setPixelColor(0, 255,0,136, 255); 
     led1.show();
     led2.show();
 
@@ -176,11 +177,13 @@ void changeColor() {
   if (RedButtonState2 == 1 && MassiveButtonState2 == 1) {
 
     //yellow
-    led1.setPixelColor(0, 0, 0, 0, 0);
-    led2.setPixelColor(0, 0, 0, 0, 0);
+    led1.setPixelColor(0, 153, 0, 204, 0);
+    led2.setPixelColor(0, 153, 0, 204, 0);
     led1.show();
     led2.show();
 
   }
+
+  
 
 }

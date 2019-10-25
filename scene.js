@@ -474,6 +474,8 @@ class TitleScene extends Scene {
   keyWasPressed(keyCode, player1, player2) {
     if(keyCode == 77) {
       this.handleKeyPressMode(keyCode, player1, player2);
+    } else if(keyCode == 68) {
+      // do nothing: d button broken
     } else {
       this.wasKeyPressed = true;
     }
@@ -527,6 +529,8 @@ class InstructionScene extends Scene {
   keyWasPressed(keyCode, player1, player2) {
     if(keyCode == 77) {
       this.handleKeyPressMode(keyCode, player1, player2);
+    } else if(keyCode == 68) {
+      // do nothing: d button broken
     } else {
       this.wasKeyPressed = true;
     }

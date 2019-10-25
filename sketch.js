@@ -180,7 +180,7 @@ function setup() {
   // Instantiate our SerialPort object
   serial = new p5.SerialPort();
   //copy this from serial control app
-  serial.open("/dev/tty.usbmodem14111");
+  serial.open("/dev/tty.usbmodem14311");
   // call my function gotData when you receive data on the serial port
   serial.on('data', gotData);
 }
