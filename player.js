@@ -222,12 +222,14 @@ class Player {
           colorOfRing = newRingColor;
         }
 
+        this.playerRings.push(new HorizontalRing(otherPlayer, this, colorOfRing, this.scl, this.windowLoopSpacer));
+
         var loopDiff = this.numLoops - otherPlayer.numLoops;
 
         if(loopDiff === 0) {
           // create a ring that follows 'this' and has the start x and y coordinates passed to changeRingTotal
           // if we pass a new ringcolor use it, otherwise use the default
-          this.playerRings.push(new Rings(this, this.scl, colorOfRing, x, y)); //add a ring
+          //this.playerRings.push(new Rings(this, this.scl, colorOfRing, x, y)); //add a ring
         } else {
           // rings are being sent _from_ otherPlayer _to_ this.
           var targetCoordinates = otherPlayer.lineWrapperHelper.getTargetCoordinates(this);
@@ -238,7 +240,7 @@ class Player {
           } else {
             coordinateArray = [targetCoordinates, wrappedTargetCoordinates];
           }
-          this.playerRings.push(new Rings(this, this.scl, colorOfRing, x, y, coordinateArray));
+          //this.playerRings.push(new Rings(this, this.scl, colorOfRing, x, y, coordinateArray));
         }
 
         // Also put a temporary ring
