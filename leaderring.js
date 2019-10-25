@@ -7,6 +7,9 @@ class LeaderRing {
     this.x = windowWidth / 2;
     this.y = windowHeight / 2;
     this.lastPlayerLeading = undefined;
+    this.show = false;
+    this.numTicks = 0;
+    this.animationLength = 100;
   }
 
   drawRingOnLeadingPlayer(thePlayer) {

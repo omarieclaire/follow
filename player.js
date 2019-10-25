@@ -33,7 +33,6 @@ class Player {
       [167, 105, 201],
       [138, 66, 178],
       [96, 14, 142],
-
     ];
     for (var i = 0; i < this.total; i++) { //for each point in score
       this.playerRings.push(new Rings(this, this.scl, this.initialColors[i])); //push a new ring to array
@@ -45,6 +44,8 @@ class Player {
     }
 
     this.lineWrapperHelper = new LineWrapperHelper(this, this.windowLoopSpacer);
+
+    this.tempRings = [];
   }
 
   //constructor is a method which is run only once to set up the object
@@ -239,6 +240,9 @@ class Player {
           }
           this.playerRings.push(new Rings(this, this.scl, colorOfRing, x, y, coordinateArray));
         }
+
+        // Also put a temporary ring
+        this.tempRings.push(new TemporaryRing(this, 80));
       }
     }
   }
@@ -484,6 +488,20 @@ class Player {
         stroke(pointColor);
         //arc(trailXCoordinate, trailYCoordinate, newRadius, newRadius, startAngle, endAngle);
         pop();
+      }
+    }
+
+    // draw temporary rings when player eats food or gets a +1
+    var radiusOfTemporaryRings = this.currentDiameter()
+    // iterate over the rings backwards removing any temporary rings
+    // which h
+    var j = this.tempRings.length;
+    while (j--) {
+      let ring = this.tempRings[j];
+      if(ring.isDone()) {
+        this.tempRings.splice(j,1);
+      } else {
+        ring.draw(radiusOfTemporaryRings);
       }
     }
   }
