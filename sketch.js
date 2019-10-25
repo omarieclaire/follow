@@ -145,7 +145,7 @@ function preload() {
   p1Ball = loadAnimation('img/p11.png', 'img/p12.png', 'img/p13.png', 'img/p14.png', 'img/p15.png', 'img/p16.png');
   p2Ball = loadAnimation('img/p21.png', 'img/p22.png', 'img/p23.png', 'img/p24.png', 'img/p25.png', 'img/p26.png');
 
-  spectral = loadFont('fonts/spectral.ttf');
+  spectral = loadFont('fonts/Vollkorn-Regular.ttf');
   openSansFont = loadFont('fonts/OpenSans-Regular.ttf');
 
 }
