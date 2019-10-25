@@ -493,6 +493,8 @@ class InstructionScene extends Scene {
   constructor() {
     super();
     this.wasKeyPressed = false;
+    this.length = 400;
+    this.numTicks = 0;
     //introSound.loop();
   }
 
@@ -501,10 +503,15 @@ class InstructionScene extends Scene {
     background(0, 0, 20);
     textSize(standardTextSize);
     textAlign(CENTER, TOP);
-    fill(player1Color);
     textFont(openSansFont);
-    textLeading(scl * 2);
-    text(this.instructionText, windowWidth / 5, height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
+
+    var remainingTime = Math.floor((this.length - this.numTicks)/50);
+    fill(200);
+    text(remainingTime, windowWidth / 5, height / 20, 3 / 5 * windowWidth, 3 / 5 * height);
+
+    fill(player1Color);
+    // put the "1.3 *" to shift the text down a bit under the timer
+    text(this.instructionText, windowWidth / 5, 1.3 * height / 5, 3 / 5 * windowWidth, 3 / 5 * height);
     /*
     fill(player1Color);
     text("player 1 use asdw keys to move", windowWidth / 2, windowHeight / 5);
@@ -514,12 +521,13 @@ class InstructionScene extends Scene {
     fill(200);
     textSize(standardTextSize / 2);
     textAlign(CENTER, TOP);
-    text("press spacebar to begin", windowWidth / 5, 4 / 5 * height, 3 / 5 * windowWidth, height);
+    text("press a button to begin", windowWidth / 5, 4 / 5 * height, 3 / 5 * windowWidth, height);
     pop();
+    this.numTicks++;
   }
 
   advanceToNextScene(player1, player2) {
-    return this.wasKeyPressed == true;
+    return this.wasKeyPressed == true || this.numTicks > this.length;
   }
 
   keyWasPressed(keyCode, player1, player2) {
@@ -534,6 +542,7 @@ class InstructionScene extends Scene {
   resetScene() {
     super.resetScene();
     this.wasKeyPressed = false;
+    this.numTicks = 0;
   }
 }
 

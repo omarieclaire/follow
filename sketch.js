@@ -8,8 +8,6 @@
 
 // TODOS
 
-// fix code so a player can press any button to skip title scene AND instruction scene (instead of spacebar)
-// put a timer on instruction scene so it only displays for 7 seconds (in case player doesn't push button)
 // WILL THIS CREATE A BUG? think carefully! player HOLDS button for faster movement speed
 // fix ring movement
 // WAITING ON - (need to be at NYU) check arduino code!
