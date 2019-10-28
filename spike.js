@@ -73,7 +73,7 @@ class Spike {
       // line(10, 10, 50, 50);
       triangle(-scl / 2.5, scl / 5.5, scl / 2.5, scl / 5.5, 0, -scl / 1.5);
       triangle(-scl / 2.5, -scl / 5.5, scl / 2.5, -scl / 5.5, 0, scl / 1.5); //upside down
-      this.angle = this.angle + 4;
+      this.angle = this.angle + 4 ;
     }
     this.angle = this.angle + 3;
     pop();
